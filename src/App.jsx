@@ -8,6 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import Header from "./components/Header/Header";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -17,6 +18,7 @@ const App = () => {
   return (
     <Router>
       <GlobalStyles />
+      <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/*" element={<Navigate to="/" />} />

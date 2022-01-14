@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
 
@@ -7,19 +8,27 @@ const MainPage = () => {
   return (
     <MainPageWrapper>
       <Category>
-        <Title name={"아우터"} />
+        <CategoryLink to="outer">
+          <Title name={"아우터"} />
+        </CategoryLink>
         <ItemList />
       </Category>
       <Category>
-        <Title name={"상의"} />
+        <CategoryLink to="top">
+          <Title name={"상의"} />
+        </CategoryLink>
         <ItemList />
       </Category>
       <Category>
-        <Title name={"하의"} />
+        <CategoryLink to="pants">
+          <Title name={"하의"} />
+        </CategoryLink>
         <ItemList />
       </Category>
       <Category>
-        <Title name={"신발"} />
+        <CategoryLink to="shoes">
+          <Title name={"신발"} />
+        </CategoryLink>
         <ItemList />
       </Category>
     </MainPageWrapper>
@@ -36,5 +45,10 @@ const MainPageWrapper = styled.div`
 `;
 
 const Category = styled.div``;
+
+const CategoryLink = styled(Link)`
+  color: black;
+  text-decoration: none;
+`;
 
 export default MainPage;

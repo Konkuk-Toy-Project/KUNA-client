@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <HeaderWrapper>
       <ShortcutMenuWrapper>
-        <HomeIcon
-          src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
-          alt="Home Icon"
-        />
+        <Link to="/">
+          <HomeIcon
+            src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
+            alt="Home Icon"
+          />
+        </Link>
         <SearchBar>
           <SearchBarInput type="text" />
           <SearchIcon type="button">🔎</SearchIcon>
@@ -45,10 +48,18 @@ const Header = () => {
         </MenuCategories>
       </ShortcutMenuWrapper>
       <PageMenus>
-        <PageMenu>아우터</PageMenu>
-        <PageMenu>상의</PageMenu>
-        <PageMenu>하의</PageMenu>
-        <PageMenu>신발</PageMenu>
+        <PageLink to="/outer">
+          <PageMenu>아우터</PageMenu>
+        </PageLink>
+        <PageLink to="/top">
+          <PageMenu>상의</PageMenu>
+        </PageLink>
+        <PageLink to="/pants">
+          <PageMenu>하의</PageMenu>
+        </PageLink>
+        <PageLink to="/shoes">
+          <PageMenu>신발</PageMenu>
+        </PageLink>
       </PageMenus>
     </HeaderWrapper>
   );
@@ -135,6 +146,11 @@ const MenuCategory = styled.li`
 const PageMenus = styled.ul`
   display: flex;
   margin: 1em 0;
+`;
+
+const PageLink = styled(Link)`
+  color: black;
+  text-decoration: none;
 `;
 
 const PageMenu = styled.li`

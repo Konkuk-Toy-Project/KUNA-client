@@ -1,6 +1,59 @@
 import React from "react";
 import styled from "styled-components";
 
+const Header = () => {
+  return (
+    <HeaderWrapper>
+      <ShortcutMenuWrapper>
+        <HomeIcon
+          src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
+          alt="Home Icon"
+        />
+        <SearchBar>
+          <SearchBarInput type="text" />
+          <SearchIcon type="button">🔎</SearchIcon>
+        </SearchBar>
+        <MenuCategories>
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
+              alt=""
+            />
+            <p>장바구니</p>
+          </MenuCategory>
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
+              alt=""
+            />
+            <p>찜목록</p>
+          </MenuCategory>
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+              alt=""
+            />
+            <p>로그인</p>
+          </MenuCategory>
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon5.png"
+              alt=""
+            />
+            <p>프로필</p>
+          </MenuCategory>
+        </MenuCategories>
+      </ShortcutMenuWrapper>
+      <PageMenus>
+        <PageMenu>아우터</PageMenu>
+        <PageMenu>상의</PageMenu>
+        <PageMenu>하의</PageMenu>
+        <PageMenu>신발</PageMenu>
+      </PageMenus>
+    </HeaderWrapper>
+  );
+};
+
 const HeaderWrapper = styled.header`
   display: flex;
   flex-direction: column;
@@ -94,58 +147,5 @@ const PageMenu = styled.li`
     color: white;
   }
 `;
-
-const Header = () => {
-  return (
-    <HeaderWrapper>
-      <ShortcutMenuWrapper>
-        <HomeIcon
-          src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
-          alt="Home Icon"
-        />
-        <SearchBar>
-          <SearchBarInput type="text" />
-          <SearchIcon type="button">🔎</SearchIcon>
-        </SearchBar>
-        <MenuCategories>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
-              alt=""
-            />
-            <p>장바구니</p>
-          </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
-              alt=""
-            />
-            <p>찜목록</p>
-          </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
-              alt=""
-            />
-            <p>로그인</p>
-          </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon5.png"
-              alt=""
-            />
-            <p>프로필</p>
-          </MenuCategory>
-        </MenuCategories>
-      </ShortcutMenuWrapper>
-      <PageMenus>
-        <PageMenu>아우터</PageMenu>
-        <PageMenu>상의</PageMenu>
-        <PageMenu>하의</PageMenu>
-        <PageMenu>신발</PageMenu>
-      </PageMenus>
-    </HeaderWrapper>
-  );
-};
 
 export default Header;

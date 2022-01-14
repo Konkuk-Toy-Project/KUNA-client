@@ -1,8 +1,10 @@
 import React from "react";
-import MainTitle from "../components/MainTitle/MainTitle";
+import styled from "styled-components";
+
+const MainPageWrapper = styled.div``;
 
 const MainPage = () => {
-  return <MainTitle />;
+  return <MainPageWrapper></MainPageWrapper>;
 };
 
 export default MainPage;

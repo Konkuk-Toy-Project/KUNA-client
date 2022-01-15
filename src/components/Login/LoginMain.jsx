@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Password from "./Password";
+
+const INPUT_TYPE_PW = "password";
+const INPUT_TYPE_TEXT = "text";
 
 const LoginMain = () => {
   const [account, setAccount] = useState({ id: "", pw: "" });
@@ -9,6 +11,14 @@ const LoginMain = () => {
   const onChange = (e) => {
     setAccount({ ...account, [e.target.name]: e.target.value });
     console.log(account);
+  };
+
+  const [pwInputType, setPwInputType] = useState(INPUT_TYPE_PW);
+
+  // toogle - show/hide pw
+  const showPw = () => {
+    if (pwInputType === INPUT_TYPE_PW) setPwInputType(INPUT_TYPE_TEXT);
+    else setPwInputType(INPUT_TYPE_PW);
   };
 
   // login btn click event
@@ -29,15 +39,24 @@ const LoginMain = () => {
           />
         </label>
       </div>
-      <Password type={1} name="pw" data={account} onChange={onChange} />
-
+      <div name="pw-container">
+        <label>
+          <input
+            type={pwInputType}
+            name="pw"
+            placeholder="비밀번호"
+            value={account.pw}
+            onChange={onChange}
+          />
+          <i onClick={showPw}>{pwInputType === INPUT_TYPE_PW ? "👀" : "🔒"} </i>
+        </label>
+      </div>
       {isWrong ? (
         <div id="warningStr">
           아이디 또는 비밀번호가 잘못 입력 되었습니다. 아이디와 비밀번호를
           정확히 입력해 주세요.
         </div>
       ) : null}
-
       <button
         id="loginBtn"
         type="submit"

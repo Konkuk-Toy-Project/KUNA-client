@@ -1,45 +1,44 @@
-import React, { Component, useEffect, useState } from "react";
-import Password from "./Password";
+import React, { useState } from "react";
+import BirthSelectBox from "./BirthSelectBox";
 
-const emailArr = ["선택", "naver.com", "gmail.com", "daum.net", "직접입력"];
+const TYPE_MANUALLY = "직접입력";
+const emailArr = [TYPE_MANUALLY, "naver.com", "gmail.com", "daum.net"];
 const phoneFirstArr = ["010", "011", "016"];
 const YEAR_START = 1920;
 const YEAR_END = 2022;
-const years = [];
-const months = [];
-const days = [];
-var i = 0;
-const makeNumArr = (arr, start, end) => {
-  for (i = start; i <= end; i++) {
-    if (i === start) arr.push("   ");
-    i < 10 ? arr.push("0" + i) : arr.push(String(i));
-  }
-};
-
-const makeDateArr = () => {
-  makeNumArr(years, YEAR_START, YEAR_END);
-  makeNumArr(months, 1, 12);
-  makeNumArr(days, 1, 31);
-};
 
 const SignIn = () => {
   const [info, setInfo] = useState({
     id: "",
+    emailAddr: "",
     pw: "",
     pwCheck: "",
     name: "",
-    phone: "",
-    birth: "",
+    phone_first: "",
+    phone_mid: "",
+    phone_last: "",
+    birth_year: "",
+    birth_month: "",
+    birth_day: "",
   });
-  const [dateArr, setDateArr] = useState([[], [], []]);
-  useEffect(() => {
-    makeDateArr();
-    setDateArr([years, months, days]);
-  }, []);
+
+  const [isEmailTypingMode, setIsEmailTypingMode] = useState(true);
+
   const onSignIn = () => {};
   const onChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
     console.log(info);
+  };
+
+  const onSelectEmail = (e) => {
+    const value = e.target.value;
+    if (value !== TYPE_MANUALLY) {
+      setIsEmailTypingMode(false);
+      setInfo({ ...info, ["emailAddr"]: value });
+    } else {
+      setIsEmailTypingMode(true);
+      setInfo({ ...info, ["emailAddr"]: "" });
+    }
   };
 
   return (
@@ -47,69 +46,123 @@ const SignIn = () => {
       <div id="id-container">
         <label id="id-label">
           <span>아이디(이메일)</span>
-          <input type="text" id="id" value={info.id} onChange={onChange} />@
-          <input type="text" id="emailAddr" />
-          <select>
-            {emailArr.map((email) => (
-              <option>{email}</option>
+          <input
+            type="text"
+            id="id"
+            name="id"
+            value={info.id}
+            onChange={onChange}
+          />
+          @
+          <input
+            type="text"
+            name="emailAddr"
+            value={info.emailAddr}
+            onChange={onChange}
+            disabled={isEmailTypingMode ? false : true}
+          />
+          <select onChange={onSelectEmail}>
+            {emailArr.map((email, idx) => (
+              <option key={idx}>{email}</option>
             ))}
           </select>
           <button id="idDupCheck">중복확인</button>
         </label>
       </div>
-      <div id="pw-container">
-        <Password
-          type={2}
-          name={Object.keys(info)[1]}
-          data={info}
-          onChange={onChange}
-        />
+
+      <div name="pw-container">
+        <span>비밀번호</span>
+        <label>
+          <input
+            name="pw"
+            type="password"
+            value={info.pw}
+            onChange={onChange}
+            placeholder="8자이상, 영문자, 숫자, 특수문자 조합"
+          />
+        </label>
+        {info.pw !== "" &&
+        (info.pw.match(/[a-z]+?/) === null ||
+          info.pw.match(/[0-9]+?/) === null ||
+          info.pw.match(/[`~!@#$%^&*|\\\'\";:\/?]+?/) === null) ? (
+          <div id="warningPw">
+            비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다.
+          </div>
+        ) : null}
       </div>
-      <div id="pwCheck-container">
-        <Password
-          type={3}
-          name={Object.keys(info)[2]}
-          data={info}
-          onChange={onChange}
-        />
+
+      <div name="pwCheck-container">
+        <span>비밀번호 확인</span>
+        <label>
+          <input
+            type="password"
+            name="pwCheck"
+            placeholder="비밀번호 확인"
+            value={info.pwCheck}
+            onChange={onChange}
+          />
+          <span>
+            {info.pw !== "" && info.pw === info.pwCheck ? "🟢" : "🔴"}
+          </span>
+        </label>
       </div>
+
       <div id="name-container">
         <label id="name-label">
           <span>이름</span>
-          <input type="text" placeholder="이름" />
+          <input
+            type="text"
+            name="name"
+            placeholder="이름"
+            onChange={onChange}
+          />
         </label>
       </div>
       <div id="phone-container">
-        <select name="phone-first" id="phone-first">
+        <select name="phone_first" id="phone-first" onChange={onChange}>
           {phoneFirstArr.map((phoneFirst) => (
             <option key={"p_" + phoneFirst}>{phoneFirst}</option>
           ))}
         </select>
         -
-        <input id="phoneMiddle" type="text" maxLength={4} />
+        <input
+          id="phoneMiddle"
+          name="phone_mid"
+          onChange={onChange}
+          type="text"
+          maxLength={4}
+        />
         -
-        <input id="phoneEnd" type="text" maxLength={4} />
+        <input
+          id="phoneLast"
+          name="phone_last"
+          onChange={onChange}
+          type="text"
+          maxLength={4}
+        />
       </div>
       <div id="birth-container">
         <label id="birth-label">
-          {/* 컴포넌트화 하기  */}
-          <select id="year">
-            {dateArr[0].map((year) => (
-              <option key={"y_" + year}>{year}</option>
-            ))}
-          </select>
+          <BirthSelectBox
+            name="birth_year"
+            start={YEAR_START}
+            end={YEAR_END}
+            onChange={onChange}
+          />
           년
-          <select id="month">
-            {dateArr[1].map((mon) => (
-              <option key={"m_" + mon}>{mon}</option>
-            ))}
-          </select>
+          <BirthSelectBox
+            name="birth_month"
+            start={1}
+            end={12}
+            onChange={onChange}
+          />
           월
-          <select id="day">
-            {dateArr[2].map((day) => (
-              <option key={"d_" + day}>{day}</option>
-            ))}
-          </select>
+          <BirthSelectBox
+            name="birth_day"
+            start={1}
+            end={31}
+            onChange={onChange}
+          />
           일
         </label>
       </div>

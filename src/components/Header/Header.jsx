@@ -6,12 +6,12 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <ShortcutMenuWrapper>
-        <Link to="/">
+        <PageLink to="/">
           <HomeIcon
             src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
             alt="Home Icon"
           />
-        </Link>
+        </PageLink>
         <SearchBar>
           <SearchBarInput type="text" />
           <SearchIcon type="button">🔎</SearchIcon>
@@ -24,13 +24,15 @@ const Header = () => {
             />
             <p>장바구니</p>
           </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
-              alt=""
-            />
-            <p>찜목록</p>
-          </MenuCategory>
+          <PageLink to="/like">
+            <MenuCategory>
+              <img
+                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
+                alt=""
+              />
+              <p>찜목록</p>
+            </MenuCategory>
+          </PageLink>
           <MenuCategory>
             <img
               src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
@@ -78,6 +80,11 @@ const ShortcutMenuWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1em 0;
+`;
+
+const PageLink = styled(Link)`
+  color: black;
+  text-decoration: none;
 `;
 
 const HomeIcon = styled.img`
@@ -146,11 +153,6 @@ const MenuCategory = styled.li`
 const PageMenus = styled.ul`
   display: flex;
   margin: 1em 0;
-`;
-
-const PageLink = styled(Link)`
-  color: black;
-  text-decoration: none;
 `;
 
 const PageMenu = styled.li`

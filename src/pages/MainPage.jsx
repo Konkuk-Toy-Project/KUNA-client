@@ -11,25 +11,25 @@ const MainPage = () => {
         <CategoryLink to="outer">
           <Title name={"아우터"} />
         </CategoryLink>
-        <ItemList />
+        <ItemList listType={"main"} />
       </Category>
       <Category>
         <CategoryLink to="top">
           <Title name={"상의"} />
         </CategoryLink>
-        <ItemList />
+        <ItemList listType={"main"} />
       </Category>
       <Category>
         <CategoryLink to="pants">
           <Title name={"하의"} />
         </CategoryLink>
-        <ItemList />
+        <ItemList listType={"main"} />
       </Category>
       <Category>
         <CategoryLink to="shoes">
           <Title name={"신발"} />
         </CategoryLink>
-        <ItemList />
+        <ItemList listType={"main"} />
       </Category>
     </MainPageWrapper>
   );

@@ -26,9 +26,9 @@ const CategoryPage = () => {
   return (
     <CategoryPageWrapper>
       <Title name={convertEngTitleToKor(category)} />
-      <ItemList />
-      <ItemList />
-      <ItemList />
+      <ItemList listType={"main"} />
+      <ItemList listType={"main"} />
+      <ItemList listType={"main"} />
     </CategoryPageWrapper>
   );
 };
@@ -36,6 +36,10 @@ const CategoryPage = () => {
 const CategoryPageWrapper = styled.div`
   text-align: center;
   margin: 2em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default CategoryPage;

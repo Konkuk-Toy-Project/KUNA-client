@@ -1,31 +1,46 @@
 import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { basketItemState, itemState } from "../../../store/like";
 
-const Item = ({ listType }) => {
+const Item = ({ listType, item }) => {
+  const [items, setItems] = useRecoilState(itemState);
+  const [basketItems, setBasketItems] = useRecoilState(basketItemState);
+
   const briefTitle = (listType, title) => {
     return listType === "main"
       ? title.slice(0, 16) + "..."
       : title.slice(0, 8) + "...";
   };
 
+  const onClickDelete = () => {
+    const filterClickedItem = items.filter((current) => current.id !== item.id);
+    setItems(filterClickedItem);
+  };
+
+  const onClickDeleteBasket = () => {
+    const filterClickedItem = basketItems.filter(
+      (current) => current.id !== item.id
+    );
+    setBasketItems(filterClickedItem);
+  };
+
   return (
     <ItemWrapper listType={listType}>
-      <ItemImage
-        src="https://img.sonyunara.com/files/goods/165196/1641453724_5.gif.webp"
-        listType={listType}
-      />
+      <ItemImage src={item.image} listType={listType} />
       <ItemDescription listType={listType}>
-        <ItemTitle>
-          {briefTitle(
-            listType,
-            "레셔 아가일패턴 브이넥 벌룬소매 니트 가디건(G)"
-          )}
-        </ItemTitle>
+        <ItemTitle>{briefTitle(listType, item.title)}</ItemTitle>
         <ItemPriceWrapper listType={listType}>
-          <p>5%</p>
-          <p>25,400</p>
+          <p>{item.discount}</p>
+          <p>{item.price}</p>
         </ItemPriceWrapper>
       </ItemDescription>
+      {listType === "like" ? (
+        <button onClick={onClickDelete}>Delete</button>
+      ) : null}
+      {listType === "basket" ? (
+        <button onClick={onClickDeleteBasket}>Delete Basket</button>
+      ) : null}
     </ItemWrapper>
   );
 };

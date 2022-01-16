@@ -12,6 +12,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import CategoryPage from "./pages/CategoryPage";
 import LikePage from "./pages/LikePage";
+import BasketPage from "./pages/BasketPage";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/" element={<MainPage />} />
         <Route path=":category" element={<CategoryPage />} />
         <Route path="/like" element={<LikePage />} />
+        <Route path="/basket" element={<BasketPage />} />
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />

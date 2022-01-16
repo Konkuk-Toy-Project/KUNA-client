@@ -3,33 +3,37 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
+import { useRecoilValue } from "recoil";
+import { itemState } from "../store/like";
 
 const MainPage = () => {
+  const items = useRecoilValue(itemState);
+
   return (
     <MainPageWrapper>
       <Category>
         <CategoryLink to="outer">
           <Title name={"아우터"} />
         </CategoryLink>
-        <ItemList listType={"main"} />
+        <ItemList listType={"main"} items={items} />
       </Category>
       <Category>
         <CategoryLink to="top">
           <Title name={"상의"} />
         </CategoryLink>
-        <ItemList listType={"main"} />
+        <ItemList listType={"main"} items={items} />
       </Category>
       <Category>
         <CategoryLink to="pants">
           <Title name={"하의"} />
         </CategoryLink>
-        <ItemList listType={"main"} />
+        <ItemList listType={"main"} items={items} />
       </Category>
       <Category>
         <CategoryLink to="shoes">
           <Title name={"신발"} />
         </CategoryLink>
-        <ItemList listType={"main"} />
+        <ItemList listType={"main"} items={items} />
       </Category>
     </MainPageWrapper>
   );

@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { basketItemState } from "../../store/like";
 
 const Header = () => {
+  const basketItems = useRecoilValue(basketItemState);
+
   return (
     <HeaderWrapper>
       <ShortcutMenuWrapper>
@@ -24,6 +28,7 @@ const Header = () => {
                 alt=""
               />
               <p>장바구니</p>
+              <p>{basketItems.length}</p>
             </MenuCategory>
           </PageLink>
           <PageLink to="/like">

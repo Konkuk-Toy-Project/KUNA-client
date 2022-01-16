@@ -1,13 +1,24 @@
 import React from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { itemState } from "../../../store/like";
 import Item from "../Item/Item";
 
 const ItemList = ({ listType, items }) => {
+  const setLikeItems = useSetRecoilState(itemState);
+
+  const onClickDeleteAll = () => {
+    setLikeItems([]);
+  };
+
   return (
     <ItemListWrapper>
-      {items.map((item, index) => (
-        <Item key={index} listType={listType} item={item} />
+      {items.map((item) => (
+        <Item key={item.id} listType={listType} item={item} />
       ))}
+      {listType === "like" ? (
+        <button onClick={onClickDeleteAll}>전체 삭제</button>
+      ) : null}
     </ItemListWrapper>
   );
 };

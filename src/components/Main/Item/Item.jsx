@@ -1,11 +1,20 @@
 import React from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { itemState } from "../../../store/like";
 
 const Item = ({ listType, item }) => {
+  const [items, setItems] = useRecoilState(itemState);
+
   const briefTitle = (listType, title) => {
     return listType === "main"
       ? title.slice(0, 16) + "..."
       : title.slice(0, 8) + "...";
+  };
+
+  const onClickDelete = () => {
+    const filterClickedItem = items.filter((current) => current.id !== item.id);
+    setItems(filterClickedItem);
   };
 
   return (
@@ -18,6 +27,9 @@ const Item = ({ listType, item }) => {
           <p>{item.price}</p>
         </ItemPriceWrapper>
       </ItemDescription>
+      {listType === "like" ? (
+        <button onClick={onClickDelete}>Delete</button>
+      ) : null}
     </ItemWrapper>
   );
 };

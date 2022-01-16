@@ -17,13 +17,15 @@ const Header = () => {
           <SearchIcon type="button">🔎</SearchIcon>
         </SearchBar>
         <MenuCategories>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
-              alt=""
-            />
-            <p>장바구니</p>
-          </MenuCategory>
+          <PageLink to="/basket">
+            <MenuCategory>
+              <img
+                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
+                alt=""
+              />
+              <p>장바구니</p>
+            </MenuCategory>
+          </PageLink>
           <PageLink to="/like">
             <MenuCategory>
               <img

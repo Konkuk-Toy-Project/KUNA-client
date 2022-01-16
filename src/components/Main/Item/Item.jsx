@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Item = ({ listType }) => {
+const Item = ({ listType, item }) => {
   const briefTitle = (listType, title) => {
     return listType === "main"
       ? title.slice(0, 16) + "..."
@@ -10,20 +10,12 @@ const Item = ({ listType }) => {
 
   return (
     <ItemWrapper listType={listType}>
-      <ItemImage
-        src="https://img.sonyunara.com/files/goods/165196/1641453724_5.gif.webp"
-        listType={listType}
-      />
+      <ItemImage src={item.image} listType={listType} />
       <ItemDescription listType={listType}>
-        <ItemTitle>
-          {briefTitle(
-            listType,
-            "레셔 아가일패턴 브이넥 벌룬소매 니트 가디건(G)"
-          )}
-        </ItemTitle>
+        <ItemTitle>{briefTitle(listType, item.title)}</ItemTitle>
         <ItemPriceWrapper listType={listType}>
-          <p>5%</p>
-          <p>25,400</p>
+          <p>{item.discount}</p>
+          <p>{item.price}</p>
         </ItemPriceWrapper>
       </ItemDescription>
     </ItemWrapper>

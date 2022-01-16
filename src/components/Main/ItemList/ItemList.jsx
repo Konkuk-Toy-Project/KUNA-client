@@ -2,17 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import Item from "../Item/Item";
 
-const ItemList = ({ listType }) => {
+const ItemList = ({ listType, items }) => {
   return (
     <ItemListWrapper>
-      <Item listType={listType} />
-      <Item listType={listType} />
-      <Item listType={listType} />
-      <Item listType={listType} />
-      <Item listType={listType} />
-      <Item listType={listType} />
-      <Item listType={listType} />
-      <Item listType={listType} />
+      {items.map((item, index) => (
+        <Item key={index} listType={listType} item={item} />
+      ))}
     </ItemListWrapper>
   );
 };

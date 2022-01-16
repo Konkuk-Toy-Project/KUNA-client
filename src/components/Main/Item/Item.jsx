@@ -1,10 +1,11 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { itemState } from "../../../store/like";
+import { basketItemState, itemState } from "../../../store/like";
 
 const Item = ({ listType, item }) => {
   const [items, setItems] = useRecoilState(itemState);
+  const [basketItems, setBasketItems] = useRecoilState(basketItemState);
 
   const briefTitle = (listType, title) => {
     return listType === "main"
@@ -15,6 +16,13 @@ const Item = ({ listType, item }) => {
   const onClickDelete = () => {
     const filterClickedItem = items.filter((current) => current.id !== item.id);
     setItems(filterClickedItem);
+  };
+
+  const onClickDeleteBasket = () => {
+    const filterClickedItem = basketItems.filter(
+      (current) => current.id !== item.id
+    );
+    setBasketItems(filterClickedItem);
   };
 
   return (
@@ -29,6 +37,9 @@ const Item = ({ listType, item }) => {
       </ItemDescription>
       {listType === "like" ? (
         <button onClick={onClickDelete}>Delete</button>
+      ) : null}
+      {listType === "basket" ? (
+        <button onClick={onClickDeleteBasket}>Delete Basket</button>
       ) : null}
     </ItemWrapper>
   );

@@ -1,4 +1,10 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist({
+  key: "teams",
+  storage: localStorage,
+});
 
 export const itemState = atom({
   key: "itemState",
@@ -68,4 +74,10 @@ export const itemState = atom({
       price: "25,400",
     },
   ],
+});
+
+export const basketItemState = atom({
+  key: "basketItemState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
 });

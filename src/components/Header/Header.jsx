@@ -1,5 +1,71 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+const Header = () => {
+  return (
+    <HeaderWrapper>
+      <ShortcutMenuWrapper>
+        <PageLink to="/">
+          <HomeIcon
+            src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
+            alt="Home Icon"
+          />
+        </PageLink>
+        <SearchBar>
+          <SearchBarInput type="text" />
+          <SearchIcon type="button">🔎</SearchIcon>
+        </SearchBar>
+        <MenuCategories>
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
+              alt=""
+            />
+            <p>장바구니</p>
+          </MenuCategory>
+          <PageLink to="/like">
+            <MenuCategory>
+              <img
+                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
+                alt=""
+              />
+              <p>찜목록</p>
+            </MenuCategory>
+          </PageLink>
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+              alt=""
+            />
+            <p>로그인</p>
+          </MenuCategory>
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon5.png"
+              alt=""
+            />
+            <p>프로필</p>
+          </MenuCategory>
+        </MenuCategories>
+      </ShortcutMenuWrapper>
+      <PageMenus>
+        <PageLink to="/outer">
+          <PageMenu>아우터</PageMenu>
+        </PageLink>
+        <PageLink to="/top">
+          <PageMenu>상의</PageMenu>
+        </PageLink>
+        <PageLink to="/pants">
+          <PageMenu>하의</PageMenu>
+        </PageLink>
+        <PageLink to="/shoes">
+          <PageMenu>신발</PageMenu>
+        </PageLink>
+      </PageMenus>
+    </HeaderWrapper>
+  );
+};
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -14,6 +80,11 @@ const ShortcutMenuWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1em 0;
+`;
+
+const PageLink = styled(Link)`
+  color: black;
+  text-decoration: none;
 `;
 
 const HomeIcon = styled.img`
@@ -94,58 +165,5 @@ const PageMenu = styled.li`
     color: white;
   }
 `;
-
-const Header = () => {
-  return (
-    <HeaderWrapper>
-      <ShortcutMenuWrapper>
-        <HomeIcon
-          src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
-          alt="Home Icon"
-        />
-        <SearchBar>
-          <SearchBarInput type="text" />
-          <SearchIcon type="button">🔎</SearchIcon>
-        </SearchBar>
-        <MenuCategories>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
-              alt=""
-            />
-            <p>장바구니</p>
-          </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
-              alt=""
-            />
-            <p>찜목록</p>
-          </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
-              alt=""
-            />
-            <p>로그인</p>
-          </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon5.png"
-              alt=""
-            />
-            <p>프로필</p>
-          </MenuCategory>
-        </MenuCategories>
-      </ShortcutMenuWrapper>
-      <PageMenus>
-        <PageMenu>아우터</PageMenu>
-        <PageMenu>상의</PageMenu>
-        <PageMenu>하의</PageMenu>
-        <PageMenu>신발</PageMenu>
-      </PageMenus>
-    </HeaderWrapper>
-  );
-};
 
 export default Header;

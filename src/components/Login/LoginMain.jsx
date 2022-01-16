@@ -33,6 +33,7 @@ const LoginMain = () => {
           <input
             type="text"
             id="id"
+            name="id"
             placeholder="이메일"
             value={account.id}
             onChange={onChange}

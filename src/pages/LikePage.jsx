@@ -3,10 +3,10 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
-import { itemState } from "../store/like";
+import { likeState } from "../store/like";
 
 const LikePage = () => {
-  const items = useRecoilValue(itemState);
+  const items = useRecoilValue(likeState);
 
   return (
     <LikePageWrapper>

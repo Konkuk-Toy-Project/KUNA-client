@@ -8,16 +8,16 @@ import { basketItemState, itemState } from "../store/like";
 
 const BasketPage = () => {
   const [items, setItems] = useRecoilState(basketItemState);
-  const initialItems = useRecoilValue(itemState);
 
-  //   useEffect(() => {
-  //     setItems([...initialItems]);
-  //   }, [initialItems]);
+  const onClickDeleteAll = () => {
+    setItems([]);
+  };
 
   return (
     <BasketPageWrapper>
       <Title name="장바구니" />
       <ItemList listType={"basket"} items={items} />
+      <button onClick={onClickDeleteAll}>전체 삭제</button>
     </BasketPageWrapper>
   );
 };

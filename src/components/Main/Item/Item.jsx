@@ -25,6 +25,10 @@ const Item = ({ listType, item }) => {
     setBasketItems(filterClickedItem);
   };
 
+  const onClickLikeItem = () => {
+    setBasketItems([...basketItems, item]);
+  };
+
   return (
     <ItemWrapper listType={listType}>
       <ItemImage src={item.image} listType={listType} />
@@ -40,6 +44,9 @@ const Item = ({ listType, item }) => {
       ) : null}
       {listType === "basket" ? (
         <button onClick={onClickDeleteBasket}>Delete Basket</button>
+      ) : null}
+      {listType === "main" ? (
+        <button onClick={onClickLikeItem}>Like</button>
       ) : null}
     </ItemWrapper>
   );

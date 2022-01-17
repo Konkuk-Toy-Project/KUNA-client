@@ -1,10 +1,10 @@
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { basketItemState, itemState } from "../../../store/like";
+import { basketItemState, likeState } from "../../../store/like";
 
 const Item = ({ listType, item }) => {
-  const [items, setItems] = useRecoilState(itemState);
+  const [items, setItems] = useRecoilState(likeState);
   const [basketItems, setBasketItems] = useRecoilState(basketItemState);
 
   const briefTitle = (listType, title) => {
@@ -13,7 +13,7 @@ const Item = ({ listType, item }) => {
       : title.slice(0, 8) + "...";
   };
 
-  const onClickDelete = () => {
+  const onClickDeleteLike = () => {
     const filterClickedItem = items.filter((current) => current.id !== item.id);
     setItems(filterClickedItem);
   };
@@ -40,13 +40,13 @@ const Item = ({ listType, item }) => {
         </ItemPriceWrapper>
       </ItemDescription>
       {listType === "like" ? (
-        <button onClick={onClickDelete}>Delete</button>
+        <button onClick={onClickDeleteLike}>Delete Like</button>
       ) : null}
       {listType === "basket" ? (
         <button onClick={onClickDeleteBasket}>Delete Basket</button>
       ) : null}
       {listType === "main" ? (
-        <button onClick={onClickLikeItem}>Like</button>
+        <button onClick={onClickLikeItem}>장바구니 추가</button>
       ) : null}
     </ItemWrapper>
   );

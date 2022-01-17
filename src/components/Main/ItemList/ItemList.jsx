@@ -1,11 +1,11 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { itemState } from "../../../store/like";
+import { likeState } from "../../../store/like";
 import Item from "../Item/Item";
 
 const ItemList = ({ listType, items }) => {
-  const setLikeItems = useSetRecoilState(itemState);
+  const setLikeItems = useSetRecoilState(likeState);
 
   const onClickDeleteAll = () => {
     setLikeItems([]);

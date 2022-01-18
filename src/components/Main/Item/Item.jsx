@@ -26,7 +26,10 @@ const Item = ({ listType, item }) => {
   };
 
   const onClickLikeItem = () => {
-    setBasketItems([...basketItems, item]);
+    const currentItem = item;
+    if (!basketItems.includes(currentItem)) {
+      setBasketItems([...basketItems, item]);
+    }
   };
 
   return (

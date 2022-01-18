@@ -2,9 +2,11 @@ import React, { useState } from "react";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
+const ID = "id";
+const PW = "pw";
 
 const LoginMain = () => {
-  const [account, setAccount] = useState({ id: "", pw: "" });
+  const [account, setAccount] = useState({ [ID]: "", [PW]: "" });
   const [isWrong, setIsWrong] = useState(false); // when user fail to login
 
   // changing input about id & pw
@@ -32,10 +34,10 @@ const LoginMain = () => {
         <label>
           <input
             type="text"
-            id="id"
-            name="id"
+            id={ID}
+            name={PW}
             placeholder="이메일"
-            value={account.id}
+            value={account[ID]}
             onChange={onChange}
           />
         </label>
@@ -44,9 +46,9 @@ const LoginMain = () => {
         <label>
           <input
             type={pwInputType}
-            name="pw"
+            name={PW}
             placeholder="비밀번호"
-            value={account.pw}
+            value={account[PW]}
             onChange={onChange}
           />
           <i onClick={showPw}>{pwInputType === INPUT_TYPE_PW ? "👀" : "🔒"} </i>

@@ -1,25 +1,38 @@
 import React, { useState } from "react";
 import BirthSelectBox from "./BirthSelectBox";
+import PhoneInput from "./PhoneInput";
 
 const TYPE_MANUALLY = "직접입력";
 const emailArr = [TYPE_MANUALLY, "naver.com", "gmail.com", "daum.net"];
-const phoneFirstArr = ["010", "011", "016"];
+
 const YEAR_START = 1920;
 const YEAR_END = 2022;
 
+const ID = "id";
+const EMAIL_ADDR = "emailAddr";
+const PW = "pw";
+const PW_CHECK = "pwCheck";
+const NAME = "name";
+const PH_FIRST = "phone_first";
+const PH_MID = "phone_mid";
+const PH_LAST = "phone_last";
+const BIRTH_Y = "birth_year";
+const BIRTH_M = "birth_month";
+const BIRTH_D = "birth_day";
+
 const SignIn = () => {
   const [info, setInfo] = useState({
-    id: "",
-    emailAddr: "",
-    pw: "",
-    pwCheck: "",
-    name: "",
-    phone_first: "",
-    phone_mid: "",
-    phone_last: "",
-    birth_year: "",
-    birth_month: "",
-    birth_day: "",
+    [ID]: "",
+    [EMAIL_ADDR]: "",
+    [PW]: "",
+    [PW_CHECK]: "",
+    [NAME]: "",
+    [PH_FIRST]: "010",
+    [PH_MID]: "",
+    [PH_LAST]: "",
+    [BIRTH_Y]: "",
+    [BIRTH_M]: "",
+    [BIRTH_D]: "",
   });
 
   const [isEmailTypingMode, setIsEmailTypingMode] = useState(true);
@@ -34,30 +47,30 @@ const SignIn = () => {
     const value = e.target.value;
     if (value !== TYPE_MANUALLY) {
       setIsEmailTypingMode(false);
-      setInfo({ ...info, ["emailAddr"]: value });
+      setInfo({ ...info, [EMAIL_ADDR]: value });
     } else {
       setIsEmailTypingMode(true);
-      setInfo({ ...info, ["emailAddr"]: "" });
+      setInfo({ ...info, [EMAIL_ADDR]: "" });
     }
   };
 
   return (
     <div>
-      <div id="id-container">
-        <label id="id-label">
-          <span>아이디(이메일)</span>
+      <ul id="info-container">
+        <li id="id-container">
+          <p>아이디(이메일)</p>
           <input
             type="text"
-            id="id"
-            name="id"
-            value={info.id}
+            id={ID}
+            name={ID}
+            value={info[ID]}
             onChange={onChange}
           />
           @
           <input
             type="text"
-            name="emailAddr"
-            value={info.emailAddr}
+            name={EMAIL_ADDR}
+            value={info[EMAIL_ADDR]}
             onChange={onChange}
             disabled={isEmailTypingMode ? false : true}
           />
@@ -67,105 +80,80 @@ const SignIn = () => {
             ))}
           </select>
           <button id="idDupCheck">중복확인</button>
-        </label>
-      </div>
+        </li>
 
-      <div name="pw-container">
-        <span>비밀번호</span>
-        <label>
+        <li name="pw-container">
+          <p>비밀번호</p>
           <input
-            name="pw"
+            name={PW}
             type="password"
-            value={info.pw}
+            value={info[PW]}
             onChange={onChange}
             placeholder="8자이상, 영문자, 숫자, 특수문자 조합"
           />
-        </label>
-        {info.pw !== "" &&
-        (info.pw.match(/[a-z]+?/) === null ||
-          info.pw.match(/[0-9]+?/) === null ||
-          info.pw.match(/[`~!@#$%^&*|\\\'\";:\/?]+?/) === null) ? (
-          <div id="warningPw">
-            비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다.
-          </div>
-        ) : null}
-      </div>
 
-      <div name="pwCheck-container">
-        <span>비밀번호 확인</span>
-        <label>
+          {info[PW] !== "" &&
+          (info[PW].match(/[a-z]+?/) === null ||
+            info[PW].match(/[0-9]+?/) === null ||
+            info[PW].match(/[`~!@#$%^&*|\\\'\";:\/?]+?/) === null) ? (
+            <div id="warningPw">
+              비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다.
+            </div>
+          ) : null}
+        </li>
+
+        <li name="pwCheck-container">
+          <p>비밀번호 확인</p>
           <input
             type="password"
-            name="pwCheck"
+            name={PW_CHECK}
             placeholder="비밀번호 확인"
-            value={info.pwCheck}
+            value={info[PW_CHECK]}
             onChange={onChange}
           />
           <span>
-            {info.pw !== "" && info.pw === info.pwCheck ? "🟢" : "🔴"}
+            {info[PW] !== "" && info[PW] === info[PW_CHECK] ? "🟢" : "🔴"}
           </span>
-        </label>
-      </div>
+        </li>
 
-      <div id="name-container">
-        <label id="name-label">
-          <span>이름</span>
+        <li id="name-container">
+          <p>이름</p>
           <input
             type="text"
-            name="name"
+            name={NAME}
             placeholder="이름"
             onChange={onChange}
           />
-        </label>
-      </div>
-      <div id="phone-container">
-        <select name="phone_first" id="phone-first" onChange={onChange}>
-          {phoneFirstArr.map((phoneFirst) => (
-            <option key={"p_" + phoneFirst}>{phoneFirst}</option>
-          ))}
-        </select>
-        -
-        <input
-          id="phoneMiddle"
-          name="phone_mid"
-          onChange={onChange}
-          type="text"
-          maxLength={4}
-        />
-        -
-        <input
-          id="phoneLast"
-          name="phone_last"
-          onChange={onChange}
-          type="text"
-          maxLength={4}
-        />
-      </div>
-      <div id="birth-container">
-        <label id="birth-label">
+        </li>
+        <li id="phone-container">
+          <p>휴대전화</p>
+          <PhoneInput name={[PH_FIRST, PH_MID, PH_LAST]} onChange={onChange} />
+        </li>
+        <li id="birth-container">
+          <label id="birth-label">생년월일</label>
           <BirthSelectBox
-            name="birth_year"
+            name={BIRTH_Y}
             start={YEAR_START}
             end={YEAR_END}
             onChange={onChange}
           />
           년
           <BirthSelectBox
-            name="birth_month"
+            name={BIRTH_M}
             start={1}
             end={12}
             onChange={onChange}
           />
           월
           <BirthSelectBox
-            name="birth_day"
+            name={BIRTH_D}
             start={1}
             end={31}
             onChange={onChange}
           />
           일
-        </label>
-      </div>
+        </li>
+      </ul>
       <div id="signInBtn-container">
         <button id="signIn" onSubmit={onSignIn}>
           가입하기

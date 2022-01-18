@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { basketItemState } from "../../store/like";
 
 const Header = () => {
+  const basketItems = useRecoilValue(basketItemState);
+
   return (
     <HeaderWrapper>
       <ShortcutMenuWrapper>
@@ -17,13 +21,16 @@ const Header = () => {
           <SearchIcon type="button">🔎</SearchIcon>
         </SearchBar>
         <MenuCategories>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
-              alt=""
-            />
-            <p>장바구니</p>
-          </MenuCategory>
+          <PageLink to="/basket">
+            <MenuCategory>
+              <img
+                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
+                alt=""
+              />
+              <p>장바구니</p>
+              <p>{basketItems.length}</p>
+            </MenuCategory>
+          </PageLink>
           <PageLink to="/like">
             <MenuCategory>
               <img

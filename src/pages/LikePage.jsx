@@ -1,13 +1,17 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
+import { likeState } from "../store/like";
 
 const LikePage = () => {
+  const items = useRecoilValue(likeState);
+
   return (
     <LikePageWrapper>
       <Title name="좋아요" />
-      <ItemList listType={"like"} />
+      <ItemList listType={"like"} items={items} />
     </LikePageWrapper>
   );
 };

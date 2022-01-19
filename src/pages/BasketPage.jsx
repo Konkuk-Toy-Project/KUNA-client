@@ -16,7 +16,7 @@ const BasketPage = () => {
   const calculateTotalPrice = () => {
     let total = 0;
     items.map((item) => {
-      return (total += item.price);
+      return (total += item.price * item.count);
     });
     return total;
   };

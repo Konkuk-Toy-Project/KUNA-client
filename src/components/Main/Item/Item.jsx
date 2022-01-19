@@ -26,10 +26,29 @@ const Item = ({ listType, item }) => {
   };
 
   const onClickLikeItem = () => {
-    const currentItem = item;
-    if (!basketItems.includes(currentItem)) {
-      setBasketItems([...basketItems, item]);
+    const currentItem = { ...item, count: 1 };
+    const existingItem = basketItems.find((item) => item.id === currentItem.id);
+    if (!existingItem) {
+      setBasketItems([...basketItems, currentItem]);
+    } else {
+      alert("이미 장바구니에 추가된 아이템입니다.");
     }
+  };
+
+  const changeItemCount = (item, type) => {
+    const currentItem = { ...item };
+    type === "increase" ? currentItem.count++ : currentItem.count--;
+    let currentItemIndex;
+    basketItems.find((item, index) =>
+      item.id === currentItem.id ? (currentItemIndex = index) : null
+    );
+
+    let existingItem = basketItems.filter((item) => item.id !== currentItem.id);
+    if (currentItem.count !== 0) {
+      existingItem.splice(currentItemIndex, 0, currentItem);
+    }
+
+    setBasketItems([...existingItem]);
   };
 
   return (
@@ -50,6 +69,13 @@ const Item = ({ listType, item }) => {
       ) : null}
       {listType === "main" ? (
         <button onClick={onClickLikeItem}>장바구니 추가</button>
+      ) : null}
+      {listType === "basket" ? <span>{item.count}</span> : null}
+      {listType === "basket" ? (
+        <button onClick={() => changeItemCount(item, "increase")}>+</button>
+      ) : null}
+      {listType === "basket" ? (
+        <button onClick={() => changeItemCount(item, "decrease")}>-</button>
       ) : null}
     </ItemWrapper>
   );

@@ -35,7 +35,7 @@ const LoginMain = () => {
           <input
             type="text"
             id={ID}
-            name={PW}
+            name={ID}
             placeholder="이메일"
             value={account[ID]}
             onChange={onChange}

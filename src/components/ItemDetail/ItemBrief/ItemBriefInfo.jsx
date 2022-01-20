@@ -15,7 +15,7 @@ const ItemBriefInfo = () => {
       />
       <LikeBtn num={item.like} />
       {/* 옵션 컴포넌트*/}
-      <div name="submi-btns">
+      <div name="submit-btns">
         <button>장바구니</button>
         <button>바로결제</button>
       </div>

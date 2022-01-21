@@ -11,6 +11,7 @@ const ProfileBannerWrapper = styled.div`
   height: 20vh;
   border: 1px solid black;
   margin: 1em;
+  border-radius: 20px;
 `;
 
 const UserInfo = styled.div`

@@ -3,6 +3,7 @@ import { useState } from "react/cjs/react.development";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { userState } from "../../../store/like";
+import UserCertainInfo from "../UserCertainInfo/UserCertainInfo";
 
 const UserInfoWrapper = styled.div`
   display: flex;
@@ -13,34 +14,6 @@ const UserInfoWrapper = styled.div`
   border: 1px solid black;
   margin: 1em;
   border-radius: 20px;
-`;
-
-const UserCertainInfoWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 80vw;
-  padding: 2em;
-  border: 1px solid black;
-  margin-top: 1em;
-  border-radius: 10px;
-`;
-
-const UserCertainInfo = styled.p`
-  font-size: 1.5em;
-  padding: 0.5em;
-  padding-left: 8em;
-  width: 5em;
-`;
-
-const UserInputWrapper = styled.div``;
-
-const UserUnchangeableInfo = styled.p`
-  border-style: none;
-  border: 1px solid black;
-  padding: 1em;
-  width: 20em;
-  border-radius: 10px;
 `;
 
 const UserInfoEditWrapper = styled.div`
@@ -80,30 +53,10 @@ const UserInfo = () => {
 
   return (
     <UserInfoWrapper>
-      <UserCertainInfoWrapper>
-        <UserCertainInfo>이름</UserCertainInfo>
-        <UserInputWrapper>
-          <UserUnchangeableInfo>{user.name}</UserUnchangeableInfo>
-        </UserInputWrapper>
-      </UserCertainInfoWrapper>
-      <UserCertainInfoWrapper>
-        <UserCertainInfo>이메일</UserCertainInfo>
-        <UserInputWrapper>
-          <UserUnchangeableInfo>{user.email}</UserUnchangeableInfo>
-        </UserInputWrapper>
-      </UserCertainInfoWrapper>
-      <UserCertainInfoWrapper>
-        <UserCertainInfo>핸드폰</UserCertainInfo>
-        <UserInputWrapper>
-          <UserUnchangeableInfo>{user.phone}</UserUnchangeableInfo>
-        </UserInputWrapper>
-      </UserCertainInfoWrapper>
-      <UserCertainInfoWrapper>
-        <UserCertainInfo>생년월일</UserCertainInfo>
-        <UserInputWrapper>
-          <UserUnchangeableInfo>{user.birth}</UserUnchangeableInfo>
-        </UserInputWrapper>
-      </UserCertainInfoWrapper>
+      <UserCertainInfo title="이름" info={user.name} />
+      <UserCertainInfo title="이메일" info={user.email} />
+      <UserCertainInfo title="핸드폰" info={user.phone} />
+      <UserCertainInfo title="생년월일" info={user.birth} />
       <UserInfoEditWrapper>
         <UserInfoEditButton onClick={onClickEditPassword}>
           비밀번호 변경

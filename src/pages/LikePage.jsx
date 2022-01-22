@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
-import { likeState } from "../store/like";
+import { likeState } from "../store/atoms";
 
 const LikePage = () => {
   const items = useRecoilValue(likeState);

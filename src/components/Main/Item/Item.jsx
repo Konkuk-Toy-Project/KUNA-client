@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { basketItemState, likeState } from "../../../store/like";
+import { basketItemState, likeState } from "../../../store/atoms";
 
 const Item = ({ listType, item }) => {
   const [items, setItems] = useRecoilState(likeState);

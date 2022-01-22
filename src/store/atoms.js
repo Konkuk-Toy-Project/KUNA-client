@@ -119,3 +119,22 @@ export const basketItemState = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+
+export const userState = atom({
+  key: "userState",
+  default: {
+    image:
+      "https://w.namu.la/s/18cdc3e45fee5e76f3f3a29056396db782c12502afe39de7539f82893cd2339c70522a6bdbb849a2cf990ce554dca7db8307eac97b5591f4a623fc595694af51ef0b92a216ae9bbc63c4a65415f7579a977dcf5da16a4e26a34efb1ae546b93f",
+    email: "asdf@asdf.com",
+    password: "mypassword",
+    name: "홍길동",
+    phone: "010123456789",
+    birth: "19980101",
+    role: "Bronze",
+  },
+});
+
+export const passwordPopUpState = atom({
+  key: "passwordPopUpState",
+  default: false,
+});

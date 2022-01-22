@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ProfileBanner from "../components/User/ProfileBanner/ProfileBanner";
 import UserInfo from "../components/User/UserInfo/UserInfo";
 
-const UserMenuWrapper = styled.div`
+const UserPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,12 +12,10 @@ const UserMenuWrapper = styled.div`
 
 const UserPage = () => {
   return (
-    <div>
-      <UserMenuWrapper>
-        <ProfileBanner />
-        <UserInfo />
-      </UserMenuWrapper>
-    </div>
+    <UserPageWrapper>
+      <ProfileBanner />
+      <UserInfo />
+    </UserPageWrapper>
   );
 };
 

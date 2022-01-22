@@ -1,8 +1,8 @@
 import React from "react";
-import { useState } from "react/cjs/react.development";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { userState } from "../../../store/like";
+import { passwordPopUpState, userState } from "../../../store/atoms";
+import PasswordPopUp from "../PasswordPopUp/PasswordPopUp";
 import UserCertainInfo from "../UserCertainInfo/UserCertainInfo";
 
 const UserInfoWrapper = styled.div`
@@ -41,14 +41,10 @@ const UserInfoEditButton = styled.button`
 
 const UserInfo = () => {
   const user = useRecoilValue(userState);
-  const [editPassword, setEditPassword] = useState(false);
+  const [editPassword, setEditPassword] = useRecoilState(passwordPopUpState);
 
   const onClickEditPassword = () => {
     setEditPassword(true);
-  };
-
-  const onClickEditButton = () => {
-    alert("내용이 변경되었습니다.");
   };
 
   return (
@@ -61,11 +57,8 @@ const UserInfo = () => {
         <UserInfoEditButton onClick={onClickEditPassword}>
           비밀번호 변경
         </UserInfoEditButton>
-        <UserInfoEditButton onClick={onClickEditButton}>
-          수정 완료
-        </UserInfoEditButton>
       </UserInfoEditWrapper>
-      {editPassword && <h1>Password</h1>}
+      {editPassword && <PasswordPopUp />}
     </UserInfoWrapper>
   );
 };

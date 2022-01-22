@@ -133,3 +133,8 @@ export const userState = atom({
     role: "Bronze",
   },
 });
+
+export const passwordPopUpState = atom({
+  key: "passwordPopUpState",
+  default: false,
+});

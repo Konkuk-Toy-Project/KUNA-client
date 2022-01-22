@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../../store/like";
+import { userState } from "../../../store/atoms";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;

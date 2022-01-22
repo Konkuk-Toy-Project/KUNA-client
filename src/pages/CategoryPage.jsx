@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
-import { itemState } from "../store/like";
+import { itemState } from "../store/atoms";
 
 const CategoryPage = () => {
   const items = useRecoilValue(itemState);

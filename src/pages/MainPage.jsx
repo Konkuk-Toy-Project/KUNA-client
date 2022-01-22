@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
 import { useRecoilValue } from "recoil";
-import { itemState } from "../store/like";
+import { itemState } from "../store/atoms";
 
 const MainPage = () => {
   const items = useRecoilValue(itemState);

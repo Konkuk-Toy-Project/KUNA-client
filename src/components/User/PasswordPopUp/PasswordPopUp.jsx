@@ -30,7 +30,8 @@ const PasswordPopUp = () => {
     setConfirmPassword(event.target.value);
   };
 
-  const onClickCancel = () => {
+  const onClickCancel = (event) => {
+    event.preventDefault();
     setEditPassword(false);
   };
 

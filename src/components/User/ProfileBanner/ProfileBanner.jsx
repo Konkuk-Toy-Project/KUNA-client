@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { showPointState, userState } from "../../../store/atoms";
+import {
+  showCouponState,
+  showPointState,
+  userState,
+} from "../../../store/atoms";
 import PointPopUp from "../PointPopUp/PointPopUp";
+import CouponPopUp from "../CouponPopUp/CouponPopUp";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;
@@ -69,9 +74,14 @@ const UserMenu = styled.li`
 const ProfileBanner = () => {
   const userInfo = useRecoilValue(userState);
   const [showPoint, setShowPoint] = useRecoilState(showPointState);
+  const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
 
   const onClickPoint = () => {
     setShowPoint(true);
+  };
+
+  const onClickCoupon = () => {
+    setShowCoupon(true);
   };
 
   return (
@@ -85,10 +95,11 @@ const ProfileBanner = () => {
       </UserInfo>
       <UserMenus>
         <UserMenu onClick={onClickPoint}>포인트</UserMenu>
-        <UserMenu>쿠폰</UserMenu>
+        <UserMenu onClick={onClickCoupon}>쿠폰</UserMenu>
         <UserMenu>주문한 상품</UserMenu>
       </UserMenus>
       {showPoint && <PointPopUp />}
+      {showCoupon && <CouponPopUp />}
     </ProfileBannerWrapper>
   );
 };

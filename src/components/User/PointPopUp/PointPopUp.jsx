@@ -20,9 +20,11 @@ const PointPopUp = () => {
   const points = useRecoilValue(userPointState);
   const setShowPoint = useSetRecoilState(showPointState);
 
-  const onClickClose = () => {
+  const onClickClose = (event) => {
+    event.preventDefault();
     setShowPoint(false);
   };
+
   return (
     <PointPopUpWrapper>
       <h1>보유 포인트 : {points}</h1>

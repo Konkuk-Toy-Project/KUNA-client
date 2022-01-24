@@ -207,3 +207,13 @@ export const showOrderedItemState = atom({
   key: "showOrderedItemState",
   default: false,
 });
+
+export const currentX = atom({
+  key: "currentX",
+  default: 0,
+});
+
+export const currentY = atom({
+  key: "currentY",
+  default: 0,
+});

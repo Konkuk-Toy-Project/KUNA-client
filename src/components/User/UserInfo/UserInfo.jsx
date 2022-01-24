@@ -1,7 +1,12 @@
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { passwordPopUpState, userState } from "../../../store/atoms";
+import {
+  currentX,
+  currentY,
+  passwordPopUpState,
+  userState,
+} from "../../../store/atoms";
 import PasswordPopUp from "../PasswordPopUp/PasswordPopUp";
 import UserCertainInfo from "../UserCertainInfo/UserCertainInfo";
 
@@ -42,8 +47,19 @@ const UserInfoEditButton = styled.button`
 const UserInfo = () => {
   const user = useRecoilValue(userState);
   const [editPassword, setEditPassword] = useRecoilState(passwordPopUpState);
+  const setCurrentX = useSetRecoilState(currentX);
+  const setCurrentY = useSetRecoilState(currentY);
+
+  const calculatePopUpWidth = () => {
+    setCurrentX(window.scrollX + window.innerWidth * 0.15);
+  };
+  const calculatePopUpHeight = () => {
+    setCurrentY(window.scrollY + window.innerHeight * 0.15);
+  };
 
   const onClickEditPassword = () => {
+    calculatePopUpWidth();
+    calculatePopUpHeight();
     setEditPassword(true);
   };
 

@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
+  currentX,
+  currentY,
   showCouponState,
   showOrderedItemState,
   showPointState,
@@ -79,16 +81,31 @@ const ProfileBanner = () => {
   const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
   const [showOrderedItem, setShowOrderedItem] =
     useRecoilState(showOrderedItemState);
+  const setCurrentX = useSetRecoilState(currentX);
+  const setCurrentY = useSetRecoilState(currentY);
+
+  const calculatePopUpWidth = () => {
+    setCurrentX(window.scrollX + window.innerWidth * 0.15);
+  };
+  const calculatePopUpHeight = () => {
+    setCurrentY(window.scrollY + window.innerHeight * 0.15);
+  };
 
   const onClickPoint = () => {
+    calculatePopUpWidth();
+    calculatePopUpHeight();
     setShowPoint(true);
   };
 
   const onClickCoupon = () => {
+    calculatePopUpWidth();
+    calculatePopUpHeight();
     setShowCoupon(true);
   };
 
   const onClickOrderedItem = () => {
+    calculatePopUpWidth();
+    calculatePopUpHeight();
     setShowOrderedItem(true);
   };
 

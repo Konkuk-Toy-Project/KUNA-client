@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react/cjs/react.development";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { passwordPopUpState } from "../../../store/atoms";
+import { currentX, currentY, passwordPopUpState } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
 const PasswordPopUpWrapper = styled.div`
+  top: ${(props) => props.top + "px"};
+  left: ${(props) => props.left + "px"};
   width: 80vw;
   height: 60vh;
   border: 1px solid black;
@@ -22,6 +24,8 @@ const PasswordPopUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const setEditPassword = useSetRecoilState(passwordPopUpState);
+  const scrollX = useRecoilValue(currentX);
+  const scrollY = useRecoilValue(currentY);
 
   const onChangePassword = (event) => {
     setPassword(event.target.value);
@@ -45,7 +49,7 @@ const PasswordPopUp = () => {
   };
 
   return (
-    <PasswordPopUpWrapper>
+    <PasswordPopUpWrapper top={scrollY} left={scrollX}>
       <CloseButton onClick={onClickCancel} />
       <h1>변경할 비밀번호</h1>
       <input onChange={onChangePassword} type="password" />

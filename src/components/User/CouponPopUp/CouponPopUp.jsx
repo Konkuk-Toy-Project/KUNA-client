@@ -1,10 +1,17 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showCouponState, userCouponState } from "../../../store/atoms";
+import {
+  currentX,
+  currentY,
+  showCouponState,
+  userCouponState,
+} from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
 const CouponPopUpWrapper = styled.div`
+  top: ${(props) => props.top + "px"};
+  left: ${(props) => props.left + "px"};
   width: 60vw;
   height: 40vh;
   border: 1px solid black;
@@ -38,13 +45,15 @@ const EnrollCouponWrapper = styled.div`
 const CouponPopUp = () => {
   const coupons = useRecoilValue(userCouponState);
   const setShowCoupon = useSetRecoilState(showCouponState);
+  const scrollX = useRecoilValue(currentX);
+  const scrollY = useRecoilValue(currentY);
 
   const onClickClose = () => {
     setShowCoupon(false);
   };
 
   return (
-    <CouponPopUpWrapper>
+    <CouponPopUpWrapper top={scrollY} left={scrollX}>
       <CloseButton onClick={onClickClose} />
       <Title>보유 쿠폰 목록</Title>
       <CouponWrapper>

@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   showCouponState,
+  showOrderedItemState,
   showPointState,
   userState,
 } from "../../../store/atoms";
 import PointPopUp from "../PointPopUp/PointPopUp";
 import CouponPopUp from "../CouponPopUp/CouponPopUp";
+import OrderedItemPopUp from "../OrderedItemPopUp/OrderedItemPopUp";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;
@@ -75,6 +77,8 @@ const ProfileBanner = () => {
   const userInfo = useRecoilValue(userState);
   const [showPoint, setShowPoint] = useRecoilState(showPointState);
   const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
+  const [showOrderedItem, setShowOrderedItem] =
+    useRecoilState(showOrderedItemState);
 
   const onClickPoint = () => {
     setShowPoint(true);
@@ -82,6 +86,10 @@ const ProfileBanner = () => {
 
   const onClickCoupon = () => {
     setShowCoupon(true);
+  };
+
+  const onClickOrderedItem = () => {
+    setShowOrderedItem(true);
   };
 
   return (
@@ -96,10 +104,11 @@ const ProfileBanner = () => {
       <UserMenus>
         <UserMenu onClick={onClickPoint}>포인트</UserMenu>
         <UserMenu onClick={onClickCoupon}>쿠폰</UserMenu>
-        <UserMenu>주문한 상품</UserMenu>
+        <UserMenu onClick={onClickOrderedItem}>주문한 상품</UserMenu>
       </UserMenus>
       {showPoint && <PointPopUp />}
       {showCoupon && <CouponPopUp />}
+      {showOrderedItem && <OrderedItemPopUp />}
     </ProfileBannerWrapper>
   );
 };

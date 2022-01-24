@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { showPointState, userPointState } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
-const PointPopUpWrapper = styled.form`
+const PointPopUpWrapper = styled.div`
   width: 40vw;
   height: 30vh;
   border: 1px solid black;
@@ -21,8 +21,7 @@ const PointPopUp = () => {
   const points = useRecoilValue(userPointState);
   const setShowPoint = useSetRecoilState(showPointState);
 
-  const onClickClose = (event) => {
-    event.preventDefault();
+  const onClickClose = () => {
     setShowPoint(false);
   };
 

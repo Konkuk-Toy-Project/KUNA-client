@@ -12,7 +12,7 @@ const CloseButtonWrapper = styled.p`
   top: 10px;
   right: 10px;
   border-radius: 50%;
-  border: 2px solid ${({ theme }) => theme.textColor};
+  border: 2px solid black;
   cursor: pointer;
   font-size: 30px;
   text-align: center;

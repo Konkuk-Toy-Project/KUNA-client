@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { passwordPopUpState } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
-const PasswordPopUpWrapper = styled.form`
+const PasswordPopUpWrapper = styled.div`
   width: 80vw;
   height: 60vh;
   border: 1px solid black;
@@ -31,8 +31,7 @@ const PasswordPopUp = () => {
     setConfirmPassword(event.target.value);
   };
 
-  const onClickCancel = (event) => {
-    event.preventDefault();
+  const onClickCancel = () => {
     setEditPassword(false);
   };
 

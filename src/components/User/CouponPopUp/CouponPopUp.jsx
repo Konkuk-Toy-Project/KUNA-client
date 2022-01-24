@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { showCouponState, userCouponState } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
-const CouponPopUpWrapper = styled.form`
+const CouponPopUpWrapper = styled.div`
   width: 60vw;
   height: 40vh;
   border: 1px solid black;
@@ -39,8 +39,7 @@ const CouponPopUp = () => {
   const coupons = useRecoilValue(userCouponState);
   const setShowCoupon = useSetRecoilState(showCouponState);
 
-  const onClickClose = (event) => {
-    event.preventDefault();
+  const onClickClose = () => {
     setShowCoupon(false);
   };
 

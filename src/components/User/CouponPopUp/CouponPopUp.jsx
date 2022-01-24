@@ -1,9 +1,17 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showCouponState, userCouponState } from "../../../store/atoms";
+import {
+  currentX,
+  currentY,
+  showCouponState,
+  userCouponState,
+} from "../../../store/atoms";
+import CloseButton from "../CloseButton/CloseButton";
 
-const CouponPopUpWrapper = styled.form`
+const CouponPopUpWrapper = styled.div`
+  top: ${(props) => props.top + "px"};
+  left: ${(props) => props.left + "px"};
   width: 60vw;
   height: 40vh;
   border: 1px solid black;
@@ -16,25 +24,53 @@ const CouponPopUpWrapper = styled.form`
   align-items: center;
 `;
 
+const Title = styled.p`
+  margin: 1em 0;
+  font-size: 24px;
+`;
+
+const CouponWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  border: 1px solid black;
+  padding: 1em;
+`;
+
+const EnrollCouponWrapper = styled.div`
+  display: flex;
+`;
+
 const CouponPopUp = () => {
   const coupons = useRecoilValue(userCouponState);
   const setShowCoupon = useSetRecoilState(showCouponState);
+  const scrollX = useRecoilValue(currentX);
+  const scrollY = useRecoilValue(currentY);
 
-  const onClickClose = (event) => {
-    event.preventDefault();
+  const onClickClose = () => {
     setShowCoupon(false);
   };
 
   return (
-    <CouponPopUpWrapper>
-      <h1>보유 쿠폰 목록</h1>
+    <CouponPopUpWrapper top={scrollY} left={scrollX}>
+      <CloseButton onClick={onClickClose} />
+      <Title>보유 쿠폰 목록</Title>
+      <CouponWrapper>
+        <h1>쿠폰 명</h1>
+        <h1>할인율</h1>
+      </CouponWrapper>
       {coupons.map((coupon) => (
-        <div key={coupon.id}>
+        <CouponWrapper key={coupon.id}>
           <h3>{coupon.name}</h3>
           <h3>{coupon.discount}%</h3>
-        </div>
+        </CouponWrapper>
       ))}
-      <button onClick={onClickClose}>닫기</button>
+      <Title>쿠폰 등록하기</Title>
+      <EnrollCouponWrapper>
+        <input type="text" />
+        <button>등록하기</button>
+      </EnrollCouponWrapper>
     </CouponPopUpWrapper>
   );
 };

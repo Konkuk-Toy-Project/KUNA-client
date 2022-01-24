@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
+  currentX,
+  currentY,
   showCouponState,
+  showOrderedItemState,
   showPointState,
   userState,
 } from "../../../store/atoms";
 import PointPopUp from "../PointPopUp/PointPopUp";
 import CouponPopUp from "../CouponPopUp/CouponPopUp";
+import OrderedItemPopUp from "../OrderedItemPopUp/OrderedItemPopUp";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;
@@ -75,13 +79,34 @@ const ProfileBanner = () => {
   const userInfo = useRecoilValue(userState);
   const [showPoint, setShowPoint] = useRecoilState(showPointState);
   const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
+  const [showOrderedItem, setShowOrderedItem] =
+    useRecoilState(showOrderedItemState);
+  const setCurrentX = useSetRecoilState(currentX);
+  const setCurrentY = useSetRecoilState(currentY);
+
+  const calculatePopUpWidth = () => {
+    setCurrentX(window.scrollX + window.innerWidth * 0.15);
+  };
+  const calculatePopUpHeight = () => {
+    setCurrentY(window.scrollY + window.innerHeight * 0.15);
+  };
 
   const onClickPoint = () => {
+    calculatePopUpWidth();
+    calculatePopUpHeight();
     setShowPoint(true);
   };
 
   const onClickCoupon = () => {
+    calculatePopUpWidth();
+    calculatePopUpHeight();
     setShowCoupon(true);
+  };
+
+  const onClickOrderedItem = () => {
+    calculatePopUpWidth();
+    calculatePopUpHeight();
+    setShowOrderedItem(true);
   };
 
   return (
@@ -96,10 +121,11 @@ const ProfileBanner = () => {
       <UserMenus>
         <UserMenu onClick={onClickPoint}>포인트</UserMenu>
         <UserMenu onClick={onClickCoupon}>쿠폰</UserMenu>
-        <UserMenu>주문한 상품</UserMenu>
+        <UserMenu onClick={onClickOrderedItem}>주문한 상품</UserMenu>
       </UserMenus>
       {showPoint && <PointPopUp />}
       {showCoupon && <CouponPopUp />}
+      {showOrderedItem && <OrderedItemPopUp />}
     </ProfileBannerWrapper>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { showPointState, userPointState } from "../../../store/atoms";
+import CloseButton from "../CloseButton/CloseButton";
 
 const PointPopUpWrapper = styled.form`
   width: 40vw;
@@ -27,9 +28,9 @@ const PointPopUp = () => {
 
   return (
     <PointPopUpWrapper>
+      <CloseButton onClick={onClickClose} />
       <h1>보유 포인트 : {points}</h1>
       <h3>구매 금액의 1%가 포인트로 적립됩니다.</h3>
-      <button onClick={onClickClose}>닫기</button>
     </PointPopUpWrapper>
   );
 };

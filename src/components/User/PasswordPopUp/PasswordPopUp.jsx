@@ -3,6 +3,7 @@ import { useState } from "react/cjs/react.development";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { passwordPopUpState } from "../../../store/atoms";
+import CloseButton from "../CloseButton/CloseButton";
 
 const PasswordPopUpWrapper = styled.form`
   width: 80vw;
@@ -46,11 +47,11 @@ const PasswordPopUp = () => {
 
   return (
     <PasswordPopUpWrapper>
+      <CloseButton onClick={onClickCancel} />
       <h1>변경할 비밀번호</h1>
       <input onChange={onChangePassword} type="password" />
       <h1>변경할 비밀번호 확인</h1>
       <input onChange={onChangeConfirmPassword} type="password" />
-      <button onClick={onClickCancel}>취소하기</button>
       <button onClick={onClickChangePassword}>변경하기</button>
     </PasswordPopUpWrapper>
   );

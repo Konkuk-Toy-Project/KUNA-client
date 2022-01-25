@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { basketItemState } from "../../store/like";
+import { basketItemState } from "../../store/atoms";
 
 const Header = () => {
   const basketItems = useRecoilValue(basketItemState);
@@ -47,13 +47,15 @@ const Header = () => {
             />
             <p>로그인</p>
           </MenuCategory>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon5.png"
-              alt=""
-            />
-            <p>프로필</p>
-          </MenuCategory>
+          <PageLink to="/user">
+            <MenuCategory>
+              <img
+                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon5.png"
+                alt=""
+              />
+              <p>프로필</p>
+            </MenuCategory>
+          </PageLink>
         </MenuCategories>
       </ShortcutMenuWrapper>
       <PageMenus>

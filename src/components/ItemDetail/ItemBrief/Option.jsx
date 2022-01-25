@@ -16,7 +16,7 @@ const Option = () => {
       setOption1(e.target.value);
 
       // option2 있나 확인
-      const tempOptTwos = optionOnes.find((o) => o.name == e.target.value)[
+      const tempOptTwos = optionOnes.find((o) => o.name === e.target.value)[
         "option2"
       ];
       setOptionTwos(tempOptTwos);

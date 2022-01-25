@@ -21,12 +21,48 @@ export const itemDetailState = atom({
     infoImg: "https://img.sonyunara.com/files/goodsm/139373/1639466954_7.jpg",
     price: 15000,
     discount: 30,
-    option1: ["그레이", "검정", "핑크"],
-    option2: ["M", "L"],
-    quantity: [3, 50, 2, 1, 15, 30],
+    option1: [
+      {
+        name: "Size M",
+        count: 16,
+        option2: [
+          {
+            name: "파란색",
+            count: 13,
+          },
+          {
+            name: "노란색",
+            count: 3,
+          },
+        ],
+      },
+      {
+        name: "Size L",
+        count: 3,
+        option2: [
+          {
+            name: "빨간색",
+            count: 3,
+          },
+          {
+            name: "노란색",
+            count: 0,
+          },
+        ],
+      },
+    ],
     title: "레셔 아가일패턴 브이넥 벌룬소매 니트 가디건(G)",
   },
   effects_UNSTABLE: [persistAtom],
+});
+
+export const ItemOptionState = selector({
+  key: "ItemOptionState", // unique ID (with respect to other atoms/selectors)
+  get: ({ get }) => {
+    const item = get(itemDetailState);
+
+    return item.option1;
+  },
 });
 
 export const ItemBriefImgsState = selector({

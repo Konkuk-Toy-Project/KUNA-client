@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { ItemBriefImgsState } from "../itemData/itemData";
 
 const LEFT = "left_btn";
 const RIGHT = "right_btn";
 
-const ImgSection = () => {
-  const itemImgSrcs = useRecoilValue(ItemBriefImgsState);
-
-  const [imgIdx, setImgIdx] = useState(0);
+const ImgSection = ({ imgsrcs, defaultIdx }) => {
+  const [imgIdx, setImgIdx] = useState(defaultIdx);
   const onBtnClick = (e) => {
     e.target.id === LEFT
-      ? setImgIdx(
-          (curIdx) => (curIdx - 1 + itemImgSrcs.length) % itemImgSrcs.length
-        )
-      : setImgIdx((curIdx) => (curIdx + 1) % itemImgSrcs.length);
+      ? setImgIdx((curIdx) => (curIdx - 1 + imgsrcs.length) % imgsrcs.length)
+      : setImgIdx((curIdx) => (curIdx + 1) % imgsrcs.length);
   };
   const onImgClick = (e) => setImgIdx(e.target.id);
 
@@ -24,13 +18,13 @@ const ImgSection = () => {
         <button id={LEFT} onClick={onBtnClick}>
           ◀
         </button>
-        <img id="main-img" src={itemImgSrcs[imgIdx]}></img>
+        <img id="main-img" src={imgsrcs[imgIdx]}></img>
         <button id={RIGHT} onClick={onBtnClick}>
           ▶
         </button>
       </div>
       <div>
-        {itemImgSrcs.map((src, idx) => (
+        {imgsrcs.map((src, idx) => (
           <img
             key={idx}
             src={src}

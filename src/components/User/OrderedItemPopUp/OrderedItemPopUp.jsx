@@ -2,16 +2,17 @@ import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
-  currentX,
+  currentReviewItemState,
   currentY,
   orderedItemState,
   showOrderedItemState,
+  showWriteReviewState,
 } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
 const OrderedItemPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: ${(props) => props.left + "px"};
+  left: 10vw;
   width: 80vw;
   height: 60vh;
   border: 1px solid black;
@@ -36,24 +37,33 @@ const OrderedItemWrapper = styled.div`
 const OrderedItemPopUp = () => {
   const setShowOrderedItemPopUp = useSetRecoilState(showOrderedItemState);
   const orderedItem = useRecoilValue(orderedItemState);
-  const scrollX = useRecoilValue(currentX);
   const scrollY = useRecoilValue(currentY);
+  const setShowWriteReviewState = useSetRecoilState(showWriteReviewState);
+  const setCurrentReviewItem = useSetRecoilState(currentReviewItemState);
 
   const onClickCancel = () => {
     setShowOrderedItemPopUp(false);
   };
 
+  const onClickWriteReview = (item) => {
+    setShowOrderedItemPopUp(false);
+    setShowWriteReviewState(true);
+    setCurrentReviewItem(item);
+  };
+
   return (
-    <OrderedItemPopUpWrapper top={scrollY} left={scrollX}>
+    <OrderedItemPopUpWrapper top={scrollY}>
       <CloseButton onClick={onClickCancel} />
       <h1>주문한 제품</h1>
-      {orderedItem.map((item) => (
-        <OrderedItemWrapper>
+      {orderedItem.map((item, index) => (
+        <OrderedItemWrapper key={index}>
           <h1>{item.title}</h1>
           {item.review ? (
             <h1>리뷰 작성 완료</h1>
           ) : (
-            <button>리뷰 작성하기</button>
+            <button onClick={() => onClickWriteReview(item)}>
+              리뷰 작성하기
+            </button>
           )}
         </OrderedItemWrapper>
       ))}

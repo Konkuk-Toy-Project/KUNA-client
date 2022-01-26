@@ -2,7 +2,6 @@ import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
-  currentX,
   currentY,
   showCouponState,
   userCouponState,
@@ -11,7 +10,7 @@ import CloseButton from "../CloseButton/CloseButton";
 
 const CouponPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: ${(props) => props.left + "px"};
+  left: 20vw;
   width: 60vw;
   height: 40vh;
   border: 1px solid black;
@@ -45,7 +44,6 @@ const EnrollCouponWrapper = styled.div`
 const CouponPopUp = () => {
   const coupons = useRecoilValue(userCouponState);
   const setShowCoupon = useSetRecoilState(showCouponState);
-  const scrollX = useRecoilValue(currentX);
   const scrollY = useRecoilValue(currentY);
 
   const onClickClose = () => {
@@ -53,7 +51,7 @@ const CouponPopUp = () => {
   };
 
   return (
-    <CouponPopUpWrapper top={scrollY} left={scrollX}>
+    <CouponPopUpWrapper top={scrollY}>
       <CloseButton onClick={onClickClose} />
       <Title>보유 쿠폰 목록</Title>
       <CouponWrapper>

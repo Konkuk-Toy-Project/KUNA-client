@@ -7,11 +7,13 @@ import {
   showCouponState,
   showOrderedItemState,
   showPointState,
+  showWriteReviewState,
   userState,
 } from "../../../store/atoms";
 import PointPopUp from "../PointPopUp/PointPopUp";
 import CouponPopUp from "../CouponPopUp/CouponPopUp";
 import OrderedItemPopUp from "../OrderedItemPopUp/OrderedItemPopUp";
+import WriteReviewPopUp from "../WriteReviewPopUp/WriteReviewPopUp";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;
@@ -83,6 +85,7 @@ const ProfileBanner = () => {
     useRecoilState(showOrderedItemState);
   const setCurrentX = useSetRecoilState(currentX);
   const setCurrentY = useSetRecoilState(currentY);
+  const showWriteReview = useRecoilValue(showWriteReviewState);
 
   const calculatePopUpWidth = () => {
     setCurrentX(window.scrollX + window.innerWidth * 0.15);
@@ -126,6 +129,7 @@ const ProfileBanner = () => {
       {showPoint && <PointPopUp />}
       {showCoupon && <CouponPopUp />}
       {showOrderedItem && <OrderedItemPopUp />}
+      {showWriteReview && <WriteReviewPopUp />}
     </ProfileBannerWrapper>
   );
 };

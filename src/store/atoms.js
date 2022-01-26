@@ -208,6 +208,16 @@ export const showOrderedItemState = atom({
   default: false,
 });
 
+export const showWriteReviewState = atom({
+  key: "showWriteReviewState",
+  default: false,
+});
+
+export const currentReviewItemState = atom({
+  key: "currentReviewItemState",
+  default: [],
+});
+
 export const currentX = atom({
   key: "currentX",
   default: 0,

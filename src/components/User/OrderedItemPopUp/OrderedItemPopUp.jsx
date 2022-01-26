@@ -2,10 +2,12 @@ import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
+  currentReviewItemState,
   currentX,
   currentY,
   orderedItemState,
   showOrderedItemState,
+  showWriteReviewState,
 } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
@@ -38,22 +40,32 @@ const OrderedItemPopUp = () => {
   const orderedItem = useRecoilValue(orderedItemState);
   const scrollX = useRecoilValue(currentX);
   const scrollY = useRecoilValue(currentY);
+  const setShowWriteReviewState = useSetRecoilState(showWriteReviewState);
+  const setCurrentReviewItem = useSetRecoilState(currentReviewItemState);
 
   const onClickCancel = () => {
     setShowOrderedItemPopUp(false);
+  };
+
+  const onClickWriteReview = (item) => {
+    setShowOrderedItemPopUp(false);
+    setShowWriteReviewState(true);
+    setCurrentReviewItem(item);
   };
 
   return (
     <OrderedItemPopUpWrapper top={scrollY} left={scrollX}>
       <CloseButton onClick={onClickCancel} />
       <h1>주문한 제품</h1>
-      {orderedItem.map((item) => (
-        <OrderedItemWrapper>
+      {orderedItem.map((item, index) => (
+        <OrderedItemWrapper key={index}>
           <h1>{item.title}</h1>
           {item.review ? (
             <h1>리뷰 작성 완료</h1>
           ) : (
-            <button>리뷰 작성하기</button>
+            <button onClick={() => onClickWriteReview(item)}>
+              리뷰 작성하기
+            </button>
           )}
         </OrderedItemWrapper>
       ))}

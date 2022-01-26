@@ -3,12 +3,15 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   currentReviewItemState,
+  currentY,
   showWriteReviewState,
 } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
 const WriteReviewPopUpWrapper = styled.div`
-  width: 40vw;
+  top: ${(props) => props.top + "px"};
+  left: 20vw;
+  width: 60vw;
   height: 30vh;
   border: 1px solid black;
   background-color: white;
@@ -20,9 +23,21 @@ const WriteReviewPopUpWrapper = styled.div`
   align-items: center;
 `;
 
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
+const ReviewInput = styled.input`
+  width: 40vw;
+  height: 10vh;
+  margin: 1em 0;
+`;
+
 const WriteReviewPopUp = () => {
   const setShowWriteReview = useSetRecoilState(showWriteReviewState);
   const currentReviewItem = useRecoilValue(currentReviewItemState);
+  const scrollY = useRecoilValue(currentY);
 
   const onClickClose = () => {
     setShowWriteReview(false);
@@ -34,10 +49,10 @@ const WriteReviewPopUp = () => {
   };
 
   return (
-    <WriteReviewPopUpWrapper>
+    <WriteReviewPopUpWrapper top={scrollY}>
       <CloseButton onClick={onClickClose} />
-      <h1>상품 : {currentReviewItem.title}</h1>
-      <input type="text" />
+      <Title>상품명 : {currentReviewItem.title}</Title>
+      <ReviewInput type="text" />
       <button onClick={onClickSubmit}>작성하기</button>
     </WriteReviewPopUpWrapper>
   );

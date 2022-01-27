@@ -38,13 +38,27 @@ const PasswordPopUp = () => {
     setEditPassword(false);
   };
 
+  const isValidPassword = (inputValue) => {
+    return (
+      inputValue !== "" &&
+      (inputValue.match(/[a-z]+?/) === null ||
+        inputValue.match(/[0-9]+?/) === null ||
+        inputValue.match(/[`~!@#$%^&*|\\;:?]+?/) === null)
+    );
+  };
+
   const onClickChangePassword = (event) => {
     event.preventDefault();
-    if (password === confirmPassword) {
-      setEditPassword(false);
-      return alert("변경 되었습니다.");
+    if (password !== confirmPassword) {
+      return alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요");
     }
-    alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요");
+    if (isValidPassword(password)) {
+      return alert(
+        "비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다."
+      );
+    }
+    setEditPassword(false);
+    return alert("변경 되었습니다.");
   };
 
   return (

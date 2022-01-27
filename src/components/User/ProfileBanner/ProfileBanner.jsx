@@ -6,6 +6,7 @@ import {
   showCouponState,
   showOrderedItemState,
   showPointState,
+  showRankState,
   showWriteReviewState,
   userState,
 } from "../../../store/atoms";
@@ -13,6 +14,7 @@ import PointPopUp from "../PointPopUp/PointPopUp";
 import CouponPopUp from "../CouponPopUp/CouponPopUp";
 import OrderedItemPopUp from "../OrderedItemPopUp/OrderedItemPopUp";
 import WriteReviewPopUp from "../WriteReviewPopUp/WriteReviewPopUp";
+import RankPopUp from "../RankPopUp/RankPopUp";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;
@@ -84,6 +86,7 @@ const ProfileBanner = () => {
     useRecoilState(showOrderedItemState);
   const setCurrentY = useSetRecoilState(currentY);
   const showWriteReview = useRecoilValue(showWriteReviewState);
+  const [showRank, setShowRank] = useRecoilState(showRankState);
 
   const calculatePopUpHeight = () => {
     setCurrentY(window.scrollY + window.innerHeight * 0.15);
@@ -104,6 +107,11 @@ const ProfileBanner = () => {
     setShowOrderedItem(true);
   };
 
+  const onClickRank = () => {
+    calculatePopUpHeight();
+    setShowRank(true);
+  };
+
   return (
     <ProfileBannerWrapper>
       <UserInfo>
@@ -111,6 +119,7 @@ const ProfileBanner = () => {
         <NameAndRankWrapper>
           <Name>{userInfo.name}님</Name>
           <Rank>등급 : {userInfo.role}</Rank>
+          <button onClick={onClickRank}>등급 달성 기준</button>
         </NameAndRankWrapper>
       </UserInfo>
       <UserMenus>
@@ -118,6 +127,7 @@ const ProfileBanner = () => {
         <UserMenu onClick={onClickCoupon}>쿠폰</UserMenu>
         <UserMenu onClick={onClickOrderedItem}>주문한 상품</UserMenu>
       </UserMenus>
+      {showRank && <RankPopUp />}
       {showPoint && <PointPopUp />}
       {showCoupon && <CouponPopUp />}
       {showOrderedItem && <OrderedItemPopUp />}

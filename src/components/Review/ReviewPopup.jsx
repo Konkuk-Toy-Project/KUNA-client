@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import ImgSection from "../ItemDetail/ItemBrief/ImgSection";
 import UserName from "./UserName";
 import RatingStars from "./RatingStars";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import IconX from "../Icon/IconX";
 
 const ReviewPopup = () => {
   // 라우터 path로 정보 보내기
@@ -25,7 +24,7 @@ const ReviewPopup = () => {
     <div>
       {/* 팝업창 관련 boolean === true 되면 보이기 */}
       <button onClick={onClick}>
-        <FontAwesomeIcon icon={faTimes} className={"styles.icon"} />
+        <IconX />
       </button>
       <ImgSection imgsrcs={imgs} defaultIdx={1} />
       <div name="textSection" backGroundColor="#f3e5f5">

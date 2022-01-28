@@ -2,16 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  currentX,
   currentY,
   showCouponState,
   showOrderedItemState,
   showPointState,
+  showRankState,
+  showWriteReviewState,
   userState,
 } from "../../../store/atoms";
 import PointPopUp from "../PointPopUp/PointPopUp";
 import CouponPopUp from "../CouponPopUp/CouponPopUp";
 import OrderedItemPopUp from "../OrderedItemPopUp/OrderedItemPopUp";
+import WriteReviewPopUp from "../WriteReviewPopUp/WriteReviewPopUp";
+import RankPopUp from "../RankPopUp/RankPopUp";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;
@@ -81,32 +84,32 @@ const ProfileBanner = () => {
   const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
   const [showOrderedItem, setShowOrderedItem] =
     useRecoilState(showOrderedItemState);
-  const setCurrentX = useSetRecoilState(currentX);
   const setCurrentY = useSetRecoilState(currentY);
+  const showWriteReview = useRecoilValue(showWriteReviewState);
+  const [showRank, setShowRank] = useRecoilState(showRankState);
 
-  const calculatePopUpWidth = () => {
-    setCurrentX(window.scrollX + window.innerWidth * 0.15);
-  };
   const calculatePopUpHeight = () => {
     setCurrentY(window.scrollY + window.innerHeight * 0.15);
   };
 
   const onClickPoint = () => {
-    calculatePopUpWidth();
     calculatePopUpHeight();
     setShowPoint(true);
   };
 
   const onClickCoupon = () => {
-    calculatePopUpWidth();
     calculatePopUpHeight();
     setShowCoupon(true);
   };
 
   const onClickOrderedItem = () => {
-    calculatePopUpWidth();
     calculatePopUpHeight();
     setShowOrderedItem(true);
+  };
+
+  const onClickRank = () => {
+    calculatePopUpHeight();
+    setShowRank(true);
   };
 
   return (
@@ -116,6 +119,7 @@ const ProfileBanner = () => {
         <NameAndRankWrapper>
           <Name>{userInfo.name}님</Name>
           <Rank>등급 : {userInfo.role}</Rank>
+          <button onClick={onClickRank}>등급 달성 기준</button>
         </NameAndRankWrapper>
       </UserInfo>
       <UserMenus>
@@ -123,9 +127,11 @@ const ProfileBanner = () => {
         <UserMenu onClick={onClickCoupon}>쿠폰</UserMenu>
         <UserMenu onClick={onClickOrderedItem}>주문한 상품</UserMenu>
       </UserMenus>
+      {showRank && <RankPopUp />}
       {showPoint && <PointPopUp />}
       {showCoupon && <CouponPopUp />}
       {showOrderedItem && <OrderedItemPopUp />}
+      {showWriteReview && <WriteReviewPopUp />}
     </ProfileBannerWrapper>
   );
 };

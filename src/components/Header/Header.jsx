@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { basketItemState } from "../../store/atoms";
 
 const Header = () => {
   const basketItems = useRecoilValue(basketItemState);
+  const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
 
+  const onChangePassword = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const onClickSearch = () => {
+    navigate(`/search/${searchValue}`);
+  };
   return (
     <HeaderWrapper>
       <ShortcutMenuWrapper>
@@ -17,8 +26,10 @@ const Header = () => {
           />
         </PageLink>
         <SearchBar>
-          <SearchBarInput type="text" />
-          <SearchIcon type="button">🔎</SearchIcon>
+          <SearchBarInput onChange={onChangePassword} type="text" />
+          <SearchIcon onClick={onClickSearch} type="button">
+            🔎
+          </SearchIcon>
         </SearchBar>
         <MenuCategories>
           <PageLink to="/basket">

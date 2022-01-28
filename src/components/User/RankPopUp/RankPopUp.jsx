@@ -1,10 +1,10 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY, showPointState, userPointState } from "../../../store/atoms";
+import { currentY, showRankState } from "../../../store/atoms";
 import CloseButton from "../CloseButton/CloseButton";
 
-const PointPopUpWrapper = styled.div`
+const RankPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
   left: 30vw;
   width: 40vw;
@@ -19,23 +19,23 @@ const PointPopUpWrapper = styled.div`
   align-items: center;
 `;
 
-const PointPopUp = () => {
-  const points = useRecoilValue(userPointState);
-  const setShowPoint = useSetRecoilState(showPointState);
-
+const RankPopUp = () => {
   const scrollY = useRecoilValue(currentY);
+  const setShowRank = useSetRecoilState(showRankState);
 
   const onClickClose = () => {
-    setShowPoint(false);
+    setShowRank(false);
   };
 
   return (
-    <PointPopUpWrapper top={scrollY}>
+    <RankPopUpWrapper top={scrollY}>
       <CloseButton onClick={onClickClose} />
-      <h1>보유 포인트 : {points}</h1>
-      <h3>구매 금액의 1%가 포인트로 적립됩니다.</h3>
-    </PointPopUpWrapper>
+      <h1>등급 목록</h1>
+      <h1>Gold : 누적 결제 금액 500,000원</h1>
+      <h1>Silver : 누적 결제 금액 300,000원</h1>
+      <h1>Bronze : 누적 결제 금액 200,000원</h1>
+    </RankPopUpWrapper>
   );
 };
 
-export default PointPopUp;
+export default RankPopUp;

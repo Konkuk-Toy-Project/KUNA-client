@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { OnlyLikeNumState } from "../itemData/itemData";
+import { OnlyLikeNumState } from "../../itemData/itemData";
 
 const LikeBtn = () => {
   const [likesNum, setLikesNum] = useState(useRecoilValue(OnlyLikeNumState));

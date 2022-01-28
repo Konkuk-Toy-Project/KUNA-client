@@ -1,11 +1,11 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { itemDetailState } from "../itemData/itemData";
-import ItemHeader from "./ItemHeader";
+import { itemDetailState } from "../../itemData/itemData";
+import ItemHeader from "./BriefHeader";
 import LikeBtn from "./LikeBtn";
-import Option from "./Option";
+import Option from "./Options/Option";
 
-const ItemBriefInfo = () => {
+const Info = () => {
   const item = useRecoilValue(itemDetailState);
   return (
     <div>
@@ -26,4 +26,4 @@ const ItemBriefInfo = () => {
   );
 };
 
-export default ItemBriefInfo;
+export default Info;

@@ -14,6 +14,7 @@ import CategoryPage from "./pages/CategoryPage";
 import LikePage from "./pages/LikePage";
 import BasketPage from "./pages/BasketPage";
 import UserPage from "./pages/UserPage";
+import SearchPage from "./pages/SearchPage";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -26,6 +27,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/search/:content" element={<SearchPage />} />
         <Route path=":category" element={<CategoryPage />} />
         <Route path="/like" element={<LikePage />} />
         <Route path="/basket" element={<BasketPage />} />

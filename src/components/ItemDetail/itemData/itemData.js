@@ -25,20 +25,21 @@ export const itemDetailState = atom({
       {
         name: "Size M",
         count: 16,
-        option2: [
-          {
-            name: "파란색",
-            count: 13,
-          },
-          {
-            name: "노란색",
-            count: 3,
-          },
-        ],
+        option2: [],
+        // option2: [
+        //   {
+        //     name: "파란색",
+        //     count: 13,
+        //   },
+        //   {
+        //     name: "노란색",
+        //     count: 3,
+        //   },
+        // ],
       },
       {
         name: "Size L",
-        count: 3,
+        count: 5,
         option2: [
           {
             name: "빨간색",
@@ -46,7 +47,7 @@ export const itemDetailState = atom({
           },
           {
             name: "노란색",
-            count: 0,
+            count: 2,
           },
         ],
       },

@@ -5,7 +5,7 @@ import {
   currentReviewItemState,
   currentY,
   showWriteReviewState,
-} from "../../../store/atoms";
+} from "../../../store/user";
 import CloseButton from "../CloseButton/CloseButton";
 
 const WriteReviewPopUpWrapper = styled.div`

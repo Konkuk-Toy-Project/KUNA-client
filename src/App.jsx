@@ -1,39 +1,24 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import MainPage from "./pages/MainPage";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import CategoryPage from "./pages/CategoryPage";
-import LikePage from "./pages/LikePage";
-import BasketPage from "./pages/BasketPage";
-import UserPage from "./pages/UserPage";
-import SearchPage from "./pages/SearchPage";
+import { BrowserRouter as Router } from "react-router-dom";
+import Header from "./components/common/Header/Header";
+import Footer from "./components/common/Footer/Footer";
+import ClientRouter from "./routers/ClientRouter";
+import OwnerRouter from "./routers/OwnerRouter";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
 `;
+
+const isClient = true;
 
 const App = () => {
   return (
     <Router>
       <GlobalStyles />
       <Header />
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/search/:content" element={<SearchPage />} />
-        <Route path=":category" element={<CategoryPage />} />
-        <Route path="/like" element={<LikePage />} />
-        <Route path="/basket" element={<BasketPage />} />
-        <Route path="/user" element={<UserPage />} />
-        <Route path="/*" element={<Navigate to="/" />} />
-      </Routes>
+      {isClient ? <ClientRouter /> : <OwnerRouter />}
       <Footer />
     </Router>
   );

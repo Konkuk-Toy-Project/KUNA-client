@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY, passwordPopUpState, userState } from "../../../store/atoms";
+import { currentY, passwordPopUpState, userState } from "../../../store/user";
 import PasswordPopUp from "../PasswordPopUp/PasswordPopUp";
 import UserCertainInfo from "../UserCertainInfo/UserCertainInfo";
 

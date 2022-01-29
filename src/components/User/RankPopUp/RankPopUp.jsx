@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY, showRankState } from "../../../store/atoms";
+import { currentY, showRankState } from "../../../store/user";
 import CloseButton from "../CloseButton/CloseButton";
 
 const RankPopUpWrapper = styled.div`

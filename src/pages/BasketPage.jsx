@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import ItemList from "../components/Main/ItemList/ItemList";
 import Title from "../components/Main/Title/Title";
-import { basketItemState } from "../store/atoms";
+import { basketItemState } from "../store/basket";
 
 const BasketPage = () => {
   const [items, setItems] = useRecoilState(basketItemState);

@@ -9,7 +9,7 @@ import {
   showRankState,
   showWriteReviewState,
   userState,
-} from "../../../store/atoms";
+} from "../../../store/user";
 import PointPopUp from "../PointPopUp/PointPopUp";
 import CouponPopUp from "../CouponPopUp/CouponPopUp";
 import OrderedItemPopUp from "../OrderedItemPopUp/OrderedItemPopUp";

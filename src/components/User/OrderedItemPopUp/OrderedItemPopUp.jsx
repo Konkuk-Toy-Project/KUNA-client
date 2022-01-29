@@ -7,7 +7,7 @@ import {
   orderedItemState,
   showOrderedItemState,
   showWriteReviewState,
-} from "../../../store/atoms";
+} from "../../../store/user";
 import CloseButton from "../CloseButton/CloseButton";
 
 const OrderedItemPopUpWrapper = styled.div`

@@ -5,7 +5,7 @@ import {
   currentY,
   showCouponState,
   userCouponState,
-} from "../../../store/atoms";
+} from "../../../store/user";
 import CloseButton from "../CloseButton/CloseButton";
 
 const CouponPopUpWrapper = styled.div`

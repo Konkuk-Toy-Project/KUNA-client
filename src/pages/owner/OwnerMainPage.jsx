@@ -13,7 +13,7 @@ const MainPage = () => {
               src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
               alt=""
             />
-            <p>상품 등록</p>
+            <p>상품 관리</p>
           </MenuCategory>
         </PageLink>
         <PageLink to="/coupons">
@@ -22,7 +22,7 @@ const MainPage = () => {
               src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
               alt=""
             />
-            <p>쿠폰 등록</p>
+            <p>쿠폰 관리</p>
           </MenuCategory>
         </PageLink>
         <PageLink to="/answers">

@@ -5,42 +5,54 @@ import styled from "styled-components";
 const MainPage = () => {
   return (
     <OwnerMainPageWrapper>
-      <PageLink to="/enroll">
-        <MenuCategory>
-          <img
-            src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
-            alt=""
-          />
-          <p>상품 등록</p>
-        </MenuCategory>
-      </PageLink>
-      <PageLink to="/coupons">
-        <MenuCategory>
-          <img
-            src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
-            alt=""
-          />
-          <p>쿠폰 등록</p>
-        </MenuCategory>
-      </PageLink>
-      <PageLink to="/answers">
-        <MenuCategory>
-          <img
-            src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
-            alt=""
-          />
-          <p>Q&A 답변</p>
-        </MenuCategory>
-      </PageLink>
+      <Title>원하는 작업을 선택하세요</Title>
+      <MenuCategoryWrapper>
+        <PageLink to="/products">
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
+              alt=""
+            />
+            <p>상품 등록</p>
+          </MenuCategory>
+        </PageLink>
+        <PageLink to="/coupons">
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
+              alt=""
+            />
+            <p>쿠폰 등록</p>
+          </MenuCategory>
+        </PageLink>
+        <PageLink to="/answers">
+          <MenuCategory>
+            <img
+              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+              alt=""
+            />
+            <p>Q&A 답변</p>
+          </MenuCategory>
+        </PageLink>
+      </MenuCategoryWrapper>
     </OwnerMainPageWrapper>
   );
 };
 
 const OwnerMainPageWrapper = styled.div`
+  text-align: center;
+  height: 70vh;
+`;
+
+const Title = styled.p`
+  font-size: 2em;
+  margin: 2em 0 4em 0;
+`;
+
+const MenuCategoryWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  height: 80vh;
 `;
 
 const MenuCategory = styled.div`
@@ -62,22 +74,6 @@ const MenuCategory = styled.div`
     font-size: 18px;
     font-weight: 400;
   }
-  &:hover {
-    transition: all 0.3s ease-in;
-    background-color: black;
-    color: white;
-  }
-`;
-
-const PageMenus = styled.ul`
-  display: flex;
-  margin: 1em 0;
-`;
-
-const PageMenu = styled.li`
-  padding: 1em;
-  cursor: pointer;
-  margin: 0 1em;
   &:hover {
     transition: all 0.3s ease-in;
     background-color: black;

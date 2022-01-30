@@ -9,7 +9,7 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
 
-  const onChangePassword = (event) => {
+  const onChangeSearch = (event) => {
     setSearchValue(event.target.value);
   };
 
@@ -26,7 +26,7 @@ const Header = () => {
           />
         </PageLink>
         <SearchBar>
-          <SearchBarInput onChange={onChangePassword} type="text" />
+          <SearchBarInput onChange={onChangeSearch} type="text" />
           <SearchIcon onClick={onClickSearch} type="button">
             🔎
           </SearchIcon>

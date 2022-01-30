@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router";
-import Header from "../components/common/Header/Header";
+import Header from "../components/client/Header/Header";
 import BasketPage from "../pages/client/BasketPage";
 import CategoryPage from "../pages/client/CategoryPage";
 import LikePage from "../pages/client/LikePage";

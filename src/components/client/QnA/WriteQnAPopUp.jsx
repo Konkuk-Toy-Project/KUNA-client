@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import IconX from "../Icon/IconX";
+import QnAItemInfo from "./QnAItemInfo";
 
 const WriteQnAPopUp = () => {
-  const imgsrc =
+  const thumbnail =
     "https://img.sonyunara.com/files/goods/69048/1611793473_21.jpg";
   const name = "sbs927 자꾸자꾸 파스텔 스탠다드핏 셔츠 7colors";
 
@@ -24,10 +25,7 @@ const WriteQnAPopUp = () => {
       <IconX />
       <br />
 
-      <div name="productInfoSection">
-        <img name="thumbnail" src={imgsrc} alt="썸네일" />
-        <div name="상품명">{name}</div>
-      </div>
+      <QnAItemInfo thumbnail={thumbnail} name={name} />
 
       <div name="writeSection">
         <label htmlFor="qnaTitle">제목</label>

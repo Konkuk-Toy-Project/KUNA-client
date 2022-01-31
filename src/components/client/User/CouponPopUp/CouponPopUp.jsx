@@ -2,11 +2,11 @@ import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
-  currentY,
   showCouponState,
   userCouponState,
 } from "../../../../store/client/user";
-import CloseButton from "../CloseButton/CloseButton";
+import { currentY } from "../../../../store/common/user";
+import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const CouponPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};

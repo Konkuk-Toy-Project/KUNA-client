@@ -1,10 +1,28 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { productState } from "../../../../store/owner/product";
+import { currentY } from "../../../../store/common/user";
+import {
+  currentItemState,
+  productState,
+  showEditPopUpState,
+} from "../../../../store/owner/product";
 
 const EnrolledItem = ({ item }) => {
   const [items, setItems] = useRecoilState(productState);
+  const setCurrentItem = useSetRecoilState(currentItemState);
+  const setShowEditPopUp = useSetRecoilState(showEditPopUpState);
+  const setCurrentY = useSetRecoilState(currentY);
+
+  const calculatePopUpHeight = () => {
+    setCurrentY(window.scrollY + window.innerHeight * 0.15);
+  };
+
+  const onClickEditItem = () => {
+    calculatePopUpHeight();
+    setCurrentItem(item);
+    setShowEditPopUp(true);
+  };
 
   const onClickDeleteItem = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -21,6 +39,7 @@ const EnrolledItem = ({ item }) => {
       }
     }
   };
+
   return (
     <ItemWrapper>
       <ItemImage src={item.image} />
@@ -31,7 +50,7 @@ const EnrolledItem = ({ item }) => {
           <p>가격 : {item.price}</p>
         </ItemPriceWrapper>
         <div>
-          <button>상품 수정</button>
+          <button onClick={onClickEditItem}>상품 수정</button>
           <button onClick={onClickDeleteItem}>상품 삭제</button>
         </div>
       </ItemDescription>

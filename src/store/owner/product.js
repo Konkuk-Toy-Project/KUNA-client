@@ -69,3 +69,13 @@ export const productState = atom({
     },
   ],
 });
+
+export const currentItemState = atom({
+  key: "currentItemState",
+  default: {},
+});
+
+export const showEditPopUpState = atom({
+  key: "showEditPopUpState",
+  default: false,
+});

@@ -98,11 +98,6 @@ export const currentReviewItemState = atom({
   default: [],
 });
 
-export const currentY = atom({
-  key: "currentY",
-  default: 0,
-});
-
 export const showRankState = atom({
   key: "showRankState",
   default: false,

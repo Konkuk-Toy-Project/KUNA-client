@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY, passwordPopUpState } from "../../../../store/client/user";
-import CloseButton from "../CloseButton/CloseButton";
+import { passwordPopUpState } from "../../../../store/client/user";
+import { currentY } from "../../../../store/common/user";
+import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const PasswordPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};

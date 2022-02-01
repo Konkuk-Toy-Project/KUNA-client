@@ -39,7 +39,7 @@ const EditItemPopUp = () => {
   const setShowEditPopUp = useSetRecoilState(showEditPopUpState);
   const [discount, setDiscount] = useState(currentItem.discount);
   const [price, setPrice] = useState(currentItem.price);
-  const [category, setCategory] = useRecoilState(productState);
+  const [product, setProduct] = useRecoilState(productState);
 
   const onClickClose = () => {
     setShowEditPopUp(false);
@@ -54,9 +54,9 @@ const EditItemPopUp = () => {
   };
 
   const editDiscountOrPrice = () => {
-    const otherItems = category.filter((item) => item.id !== currentItem.id);
+    const otherItems = product.filter((item) => item.id !== currentItem.id);
     const editedItem = { ...currentItem, discount, price };
-    setCategory([editedItem, ...otherItems]);
+    setProduct([editedItem, ...otherItems]);
   };
 
   const onClickSubmit = () => {

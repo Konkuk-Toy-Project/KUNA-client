@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { ItemOptionState } from "../../../itemData/itemData";
 
+const UP = "up";
+const DOWN = "down";
+const SEP = "_"; // seperator
+
 const Option = () => {
   const optionOnes = useRecoilValue(ItemOptionState);
   const [optionTwos, setOptionTwos] = useState([]);
@@ -11,7 +15,6 @@ const Option = () => {
   const [option2, setOption2] = useState("");
   const [stack, setStack] = useState("");
   const [selItems, setSelItems] = useState([]);
-  const [input, setInput] = useState({});
 
   const onChange = (e) => {
     if (!isOpt1Chosen) {
@@ -35,9 +38,33 @@ const Option = () => {
     }
   };
 
-  const onInputChange = (e) => {
-    console.log(e.target.value);
+  const onBtnClick = (e) => {
+    const btnName = e.target.name.split(SEP);
+    const btnType = btnName[0];
+    const itemIdx = Number(btnName[1]);
+
+    switch (btnType) {
+      case UP:
+        selItems[itemIdx].count < selItems[itemIdx].stack
+          ? setSelItems(
+              selItems.map((item, idx) =>
+                idx === itemIdx ? { ...item, count: item.count + 1 } : item
+              )
+            )
+          : alert("최대 수량입니다");
+        break;
+      case DOWN:
+        if (selItems[itemIdx].count > 1)
+          setSelItems(
+            selItems.map((item, idx) =>
+              idx === itemIdx ? { ...item, count: item.count - 1 } : item
+            )
+          );
+
+        break;
+    }
   };
+
   useEffect(() => {
     if (!isItemSelected) return;
 
@@ -56,7 +83,6 @@ const Option = () => {
           stack: stack,
         })
       );
-      setInput((cur) => Object.assign(cur, { [option1 + option2]: 1 }));
     } else alert("이미 추가된 옵션입니다! 수량을 변경해주세요. ");
 
     setOption1("");
@@ -66,7 +92,7 @@ const Option = () => {
     setIsItemSelected(false);
   }, [isItemSelected]);
 
-  console.log(input);
+  console.log(selItems);
   return (
     <div>
       <ul>
@@ -118,7 +144,15 @@ const Option = () => {
             <li key={item.option1 + idx} id={idx}>
               {item.option1}
               {item.option2 === "" ? " " : ", " + item.option2}
-              <input type="number" min={1} max={item.stack}></input>
+              <span>{item.count}</span>
+              <div>
+                <button name={UP + SEP + idx} onClick={onBtnClick}>
+                  🔼
+                </button>
+                <button name={DOWN + SEP + idx} onClick={onBtnClick}>
+                  🔽
+                </button>
+              </div>
             </li>
           ))}
         </ul>

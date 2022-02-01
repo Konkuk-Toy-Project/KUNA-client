@@ -3,12 +3,12 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   currentReviewItemState,
-  currentY,
   orderedItemState,
   showOrderedItemState,
   showWriteReviewState,
 } from "../../../../store/client/user";
-import CloseButton from "../CloseButton/CloseButton";
+import { currentY } from "../../../../store/common/user";
+import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const OrderedItemPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};

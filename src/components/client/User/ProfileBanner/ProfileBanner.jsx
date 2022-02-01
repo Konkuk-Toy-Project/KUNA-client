@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  currentY,
   showCouponState,
   showOrderedItemState,
   showPointState,
@@ -15,6 +14,7 @@ import CouponPopUp from "../CouponPopUp/CouponPopUp";
 import OrderedItemPopUp from "../OrderedItemPopUp/OrderedItemPopUp";
 import WriteReviewPopUp from "../WriteReviewPopUp/WriteReviewPopUp";
 import RankPopUp from "../RankPopUp/RankPopUp";
+import { currentY } from "../../../../store/common/user";
 
 const ProfileBannerWrapper = styled.div`
   display: flex;

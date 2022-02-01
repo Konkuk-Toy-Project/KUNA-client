@@ -1,11 +1,8 @@
 import React from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import {
-  currentY,
-  passwordPopUpState,
-  userState,
-} from "../../../../store/client/user";
+import { passwordPopUpState, userState } from "../../../../store/client/user";
+import { currentY } from "../../../../store/common/user";
 import PasswordPopUp from "../PasswordPopUp/PasswordPopUp";
 import UserCertainInfo from "../UserCertainInfo/UserCertainInfo";
 

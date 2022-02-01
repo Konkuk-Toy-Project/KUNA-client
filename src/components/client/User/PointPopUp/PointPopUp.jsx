@@ -1,12 +1,9 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import {
-  currentY,
-  showPointState,
-  userPointState,
-} from "../../../../store/client/user";
-import CloseButton from "../CloseButton/CloseButton";
+import { showPointState, userPointState } from "../../../../store/client/user";
+import { currentY } from "../../../../store/common/user";
+import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const PointPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};

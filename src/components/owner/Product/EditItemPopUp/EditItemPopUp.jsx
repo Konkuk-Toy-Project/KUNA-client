@@ -1,9 +1,11 @@
 import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useState } from "react/cjs/react.development";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { currentY } from "../../../../store/common/user";
 import {
   currentItemState,
+  productState,
   showEditPopUpState,
 } from "../../../../store/owner/product";
 import CloseButton from "../../../common/CloseButton/CloseButton";
@@ -35,8 +37,31 @@ const EditItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const currentItem = useRecoilValue(currentItemState);
   const setShowEditPopUp = useSetRecoilState(showEditPopUpState);
+  const [discount, setDiscount] = useState(currentItem.discount);
+  const [price, setPrice] = useState(currentItem.price);
+  const [category, setCategory] = useRecoilState(productState);
 
   const onClickClose = () => {
+    setShowEditPopUp(false);
+  };
+
+  const onChangeDiscount = (event) => {
+    setDiscount(event.target.value);
+  };
+
+  const onChangePrice = (event) => {
+    setPrice(event.target.value);
+  };
+
+  const editDiscountOrPrice = () => {
+    const otherItems = category.filter((item) => item.id !== currentItem.id);
+    const editedItem = { ...currentItem, discount, price };
+    setCategory([editedItem, ...otherItems]);
+  };
+
+  const onClickSubmit = () => {
+    editDiscountOrPrice();
+    alert("수정이 완료되었습니다.");
     setShowEditPopUp(false);
   };
 
@@ -47,14 +72,14 @@ const EditItemPopUp = () => {
         <h1>상품명 : {currentItem.title}</h1>
         <EditContentWrapper>
           <p>할인율 </p>
-          <input type="text" value={currentItem.discount} />
+          <input type="text" value={discount} onChange={onChangeDiscount} />
         </EditContentWrapper>
         <EditContentWrapper>
           <p>가격</p>
-          <input type="text" value={currentItem.price} />
+          <input type="text" value={price} onChange={onChangePrice} />
         </EditContentWrapper>
         <div>
-          <button>수정 완료</button>
+          <button onClick={onClickSubmit}>수정 완료</button>
         </div>
       </div>
     </EditItemPopUpWrapper>

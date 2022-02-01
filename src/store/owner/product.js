@@ -75,6 +75,11 @@ export const currentItemState = atom({
   default: {},
 });
 
+export const showAddPopUpState = atom({
+  key: "showAddPopUpState",
+  default: false,
+});
+
 export const showEditPopUpState = atom({
   key: "showEditPopUpState",
   default: false,

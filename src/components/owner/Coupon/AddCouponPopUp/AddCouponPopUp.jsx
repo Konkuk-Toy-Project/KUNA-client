@@ -45,9 +45,11 @@ const AddCouponPopUp = () => {
   };
 
   const onClickSubmit = () => {
-    addCoupon();
-    alert("쿠폰이 추가되었습니다.");
-    setShowCouponPopUp(false);
+    if (window.confirm("쿠폰을 등록하시겠습니까?")) {
+      addCoupon();
+      alert("쿠폰이 추가되었습니다.");
+      setShowCouponPopUp(false);
+    }
   };
 
   return (

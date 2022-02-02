@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import AddCouponPopUp from "../../components/owner/Coupon/AddCouponPopUp/AddCouponPopUp";
 import {
@@ -24,9 +24,14 @@ const CouponWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
-  border: 1px solid black;
+  width: 75%;
+`;
+
+const Description = styled.p`
+  font-size: 16px;
+  width: 100%;
   padding: 1em;
+  border: 1px solid black;
 `;
 
 const OwnerCouponPage = () => {
@@ -43,13 +48,15 @@ const OwnerCouponPage = () => {
       <button onClick={onClickAddCoupon}>새로운 쿠폰 등록하기</button>
       <Title>보유 쿠폰 목록</Title>
       <CouponWrapper>
-        <h1>등록한 쿠폰 명</h1>
-        <h1>할인율</h1>
+        <Description>등록한 쿠폰 명</Description>
+        <Description>할인율</Description>
+        <Description>쿠폰 등록 번호</Description>
       </CouponWrapper>
       {enrolledCoupons.map((coupon) => (
         <CouponWrapper key={coupon.id}>
-          <h3>{coupon.name}</h3>
-          <h3>{coupon.discount}%</h3>
+          <Description>{coupon.name}</Description>
+          <Description>{coupon.discount}%</Description>
+          <Description>{coupon.enrollNumber}</Description>
         </CouponWrapper>
       ))}
       {showCouponPopUp && <AddCouponPopUp />}

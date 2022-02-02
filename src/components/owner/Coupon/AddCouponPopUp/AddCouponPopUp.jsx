@@ -28,6 +28,7 @@ const AddCouponPopUp = () => {
   const [coupon, setCoupon] = useRecoilState(enrolledCouponState);
   const [name, setName] = useState("");
   const [discount, setDiscount] = useState("");
+  const [enrollNumber, setEnrollNumber] = useState("");
   const setShowCouponPopUp = useSetRecoilState(showCouponPopUpState);
 
   const onClickClose = () => {
@@ -39,7 +40,7 @@ const AddCouponPopUp = () => {
   };
 
   const addCoupon = () => {
-    const currentCoupon = { id: coupon.length, name, discount };
+    const currentCoupon = { id: coupon.length, name, discount, enrollNumber };
     setCoupon([currentCoupon, ...coupon]);
   };
 
@@ -59,6 +60,10 @@ const AddCouponPopUp = () => {
       <div>
         <h1>할인율 </h1>
         <input type="text" onChange={onChange(setDiscount)} />
+      </div>
+      <div>
+        <h1>등록번호 </h1>
+        <input type="text" onChange={onChange(setEnrollNumber)} />
       </div>
       <button onClick={onClickSubmit}>상품 추가하기</button>
     </AddCouponPopUpWrapper>

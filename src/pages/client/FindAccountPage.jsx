@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PhoneInput from "./PhoneInput";
+import PhoneInput from "../../components/client/Login/PhoneInput";
 
 const FIND_ID = "findId";
 const FIND_PW = "findPw";
@@ -9,7 +9,7 @@ const PH_FIRST = "phone_first";
 const PH_MID = "phone_mid";
 const PH_LAST = "phone_last";
 
-const FindAccount = () => {
+const FindAccountPage = () => {
   const [isFindIdTab, setIsFindIdTab] = useState(true);
   const [info, setInfo] = useState({
     [ID]: "",
@@ -63,4 +63,4 @@ const FindAccount = () => {
   );
 };
 
-export default FindAccount;
+export default FindAccountPage;

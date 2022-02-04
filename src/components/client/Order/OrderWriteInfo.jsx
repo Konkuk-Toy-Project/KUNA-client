@@ -24,26 +24,29 @@ const OrderWriteInfo = () => {
     console.log("회원인 경우, 사용자 정보 받아와서 info에 초기정보 채워넣기");
   }, []);
 
-  const onChange = () => {};
+  const onChange = (e) => {
+    setInfo({ ...info, [e.target.name]: e.target.value });
+    console.log(info);
+  };
 
   return (
     <div>
       <ul name="address">
         <OrderInput
           label="주소"
-          key={ADDRESS}
+          name={ADDRESS}
           info={info}
           onChange={onChange}
         />
         <OrderInput
           label="상세주소"
-          key={DETAIL_ADD}
+          name={DETAIL_ADD}
           info={info}
           onChange={onChange}
         />
         <OrderInput
           label="우편번호"
-          key={POST_NUM}
+          name={POST_NUM}
           info={info}
           onChange={onChange}
         />
@@ -51,13 +54,13 @@ const OrderWriteInfo = () => {
       <div name="userInfo">
         <OrderInput
           label="수령인"
-          key={RECIEVER}
+          name={RECIEVER}
           info={info}
           onChange={onChange}
         />
         <OrderInput
           label="전화번호"
-          key={PHONE}
+          name={PHONE}
           info={info}
           onChange={onChange}
         />
@@ -69,8 +72,8 @@ const OrderWriteInfo = () => {
           name={MEMO}
           cols="30"
           rows="10"
-          onChange={onTextChange}
-          value={text}
+          onChange={onChange}
+          value={info[MEMO]}
         ></textarea>
       </div>
     </div>

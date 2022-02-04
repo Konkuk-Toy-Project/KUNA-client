@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ItemHeader = ({ name, price, discount }) => {
+const BriefHeader = ({ name, price, sale }) => {
   return (
     <div>
       <h4 name="item-title">{name}</h4>
 
-      {discount > 0 ? (
+      {sale > 0 ? (
         <div id="sale-container">
           <span
             name="price"
@@ -14,8 +14,8 @@ const ItemHeader = ({ name, price, discount }) => {
           >
             {price}원
           </span>
-          <span name="discount">{discount}%</span>
-          <span name="sale-price">{(price * (100 - discount)) / 100}원</span>
+          <span name="sale">{sale}%</span>
+          <span name="sale-price">{(price * (100 - sale)) / 100}원</span>
         </div>
       ) : (
         <div id="non-sale-container">{price}원</div>
@@ -24,10 +24,10 @@ const ItemHeader = ({ name, price, discount }) => {
   );
 };
 
-ItemHeader.propTypes = {
+BriefHeader.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  discount: PropTypes.number.isRequired,
+  sale: PropTypes.number.isRequired,
 };
 
-export default ItemHeader;
+export default BriefHeader;

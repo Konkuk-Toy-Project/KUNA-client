@@ -70,10 +70,10 @@ const LoginPage = () => {
         로그인
       </button>
       <div id="subPageLink-containter">
-        <Link to="/signIn">
+        <Link to="/login/signIn">
           <span id="signIn">회원가입하기</span>
         </Link>
-        <Link to="/findIdPw">
+        <Link to="/login/findAccount">
           <span id="findIdPw">아이디/비밀번호 찾기</span>
         </Link>
       </div>

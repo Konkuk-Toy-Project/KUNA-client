@@ -1,18 +1,10 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import MainPage from "./pages/MainPage";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import CategoryPage from "./pages/CategoryPage";
-import LikePage from "./pages/LikePage";
-import LoginPage from "./pages/LoginPage";
+import { BrowserRouter } from "react-router-dom";
+
+import Footer from "./components/common/Footer/Footer";
+import Router from "./Router";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -20,18 +12,11 @@ const GlobalStyles = createGlobalStyle`
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <GlobalStyles />
-      <Header />
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path=":category" element={<CategoryPage />} />
-        <Route path="/like" element={<LikePage />} />
-        <Route path="/*" element={<Navigate to="/" />} />
-      </Routes>
+      <Router />
       <Footer />
-    </Router>
+    </BrowserRouter>
   );
 };
 

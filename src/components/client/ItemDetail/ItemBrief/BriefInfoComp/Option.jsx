@@ -1,40 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { ItemOptionState } from "../../../itemData/itemData";
+import PropTypes from "prop-types";
 
 const UP = "up";
 const DOWN = "down";
 const SEP = "_"; // seperator
 
-const Option = () => {
-  const optionOnes = useRecoilValue(ItemOptionState);
-  const [optionTwos, setOptionTwos] = useState([]);
+const Option = ({ item, chosen, setChosen }) => {
+  const optionOnes = item.option1;
+
+  const [optionTwos, setOptionTwos] = useState([]); // 선택한 옵션1의 child
   const [isOpt1Chosen, setIsOpt1Chosen] = useState(false);
   const [isItemSelected, setIsItemSelected] = useState(false);
-  const [option1, setOption1] = useState("");
-  const [option2, setOption2] = useState("");
+
+  const [option1, setOption1] = useState(["", ""]); // 선택한 옵션1[옵션명, id]
+  const [option2, setOption2] = useState(["", ""]); // 선택한 옵션2
+
   const [stack, setStack] = useState("");
   const [selItems, setSelItems] = useState([]);
 
   const onChange = (e) => {
+    const target = e.target;
+    const optIdx = target.options.selectedIndex - 1;
+
     if (!isOpt1Chosen) {
       setIsOpt1Chosen(true);
-      setOption1(e.target.value);
+      setOption1([target.value, target.children[optIdx + 1].dataset.id]);
 
-      const tempOptOne = optionOnes.find((o) => o.name === e.target.value);
-      const tempOptTwos = tempOptOne["option2"];
-      // option2 있나 확인
+      // 선택된 option1의 option2 찾기
+      const tempOptTwos = optionOnes[optIdx]["option2"];
       setOptionTwos(tempOptTwos);
 
-      // option2 없음
       if (tempOptTwos.length === 0) {
-        setStack(tempOptOne.count);
+        // option2 없음
+        setStack(optionOnes[optIdx].stock);
         setIsItemSelected(true);
       }
     } else {
-      setStack(optionTwos.find((o) => o.name === e.target.value).count);
+      setStack(optionTwos[optIdx].stock);
       setIsItemSelected(true);
-      setOption2(e.target.value);
+      setOption2([target.value, target.children[optIdx + 1].dataset.id]);
     }
   };
 
@@ -45,21 +49,32 @@ const Option = () => {
 
     switch (btnType) {
       case UP:
-        selItems[itemIdx].count < selItems[itemIdx].stack
-          ? setSelItems(
-              selItems.map((item, idx) =>
-                idx === itemIdx ? { ...item, count: item.count + 1 } : item
-              )
-            )
-          : alert("최대 수량입니다");
-        break;
-      case DOWN:
-        if (selItems[itemIdx].count > 1)
+        if (selItems[itemIdx].count < selItems[itemIdx].stack) {
           setSelItems(
-            selItems.map((item, idx) =>
-              idx === itemIdx ? { ...item, count: item.count - 1 } : item
+            selItems.map((sel, idx) =>
+              idx === itemIdx ? { ...sel, count: sel.count + 1 } : sel
             )
           );
+          setChosen(
+            chosen.map((chosen, idx) =>
+              idx === itemIdx ? { ...chosen, count: chosen.count + 1 } : chosen
+            )
+          );
+        } else alert("최대 수량입니다");
+        break;
+      case DOWN:
+        if (selItems[itemIdx].count > 1) {
+          setSelItems(
+            selItems.map((sel, idx) =>
+              idx === itemIdx ? { ...sel, count: sel.count - 1 } : sel
+            )
+          );
+          setChosen(
+            chosen.map((chosen, idx) =>
+              idx === itemIdx ? { ...chosen, count: chosen.count - 1 } : chosen
+            )
+          );
+        }
 
         break;
     }
@@ -70,29 +85,36 @@ const Option = () => {
 
     // 수량 쪽으로 데이터 넘겨주기
     const idx = selItems.findIndex(
-      (item) => item.option1 === option1 && item.option2 === option2
+      (item) => item.option1 === option1[0] && item.option2 === option2[0]
     );
 
     if (idx === -1) {
       // 기존에 선택한 적 없음
       setSelItems((cur) =>
         cur.concat({
-          option1: option1,
-          option2: option2,
+          option1: option1[0],
+          option2: option2[0],
           count: 1,
           stack: stack,
         })
       );
+      setChosen((cur) =>
+        cur.concat({
+          itemId: item.itemId,
+          option1Id: option1[1],
+          option2Id: option2[1],
+          count: 1,
+        })
+      );
     } else alert("이미 추가된 옵션입니다! 수량을 변경해주세요. ");
 
-    setOption1("");
-    setOption2("");
+    setOption1(["", ""]);
+    setOption2(["", ""]);
 
     setIsOpt1Chosen(false);
     setIsItemSelected(false);
   }, [isItemSelected]);
 
-  console.log(selItems);
   return (
     <div>
       <ul>
@@ -107,7 +129,11 @@ const Option = () => {
               옵션1
             </option>
             {optionOnes.map((optOne) => (
-              <option key={"o1_" + optOne.name} disabled={optOne.count === 0}>
+              <option
+                key={"o1_" + optOne.name}
+                disabled={optOne.count === 0}
+                data-id={optOne.option1Id}
+              >
                 {optOne.name}
                 {optOne.count == 0 ? "(품절)" : null}
               </option>
@@ -129,6 +155,7 @@ const Option = () => {
                   <option
                     key={"o2_" + optTwo.name}
                     disabled={optTwo.count === 0}
+                    data-id={optTwo.option2Id}
                   >
                     {optTwo.name}
                     {optTwo.count == 0 ? "(품절)" : null}
@@ -138,6 +165,7 @@ const Option = () => {
           </select>
         </li>
       </ul>
+
       <div name="option-counter">
         <ul>
           {selItems.map((item, idx) => (
@@ -161,6 +189,9 @@ const Option = () => {
   );
 };
 
-Option.propTypes = {};
+Option.propTypes = {
+  item: PropTypes.object.isRequired,
+  setChosen: PropTypes.func.isRequired,
+};
 
 export default Option;

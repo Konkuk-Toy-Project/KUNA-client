@@ -50,8 +50,6 @@ const OrderWriteInfo = () => {
           info={info}
           onChange={onChange}
         />
-      </ul>
-      <div name="userInfo">
         <OrderInput
           label="수령인"
           name={RECIEVER}
@@ -64,10 +62,12 @@ const OrderWriteInfo = () => {
           info={info}
           onChange={onChange}
         />
-      </div>
+        {info.phone.match(/[^0-9]/g) !== null ? (
+          <span>번호만 입력해주세요.</span>
+        ) : null}
+      </ul>
       <div name="memo">
         <label>배송 요청사항</label>
-
         <textarea
           name={MEMO}
           cols="30"

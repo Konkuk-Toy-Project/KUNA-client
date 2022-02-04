@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import BirthSelectBox from "./BirthSelectBox";
-import PhoneInput from "./PhoneInput";
+import BirthSelectBox from "../../components/client/Login/BirthSelectBox";
+import PhoneInput from "../../components/client/Login/PhoneInput";
 
 const TYPE_MANUALLY = "직접입력";
 const emailArr = [TYPE_MANUALLY, "naver.com", "gmail.com", "daum.net"];
@@ -20,7 +20,7 @@ const BIRTH_Y = "birth_year";
 const BIRTH_M = "birth_month";
 const BIRTH_D = "birth_day";
 
-const SignIn = () => {
+const SignInPage = () => {
   const [info, setInfo] = useState({
     [ID]: "",
     [EMAIL_ADDR]: "",
@@ -163,4 +163,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInPage;

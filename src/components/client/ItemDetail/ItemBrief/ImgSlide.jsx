@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const LEFT = "left_btn";
 const RIGHT = "right_btn";
 
-const ImgSection = ({ imgsrcs, defaultIdx }) => {
+const ImgSlide = ({ imgsrcs, defaultIdx }) => {
   const [imgIdx, setImgIdx] = useState(defaultIdx);
   const onBtnClick = (e) => {
     e.target.id === LEFT
@@ -39,4 +39,4 @@ const ImgSection = ({ imgsrcs, defaultIdx }) => {
   );
 };
 
-export default ImgSection;
+export default ImgSlide;

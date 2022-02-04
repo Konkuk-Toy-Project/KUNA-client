@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const BriefHeader = ({ name, price, sale }) => {
+const BriefHeader = ({ state, name, price, sale }) => {
   return (
     <div>
-      <h4 name="item-title">{name}</h4>
+      <h4 name="item-title">
+        {name}
+        {state === "sold_out" ? <span>품절</span> : null}
+      </h4>
 
       {sale > 0 ? (
         <div id="sale-container">

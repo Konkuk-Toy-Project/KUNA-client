@@ -21,7 +21,12 @@ const ItemBrief = ({ itemObj }) => {
       <ImgSlide imgsrcs={item.itemImageUrl} defaultIdx={0} />
 
       <div>
-        <BriefHeader name={item.name} price={item.price} sale={item.sale} />
+        <BriefHeader
+          state={item.itemState}
+          name={item.name}
+          price={item.price}
+          sale={item.sale}
+        />
         {/* 찜개수+사용자의 찜 내역에 포함 해야함--------------------------------- */}
         <LikeBtn num={item.preference} />
         {/* 옵션 컴포넌트*/}

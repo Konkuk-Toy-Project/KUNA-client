@@ -28,6 +28,7 @@ const BriefHeader = ({ state, name, price, sale }) => {
 };
 
 BriefHeader.propTypes = {
+  state: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   sale: PropTypes.number.isRequired,

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import IconX from "../../../Icon/IconX";
 import PropTypes from "prop-types";
 
 const UP = "up";
@@ -78,6 +79,11 @@ const Option = ({ item, chosen, setChosen }) => {
 
         break;
     }
+  };
+
+  const onDelBtnClick = (e) => {
+    setSelItems(selItems.filter((sel, idx) => idx != e.target.name));
+    setChosen(chosen.filter((chose, idx) => idx != e.target.name));
   };
 
   useEffect(() => {
@@ -179,6 +185,9 @@ const Option = ({ item, chosen, setChosen }) => {
                 </button>
                 <button name={DOWN + SEP + idx} onClick={onBtnClick}>
                   🔽
+                </button>
+                <button name={idx} key={"x_" + idx} onClick={onDelBtnClick}>
+                  ❌
                 </button>
               </div>
             </li>

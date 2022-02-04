@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { OnlyLikeNumState } from "../../itemData/itemData";
+import PropTypes from "prop-types";
 
-const LikeBtn = () => {
-  const [likesNum, setLikesNum] = useState(useRecoilValue(OnlyLikeNumState));
+const LikeBtn = ({ num }) => {
+  const [likesNum, setLikesNum] = useState(num);
   const [isLiked, setIsLiked] = useState(false);
   const onClick = () => {
     isLiked ? setLikesNum((cur) => cur - 1) : setLikesNum((cur) => cur + 1);
@@ -18,6 +17,9 @@ const LikeBtn = () => {
       </button>
     </>
   );
+};
+LikeBtn.propTypes = {
+  num: PropTypes.number.isRequired,
 };
 
 export default LikeBtn;

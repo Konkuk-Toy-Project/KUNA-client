@@ -123,7 +123,7 @@ const Option = ({ item, chosen, setChosen }) => {
             name="option1"
             id="option1"
             onChange={onChange}
-            disabled={isOpt1Chosen}
+            disabled={isOpt1Chosen || item.itemState === "sold_out"}
           >
             <option selected={!isOpt1Chosen || !isItemSelected} disabled>
               옵션1

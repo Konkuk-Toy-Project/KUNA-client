@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ItemBrief from "../../components/client/ItemDetail/ItemBrief/ItemBrief";
+import ItemDetailImg from "../../components/client/ItemDetail/ItemDetailImg";
 
 const ItemDetailPage = () => {
   //sample data
@@ -46,12 +47,13 @@ const ItemDetailPage = () => {
       },
     ],
     detailImageUrl: [
-      "https://img.sonyunara.com/files/goodsm/139373/1639466954_7.jpg",
+      "https://img.sonyunara.com/files/goodsm/171893/1643275899_1.jpg",
     ],
   });
   return (
     <div>
       <ItemBrief itemObj={item} />
+      <ItemDetailImg imgSrc={item.detailImageUrl} />
     </div>
   );
 };

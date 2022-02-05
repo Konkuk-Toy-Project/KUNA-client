@@ -95,7 +95,7 @@ const CouponSelector = ({
 CouponSelector.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   defaultPrice: PropTypes.number.isRequired,
-  setDcPrice: PropTypes.func.isRequired,
+  setTotalPrice: PropTypes.func.isRequired,
   setCouponId: PropTypes.func.isRequired,
 };
 

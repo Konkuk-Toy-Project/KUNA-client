@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import PreviewItemList from "../../components/client/Main/PreviewItemList/PreviewItemList";
+import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { basketItemState } from "../../store/client/basket";

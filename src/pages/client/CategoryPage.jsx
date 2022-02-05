@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import PreviewItemList from "../../components/client/Main/PreviewItemList/PreviewItemList";
+import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { categoryState } from "../../store/client/category";
 

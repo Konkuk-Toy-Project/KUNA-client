@@ -70,6 +70,7 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
 
   const [popWriteQnA, setPopWriteQnA] = useState(false);
   const [popAnswer, setPopAnswer] = useState(false);
+  const [selAnswIdx, setSelAnswIdx] = useState(null);
 
   const onWriteQClick = () => setPopWriteQnA(true);
   const onAnswerQClick = () => setPopAnswer(true);
@@ -79,7 +80,7 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
   }, []);
   return (
     <div>
-      <QnATable data={qnAs} />
+      <QnATable data={qnAs} setSelAnswIdx={setSelAnswIdx} />
       <button onClick={onWriteQClick}>Q&A 작성하기</button>
 
       {/* 팝업창 */}
@@ -91,7 +92,13 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
         />
       ) : null}
 
-      {/* {popAnswer ? <AnswCheckPopup /> : null} */}
+      {selAnswIdx !== null ? (
+        <AnswCheckPopup
+          qnaData={qnAs[selAnswIdx]}
+          setSelAnswIdx={setSelAnswIdx}
+          itemData={itemData}
+        />
+      ) : null}
     </div>
   );
 };

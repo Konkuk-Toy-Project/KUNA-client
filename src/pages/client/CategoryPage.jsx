@@ -2,8 +2,8 @@ import React from "react";
 import { useParams } from "react-router";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import ItemList from "../../components/client/Main/ItemList/ItemList";
-import Title from "../../components/client/Main/Title/Title";
+import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
+import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { categoryState } from "../../store/client/category";
 
 const CategoryPage = () => {
@@ -27,10 +27,10 @@ const CategoryPage = () => {
 
   return (
     <CategoryPageWrapper>
-      <Title name={convertEngTitleToKor(category)} />
-      <ItemList listType={"main"} items={items} />
-      <ItemList listType={"main"} items={items} />
-      <ItemList listType={"main"} items={items} />
+      <PreviewTitle name={convertEngTitleToKor(category)} />
+      <PreviewItemList listType={"main"} items={items} />
+      <PreviewItemList listType={"main"} items={items} />
+      <PreviewItemList listType={"main"} items={items} />
     </CategoryPageWrapper>
   );
 };

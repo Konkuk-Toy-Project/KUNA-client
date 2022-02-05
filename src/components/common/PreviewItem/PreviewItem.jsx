@@ -1,10 +1,10 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { basketItemState } from "../../../../store/client/basket";
-import { likeState } from "../../../../store/client/like";
+import { basketItemState } from "../../../store/client/basket";
+import { likeState } from "../../../store/client/like";
 
-const Item = ({ listType, item }) => {
+const PreviewItem = ({ listType, item }) => {
   const [items, setItems] = useRecoilState(likeState);
   const [basketItems, setBasketItems] = useRecoilState(basketItemState);
 
@@ -53,15 +53,15 @@ const Item = ({ listType, item }) => {
   };
 
   return (
-    <ItemWrapper listType={listType}>
-      <ItemImage src={item.image} listType={listType} />
-      <ItemDescription listType={listType}>
-        <ItemTitle>{briefTitle(listType, item.title)}</ItemTitle>
-        <ItemPriceWrapper listType={listType}>
+    <PreviewItemWrapper listType={listType}>
+      <PreviewItemImage src={item.image} listType={listType} />
+      <PreviewItemDescription listType={listType}>
+        <PreviewItemTitle>{briefTitle(listType, item.title)}</PreviewItemTitle>
+        <PreviewItemPriceWrapper listType={listType}>
           <p>{item.discount}</p>
           <p>{item.price}</p>
-        </ItemPriceWrapper>
-      </ItemDescription>
+        </PreviewItemPriceWrapper>
+      </PreviewItemDescription>
       {listType === "like" ? (
         <button onClick={onClickDeleteLike}>Delete Like</button>
       ) : null}
@@ -78,11 +78,11 @@ const Item = ({ listType, item }) => {
       {listType === "basket" ? (
         <button onClick={() => changeItemCount(item, "decrease")}>-</button>
       ) : null}
-    </ItemWrapper>
+    </PreviewItemWrapper>
   );
 };
 
-const ItemWrapper = styled.li`
+const PreviewItemWrapper = styled.li`
   display: flex;
   flex-direction: ${(props) => (props.listType === "main" ? "column" : "row")};
   justify-content: center;
@@ -92,25 +92,25 @@ const ItemWrapper = styled.li`
   border-radius: 10px;
 `;
 
-const ItemImage = styled.img`
+const PreviewItemImage = styled.img`
   width: ${(props) => (props.listType === "main" ? "10em" : "5em")};
   border-radius: 10px;
 `;
 
-const ItemDescription = styled.div`
+const PreviewItemDescription = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0.2em;
 `;
 
-const ItemTitle = styled.p`
+const PreviewItemTitle = styled.p`
   font-size: 14px;
   font-weight: 600;
 `;
 
-const ItemPriceWrapper = styled.div`
+const PreviewItemPriceWrapper = styled.div`
   display: flex;
   flex-direction: ${(props) => (props.listType === "main" ? "column" : "row")};
 `;
 
-export default Item;
+export default PreviewItem;

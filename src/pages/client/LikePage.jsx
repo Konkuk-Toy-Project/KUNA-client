@@ -1,8 +1,8 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import ItemList from "../../components/client/Main/ItemList/ItemList";
-import Title from "../../components/client/Main/Title/Title";
+import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
+import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { likeState } from "../../store/client/like";
 
 const LikePage = () => {
@@ -10,8 +10,8 @@ const LikePage = () => {
 
   return (
     <LikePageWrapper>
-      <Title name="좋아요" />
-      <ItemList listType={"like"} items={items} />
+      <PreviewTitle name="좋아요" />
+      <PreviewItemList listType={"like"} items={items} />
     </LikePageWrapper>
   );
 };

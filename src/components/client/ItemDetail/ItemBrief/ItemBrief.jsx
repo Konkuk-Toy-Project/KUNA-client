@@ -14,7 +14,6 @@ const ItemBrief = ({ itemObj }) => {
   const onBuyClick = () => {
     console.log("Path로? 선택내용 보내기");
   };
-  console.log(chosenOpts);
 
   return (
     <div>

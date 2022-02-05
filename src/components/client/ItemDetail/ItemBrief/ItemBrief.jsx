@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import ImgSlide from "./ImgSlide";
+import ImgSlide from "../../../common/ImgSlide/ImgSlide";
 import LikeBtn from "./BriefInfoComp/LikeBtn";
 import Option from "./BriefInfoComp/Option";
 import BriefHeader from "./BriefInfoComp/BriefHeader";

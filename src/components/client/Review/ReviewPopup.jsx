@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ImgSlide from "../ItemDetail/ItemBrief/ImgSlide";
+import ImgSlide from "../../common/ImgSlide/ImgSlide";
 import UserName from "./UserName";
 import RatingStars from "./RatingStars";
 import IconX from "../Icon/IconX";

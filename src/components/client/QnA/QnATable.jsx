@@ -4,10 +4,12 @@ import PageChanger from "../../common/PageChanger/PageChanger";
 
 const QNA_NUM_UNIT = 5;
 
-const QnATable = ({ data }) => {
+const QnATable = ({ data, setSelAnswIdx }) => {
   const [qnAs, setQnAs] = useState(data);
   const [curPageNum, setCurPageNum] = useState(1);
   const [totalPageNum, setTotalPageNum] = useState(1);
+
+  const onAnswClick = (e) => setSelAnswIdx(e.target.dataset.id);
 
   return (
     <div>
@@ -38,7 +40,11 @@ const QnATable = ({ data }) => {
                 <td>{q.memberName}</td>
                 <td>{q.registryDate === null ? "" : q.registryDate}</td>
                 <td>
-                  <button disabled={q.title === null || !q.answered}>
+                  <button
+                    onClick={onAnswClick}
+                    disabled={q.title === null || !q.answered}
+                    data-id={idx}
+                  >
                     {!q.answered
                       ? "답변대기"
                       : q.title != null

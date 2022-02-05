@@ -3,31 +3,28 @@ import PropTypes from "prop-types";
 import OrderInput from "./OrderInput";
 
 const ADDRESS = "address";
-const DETAIL_ADD = "detailAdd";
-const POST_NUM = "postNum";
-const RECIEVER = "receiver";
+const RECIPIENT = "recipient";
 const PHONE = "phone";
-const MEMO = "memo";
 
-const OrderWriteInfo = () => {
-  // 주소, 상세주소, 우편번호, 수령인, 전화번호, 배송요청사항
-  const [info, setInfo] = useState({
-    [ADDRESS]: "",
-    [DETAIL_ADD]: "",
-    [POST_NUM]: "",
-    [RECIEVER]: "",
-    [PHONE]: "",
-    [MEMO]: "",
+const OrderWriteInfo = ({ setData }) => {
+  const [infos, setInfos] = useState({
+    [ADDRESS]: "", //배송지 주소
+    [RECIPIENT]: "", //수령인
+    [PHONE]: "", //수령인 전화번호
   });
 
+  const onChange = (e) => {
+    setInfos({ ...infos, [e.target.name]: e.target.value });
+    console.log(infos);
+  };
+
   useEffect(() => {
-    console.log("회원인 경우, 사용자 정보 받아와서 info에 초기정보 채워넣기");
+    console.log("회원인 경우, 사용자 정보 받아와서 inputs에 초기정보 채워넣기");
   }, []);
 
-  const onChange = (e) => {
-    setInfo({ ...info, [e.target.name]: e.target.value });
-    console.log(info);
-  };
+  useEffect(() => {
+    setData(infos);
+  }, [infos]);
 
   return (
     <div>
@@ -35,51 +32,29 @@ const OrderWriteInfo = () => {
         <OrderInput
           label="주소"
           name={ADDRESS}
-          info={info}
-          onChange={onChange}
-        />
-        <OrderInput
-          label="상세주소"
-          name={DETAIL_ADD}
-          info={info}
-          onChange={onChange}
-        />
-        <OrderInput
-          label="우편번호"
-          name={POST_NUM}
-          info={info}
+          info={infos}
           onChange={onChange}
         />
         <OrderInput
           label="수령인"
-          name={RECIEVER}
-          info={info}
+          name={RECIPIENT}
+          info={infos}
           onChange={onChange}
         />
         <OrderInput
           label="전화번호"
           name={PHONE}
-          info={info}
+          info={infos}
           onChange={onChange}
         />
-        {info.phone.match(/[^0-9]/g) !== null ? (
+        {infos.phone.match(/[^0-9]/g) !== null ? (
           <span>번호만 입력해주세요.</span>
         ) : null}
       </ul>
-      <div name="memo">
-        <label>배송 요청사항</label>
-        <textarea
-          name={MEMO}
-          cols="30"
-          rows="10"
-          onChange={onChange}
-          value={info[MEMO]}
-        ></textarea>
-      </div>
     </div>
   );
 };
 
-OrderWriteInfo.propTypes = {};
+OrderWriteInfo.propTypes = { setData: PropTypes.func.isRequired };
 
 export default OrderWriteInfo;

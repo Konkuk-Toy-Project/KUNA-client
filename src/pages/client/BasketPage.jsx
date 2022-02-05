@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import ItemList from "../../components/client/Main/ItemList/ItemList";
+import PreviewItemList from "../../components/client/Main/PreviewItemList/PreviewItemList";
 
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { basketItemState } from "../../store/client/basket";
@@ -49,7 +49,7 @@ const BasketPage = () => {
   return (
     <BasketPageWrapper>
       <PreviewTitle name="장바구니" />
-      <ItemList listType={"basket"} items={items} />
+      <PreviewItemList listType={"basket"} items={items} />
       <button onClick={onClickDeleteAll}>전체 삭제</button>
       <button>결제하기</button>
       <p>기존 금액 : {calculateTotalPrice()}원</p>

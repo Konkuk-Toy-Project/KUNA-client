@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import ItemList from "../../components/client/Main/ItemList/ItemList";
+import PreviewItemList from "../../components/client/Main/PreviewItemList/PreviewItemList";
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { likeState } from "../../store/client/like";
 
@@ -11,7 +11,7 @@ const LikePage = () => {
   return (
     <LikePageWrapper>
       <PreviewTitle name="좋아요" />
-      <ItemList listType={"like"} items={items} />
+      <PreviewItemList listType={"like"} items={items} />
     </LikePageWrapper>
   );
 };

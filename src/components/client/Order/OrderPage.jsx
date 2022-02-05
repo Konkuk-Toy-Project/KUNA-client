@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import IconX from "../Icon/IconX.jsx";
+import CouponSelector from "./CouponSelector.jsx";
+import OrderWriteInfo from "./OrderWriteInfo.jsx";
 
-const PER = "percent";
+// const PER = "percent";
 const CREDIT = "credit";
 const BANK_BOOK = "bankbook";
 const PAY_METHOD = "payMethod";
@@ -9,27 +11,31 @@ const PAY_METHOD = "payMethod";
 const OrderPage = () => {
   const [items, setItems] = useState([]);
   const [info, setInfo] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(30000);
-  const [dcPrice, setDcPrice] = useState(totalPrice);
-  const [didUsedCoupon, setDidUsedCoupon] = useState(false);
-  const [coupons, setCoupons] = useState([]);
+  const [defaultPrice, setDefaultPrice] = useState(30000);
+  const [totalPrice, setTotalPrice] = useState(defaultPrice);
+
   const [payMethod, setPayMethod] = useState("");
+  const [inputData, setInputData] = useState({});
+  const [couponId, setCouponId] = useState({});
+  const [usePoint, setUsePoint] = useState({});
 
-  const onCouponSel = (e) => {
-    console.log(e.target.value);
-    const selCp = coupons.find((c) => c.couponId == e.target.value);
-    console.log(selCp);
-    setDcPrice(
-      selCp.couponKind === PER
-        ? (totalPrice * (100 - selCp.rate)) / 100
-        : totalPrice - selCp.rate
-    );
-    setDidUsedCoupon(true);
-  };
-
-  const onRemoveCoupon = () => {
-    setDidUsedCoupon(false);
-  };
+  const [data, setData] = useState({
+    address: "", //배송지 주소
+    recipient: "", //수령인
+    phone: "", //수령인 전화번호
+    payMethod: "", //결제 방법(card, bankbook)
+    usePoint: "", //포인트 사용액
+    totalPrice: "", //전체 주문 금액(택배비 미포함)
+    shippingChage: "", //택배비
+    couponId: "", //쿠폰 사용 Id
+    orderItems: {
+      //주문 상품들
+      itemId: "", //상품 고유 Id
+      option1Id: "", //옵션1 고유 id
+      option2Id: "", //옵션2 고유 id
+      count: "", //구매 개수
+    },
+  });
 
   const onPayMthdClick = (e) => {
     setPayMethod(e.target.value);
@@ -41,40 +47,9 @@ const OrderPage = () => {
     console.log("input관련 정보들 받아오기(주소 등))"); // => input 관련 컴포넌트로 넘겨주기
   }, []);
 
-  useEffect(() => {
-    console.log("setTotalPrice이용해서 총 금액 받아오기");
-    console.log("아이템 수량 바뀔때 마다 total price 바꿔주기");
-    console.log("쿠폰 관련 정보들 받아오기 - 사용 가능한 쿠폰들만");
-    setCoupons([
-      {
-        couponKind: "percent",
-        rate: 40,
-        name: "신규회원 할인 쿠폰",
-        couponId: 1111,
-      },
-      {
-        couponKind: "static",
-        rate: 1500,
-        name: "그냥 할인 쿠폰",
-        couponId: 1131,
-      },
-      {
-        couponKind: "percent",
-        rate: 20,
-        name: "신규회원 할인 쿠폰",
-        couponId: 1121,
-      },
-    ]);
-    // 고려사항 : 만료날짜 충족, 총금액 충족, 사용여부 no
-    // couponKind: 쿠폰 종류(percent-퍼센트 할인, static-고정 할인액)
-    // rate: 할인 정도
-    // expiredDate: 만료일자
-    // couponCondition: 쿠폰 사용 조건(total_price_숫자)
-    // name: 쿠폰 이름
-    // isUsed: 사용 여부
-    // couponId: 쿠폰 고유 id
-  }, [items]);
-  console.log("할인 금액: " + dcPrice);
+  console.log(inputData);
+  console.log(couponId);
+  console.log("할인 금액: " + totalPrice);
 
   return (
     <div>
@@ -84,30 +59,15 @@ const OrderPage = () => {
       정보 입력 컴포넌트
       결제 방식 컴포넌트 
       결제하기 버튼  
-      */}
-
+    */}
+      <OrderWriteInfo setData={setInputData} />
       {/* 쿠폰 선택 */}
-      <div name="couponContainer">
-        <label>쿠폰</label>
-        <select name="coupons" disabled={didUsedCoupon} onChange={onCouponSel}>
-          <option disabled selected={!didUsedCoupon}>
-            쿠폰 선택하기
-          </option>
-          {coupons.map((coupon) => (
-            <option key={coupon.couponId} value={coupon.couponId}>
-              {coupon.name}
-              {` (${coupon.rate}${
-                coupon.couponKind === PER ? "%" : "원"
-              } 할인)`}
-            </option>
-          ))}
-        </select>
-        {didUsedCoupon ? (
-          <button onClick={onRemoveCoupon}>
-            <IconX />
-          </button>
-        ) : null}
-      </div>
+      <CouponSelector
+        items={items}
+        defaultPrice={defaultPrice}
+        setTotalPrice={setTotalPrice}
+        setCouponId={setCouponId}
+      />
 
       {/* 결제 방식 선택 */}
       <div name="paymentContainer">

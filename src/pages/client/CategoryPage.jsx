@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import ItemList from "../../components/client/Main/ItemList/ItemList";
-import Title from "../../components/client/Main/Title/Title";
+import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { categoryState } from "../../store/client/category";
 
 const CategoryPage = () => {
@@ -27,7 +27,7 @@ const CategoryPage = () => {
 
   return (
     <CategoryPageWrapper>
-      <Title name={convertEngTitleToKor(category)} />
+      <PreviewTitle name={convertEngTitleToKor(category)} />
       <ItemList listType={"main"} items={items} />
       <ItemList listType={"main"} items={items} />
       <ItemList listType={"main"} items={items} />

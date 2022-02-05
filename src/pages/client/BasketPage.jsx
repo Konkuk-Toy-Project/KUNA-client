@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import ItemList from "../../components/client/Main/ItemList/ItemList";
 
-import Title from "../../components/client/Main/Title/Title";
+import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { basketItemState } from "../../store/client/basket";
 
 const BasketPage = () => {
@@ -48,7 +48,7 @@ const BasketPage = () => {
 
   return (
     <BasketPageWrapper>
-      <Title name="장바구니" />
+      <PreviewTitle name="장바구니" />
       <ItemList listType={"basket"} items={items} />
       <button onClick={onClickDeleteAll}>전체 삭제</button>
       <button>결제하기</button>

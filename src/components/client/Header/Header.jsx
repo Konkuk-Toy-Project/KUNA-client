@@ -51,13 +51,15 @@ const Header = () => {
               <p>찜목록</p>
             </MenuCategory>
           </PageLink>
-          <MenuCategory>
-            <img
-              src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
-              alt=""
-            />
-            <p>로그인</p>
-          </MenuCategory>
+          <PageLink to="/login">
+            <MenuCategory>
+              <img
+                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+                alt=""
+              />
+              <p>로그인</p>
+            </MenuCategory>
+          </PageLink>
           <PageLink to="/user">
             <MenuCategory>
               <img

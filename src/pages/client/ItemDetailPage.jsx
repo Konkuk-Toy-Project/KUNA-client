@@ -20,7 +20,7 @@ const ItemDetailPage = () => {
     preference: 7,
     registryDate: 220102,
     sale: 15,
-    itemId: 121935,
+    itemId: "121935",
     categoryName: "shirt",
     categoryId: 1,
     option1: [

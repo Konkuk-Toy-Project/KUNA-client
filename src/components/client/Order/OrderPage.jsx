@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CouponSelector from "./CouponSelector.jsx";
 import OrderWriteInfo from "./OrderWriteInfo.jsx";
 import PayMthdSelector from "./PayMthdSelector.jsx";
+import UsingPoint from "./UsingPoint.jsx";
 
 const OrderPage = () => {
   const [items, setItems] = useState([]);
@@ -12,7 +13,7 @@ const OrderPage = () => {
   const [payMethod, setPayMethod] = useState({ ["payMethod"]: "" });
   const [inputData, setInputData] = useState({});
   const [couponId, setCouponId] = useState({ ["couponId"]: "" });
-  const [usePoint, setUsePoint] = useState({});
+  const [usePoint, setUsePoint] = useState({ ["usePoint"]: 0 });
 
   const [data, setData] = useState({
     address: "", //배송지 주소
@@ -61,6 +62,7 @@ const OrderPage = () => {
         setTotalPrice={setTotalPrice}
         setCouponId={setCouponId}
       />
+      <UsingPoint setUsePoint={setUsePoint} />
       <PayMthdSelector setPayMethod={setPayMethod} />
     </div>
   );

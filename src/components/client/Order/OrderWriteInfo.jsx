@@ -6,7 +6,7 @@ const ADDRESS = "address";
 const RECIPIENT = "recipient";
 const PHONE = "phone";
 
-const OrderWriteInfo = ({ setData }) => {
+const OrderWriteInfo = ({ setData, setIsFilled }) => {
   const [infos, setInfos] = useState({
     [ADDRESS]: "", //배송지 주소
     [RECIPIENT]: "", //수령인
@@ -24,6 +24,12 @@ const OrderWriteInfo = ({ setData }) => {
 
   useEffect(() => {
     setData(infos);
+    infos[ADDRESS] !== "" &&
+    infos[RECIPIENT] !== "" &&
+    infos[PHONE] !== "" &&
+    infos[PHONE].match(/[^0-9]/g) === null
+      ? setIsFilled(true)
+      : setIsFilled(false);
   }, [infos]);
 
   return (
@@ -55,6 +61,9 @@ const OrderWriteInfo = ({ setData }) => {
   );
 };
 
-OrderWriteInfo.propTypes = { setData: PropTypes.func.isRequired };
+OrderWriteInfo.propTypes = {
+  setData: PropTypes.func.isRequired,
+  setIsFilled: PropTypes.func.isRequired,
+};
 
 export default OrderWriteInfo;

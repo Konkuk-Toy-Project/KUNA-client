@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import IconX from "../Icon/IconX.jsx";
 import CouponSelector from "./CouponSelector.jsx";
 import OrderWriteInfo from "./OrderWriteInfo.jsx";
-
-// const PER = "percent";
-const CREDIT = "credit";
-const BANK_BOOK = "bankbook";
-const PAY_METHOD = "payMethod";
+import PayMthdSelector from "./PayMthdSelector.jsx";
 
 const OrderPage = () => {
   const [items, setItems] = useState([]);
@@ -14,9 +10,9 @@ const OrderPage = () => {
   const [defaultPrice, setDefaultPrice] = useState(30000);
   const [totalPrice, setTotalPrice] = useState(defaultPrice);
 
-  const [payMethod, setPayMethod] = useState("");
+  const [payMethod, setPayMethod] = useState({ ["payMethod"]: "" });
   const [inputData, setInputData] = useState({});
-  const [couponId, setCouponId] = useState({});
+  const [couponId, setCouponId] = useState({ ["couponId"]: "" });
   const [usePoint, setUsePoint] = useState({});
 
   const [data, setData] = useState({
@@ -50,6 +46,7 @@ const OrderPage = () => {
   console.log(inputData);
   console.log(couponId);
   console.log("할인 금액: " + totalPrice);
+  console.log(payMethod);
 
   return (
     <div>
@@ -57,44 +54,19 @@ const OrderPage = () => {
       아이템 컴포넌트 
       총 금액 컴포넌트 
       정보 입력 컴포넌트
+      쿠폰 사용 컴포넌트 
+      포인트 사용 컴포넌트 
       결제 방식 컴포넌트 
       결제하기 버튼  
     */}
       <OrderWriteInfo setData={setInputData} />
-      {/* 쿠폰 선택 */}
       <CouponSelector
         items={items}
         defaultPrice={defaultPrice}
         setTotalPrice={setTotalPrice}
         setCouponId={setCouponId}
       />
-
-      {/* 결제 방식 선택 */}
-      <div name="paymentContainer">
-        <label>결제 방식</label>
-        <ul>
-          <li>
-            <input
-              type="radio"
-              id={CREDIT}
-              name={PAY_METHOD}
-              value={CREDIT}
-              onClick={onPayMthdClick}
-            />
-            <label htmlFor={CREDIT}>신용카드</label>
-          </li>
-          <li>
-            <input
-              type="radio"
-              id={BANK_BOOK}
-              name={PAY_METHOD}
-              value={BANK_BOOK}
-              onClick={onPayMthdClick}
-            />
-            <label htmlFor={BANK_BOOK}>계좌이체</label>
-          </li>
-        </ul>
-      </div>
+      <PayMthdSelector setPayMethod={setPayMethod} />
     </div>
   );
 };

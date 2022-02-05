@@ -9,10 +9,19 @@ const ItemBrief = ({ itemObj }) => {
   const [item, setItem] = useState(itemObj);
   const [chosenOpts, setChosenOpts] = useState([]);
   const onBasketClick = () => {
+    /// 옵션 선택 안했을 경우 판단
     console.log("서버로 chosenOpts 보내기");
+    const queryString = chosenOpts.map((opt) =>
+      Object.entries(opt)
+        .map((e) => e.join("="))
+        .join("&")
+    );
+    console.log(queryString);
   };
   const onBuyClick = () => {
-    console.log("Path로? 선택내용 보내기");
+    /// 옵션 선택 안했을 경우 판단
+    console.log("쿼리로 선택내용 보내기");
+    // history.pushState({ pathname: "/order", search: "chosenOpts?=" });
   };
 
   return (

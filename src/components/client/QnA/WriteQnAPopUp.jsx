@@ -8,10 +8,16 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  const onClick = () => setIsSecret((cur) => !cur);
+  const onSecretClick = () => setIsSecret((cur) => !cur);
   const onTitleChange = (e) => setTitle(e.target.value);
   const onTextChange = (e) => setText(e.target.value);
-  const onClosePopClick = () => setPopWriteQnA(false);
+  const onClosePopClick = () => {
+    setIsSecret(false);
+    setTitle("");
+    setText("");
+    setPopWriteQnA(false);
+  };
+
   const onSubmitClick = () => {
     console.log("서버 등록");
     setPopWriteQnA(false);
@@ -30,7 +36,8 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
 
   return (
     <div>
-      <div>상품 Q&A 쓰기</div>
+      <div>상품 Q&A 작성하기</div>
+      <IconX onClick={onClosePopClick} />
       <QnAItemInfo thumbnail={itemData.img} name={itemData.name} />
 
       <div name="writeSection">
@@ -43,7 +50,7 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
         />
         <label>
           비밀글
-          <input type="checkbox" checked={isSecret} onClick={onClick} />
+          <input type="checkbox" checked={isSecret} onClick={onSecretClick} />
         </label>
 
         <div name="main">
@@ -65,6 +72,12 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
       </div>
     </div>
   );
+};
+
+WriteQnAPopUp.propTypes = {
+  itemData: PropTypes.object.isRequired,
+  setQnA: PropTypes.func.isRequired,
+  setPopWriteQnA: PropTypes.func.isRequired,
 };
 
 export default WriteQnAPopUp;

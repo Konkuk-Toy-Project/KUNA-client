@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import IconX from "../Icon/IconX.jsx";
 import CouponSelector from "./CouponSelector.jsx";
 import OrderWriteInfo from "./OrderWriteInfo.jsx";
 import PayMthdSelector from "./PayMthdSelector.jsx";
@@ -32,10 +31,6 @@ const OrderPage = () => {
       count: "", //구매 개수
     },
   });
-
-  const onPayMthdClick = (e) => {
-    setPayMethod(e.target.value);
-  };
 
   useEffect(() => {
     console.log("로그인 상태인지 판단");

@@ -5,9 +5,10 @@ const CREDIT = "credit";
 const BANK_BOOK = "bankbook";
 const PAY_METHOD = "payMethod";
 
-const PayMthdSelector = ({ setPayMethod }) => {
+const PayMthdSelector = ({ setPayMethod, setIsChecked }) => {
   const onPayMthdClick = (e) => {
     setPayMethod({ [PAY_METHOD]: e.target.value });
+    setIsChecked(true);
   };
   return (
     <div>
@@ -38,6 +39,9 @@ const PayMthdSelector = ({ setPayMethod }) => {
   );
 };
 
-PayMthdSelector.propTypes = { setPayMethod: PropTypes.func.isRequired };
+PayMthdSelector.propTypes = {
+  setPayMethod: PropTypes.func.isRequired,
+  setIsChecked: PropTypes.func.isRequired,
+};
 
 export default PayMthdSelector;

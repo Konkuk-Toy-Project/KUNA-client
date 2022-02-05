@@ -2,15 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ItemList from "../ItemList/ItemList";
-
 import Title from "../Title/Title";
-
-const CategoryWrapper = styled.div``;
-
-const CategoryLink = styled(Link)`
-  color: black;
-  text-decoration: none;
-`;
 
 const Category = ({ link, name, listType, items }) => {
   return (
@@ -22,5 +14,12 @@ const Category = ({ link, name, listType, items }) => {
     </CategoryWrapper>
   );
 };
+
+const CategoryWrapper = styled.div``;
+
+const CategoryLink = styled(Link)`
+  color: black;
+  text-decoration: none;
+`;
 
 export default Category;

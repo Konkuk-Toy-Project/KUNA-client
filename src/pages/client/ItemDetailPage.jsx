@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ItemBrief from "../../components/client/ItemDetail/ItemBrief/ItemBrief";
 import ItemDetailImg from "../../components/client/ItemDetail/ItemDetailImg";
+import ReviewPage from "./ReviewPage";
 
 const ItemDetailPage = () => {
   //sample data
@@ -53,7 +54,13 @@ const ItemDetailPage = () => {
   return (
     <div>
       <ItemBrief itemObj={item} />
+      <ul>
+        <li>제품상세</li>
+        <li>리뷰</li>
+        <li>Q&A</li>
+      </ul>
       <ItemDetailImg imgSrc={item.detailImageUrl} />
+      <ReviewPage itemId={item.itemId} />
     </div>
   );
 };

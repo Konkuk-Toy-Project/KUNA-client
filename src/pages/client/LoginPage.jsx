@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
@@ -30,55 +31,132 @@ const LoginPage = () => {
   const { id, pw } = account;
 
   return (
-    <div>
-      <div name="id_container">
-        <label>
-          <input
-            type="text"
-            id={ID}
-            name={ID}
-            placeholder="이메일"
-            value={account[ID]}
-            onChange={onChange}
-          />
-        </label>
+    <LoginWrapper>
+      <div>
+        <Title>로그인</Title>
+
+        <ul>
+          <InputLi name="id_container">
+            <Input
+              type="text"
+              id={ID}
+              name={ID}
+              placeholder="이메일"
+              value={account[ID]}
+              onChange={onChange}
+            />
+          </InputLi>
+          <InputLi name="pw-container">
+            <Input
+              type={pwInputType}
+              name={PW}
+              placeholder="비밀번호"
+              value={account[PW]}
+              onChange={onChange}
+            />
+            <IconWrapper>
+              <i onClick={showPw}>
+                {pwInputType === INPUT_TYPE_PW ? "👀" : "🔒"}{" "}
+              </i>
+            </IconWrapper>
+          </InputLi>
+        </ul>
+        {isWrong ? (
+          <div id="warningStr">
+            아이디 또는 비밀번호가 잘못 입력 되었습니다. 아이디와 비밀번호를
+            정확히 입력해 주세요.
+          </div>
+        ) : null}
+        <Button
+          type="submit"
+          onSubmit={onSubmit}
+          disabled={id === "" || pw.length < 8}
+        >
+          로그인
+        </Button>
       </div>
-      <div name="pw-container">
-        <label>
-          <input
-            type={pwInputType}
-            name={PW}
-            placeholder="비밀번호"
-            value={account[PW]}
-            onChange={onChange}
-          />
-          <i onClick={showPw}>{pwInputType === INPUT_TYPE_PW ? "👀" : "🔒"} </i>
-        </label>
-      </div>
-      {isWrong ? (
-        <div id="warningStr">
-          아이디 또는 비밀번호가 잘못 입력 되었습니다. 아이디와 비밀번호를
-          정확히 입력해 주세요.
-        </div>
-      ) : null}
-      <button
-        id="loginBtn"
-        type="submit"
-        onSubmit={onSubmit}
-        disabled={id === "" || pw.length < 8}
-      >
-        로그인
-      </button>
-      <div id="subPageLink-containter">
-        <Link to="/login/signIn">
-          <span id="signIn">회원가입하기</span>
-        </Link>
-        <Link to="/login/findAccount">
-          <span id="findIdPw">아이디/비밀번호 찾기</span>
-        </Link>
-      </div>
-    </div>
+
+      <LinkUl>
+        <LinkLi name="subPageLink">
+          <Link to="/login/signIn" style={{ textDecoration: "none" }}>
+            <LinkSpan id="signIn">회원가입 하기</LinkSpan>
+          </Link>
+        </LinkLi>
+        <LinkLi>
+          <Link to="/login/findAccount" style={{ textDecoration: "none" }}>
+            <LinkSpan id="findIdPw">아이디·비밀번호 찾기</LinkSpan>
+          </Link>
+        </LinkLi>
+      </LinkUl>
+    </LoginWrapper>
   );
 };
+
+const LoginWrapper = styled.div`
+  margin: 0 auto;
+  width: 590px;
+  padding: 30px 0 90px 0;
+`;
+
+const Title = styled.div`
+  text-align: center;
+  font-size: 25px;
+  font-weight: 600;
+  margin: 30px;
+`;
+const InputLi = styled.li`
+  width: 100%;
+  height: 60px;
+  border-bottom: 2px solid #212b16;
+  margin: 8px auto;
+`;
+const Input = styled.input`
+  box-sizing: border-box;
+  display: inline-block;
+  width: 95%;
+  height: 100%;
+  font-size: 15px;
+  padding-left: 5%;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Button = styled.button`
+  width: 100%;
+  height: 60px;
+  border-radius: 10px;
+  border: none;
+  font-size: 17px;
+  margin: 3px auto;
+  background-color: #c76fd6;
+  color: #192111;
+  &:disabled {
+    background-color: #d8d5dc;
+    color: #a5a3a8;
+  }
+`;
+const IconWrapper = styled.div`
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  margin: auto 3px;
+`;
+
+const LinkUl = styled.ul`
+  padding: 12px 0px;
+  text-align: center;
+`;
+
+const LinkLi = styled.li`
+  display: inline;
+  padding: 10px;
+`;
+
+const LinkSpan = styled.span`
+  font-size: 14px;
+  color: #424242;
+`;
 
 export default LoginPage;

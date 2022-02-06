@@ -16,6 +16,51 @@ import WriteReviewPopUp from "../WriteReviewPopUp/WriteReviewPopUp";
 import RankPopUp from "../RankPopUp/RankPopUp";
 import { currentY } from "../../../../store/common/user";
 
+const ProfileBanner = () => {
+  const userInfo = useRecoilValue(userState);
+  const [showRank, setShowRank] = useRecoilState(showRankState);
+  const [showPoint, setShowPoint] = useRecoilState(showPointState);
+  const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
+  const [showOrderedItem, setShowOrderedItem] =
+    useRecoilState(showOrderedItemState);
+  const setCurrentY = useSetRecoilState(currentY);
+  const showWriteReview = useRecoilValue(showWriteReviewState);
+
+  const calculatePopUpHeight = () => {
+    setCurrentY(window.scrollY + window.innerHeight * 0.15);
+  };
+
+  const onClick = (handleState) => {
+    calculatePopUpHeight();
+    handleState(true);
+  };
+
+  return (
+    <ProfileBannerWrapper>
+      <UserInfo>
+        <UserImage src={userInfo.image} alt="User Image" />
+        <NameAndRankWrapper>
+          <Name>{userInfo.name}님</Name>
+          <Rank>등급 : {userInfo.role}</Rank>
+          <button onClick={() => onClick(setShowRank)}>등급 달성 기준</button>
+        </NameAndRankWrapper>
+      </UserInfo>
+      <UserMenus>
+        <UserMenu onClick={() => onClick(setShowPoint)}>포인트</UserMenu>
+        <UserMenu onClick={() => onClick(setShowCoupon)}>쿠폰</UserMenu>
+        <UserMenu onClick={() => onClick(setShowOrderedItem)}>
+          주문한 상품
+        </UserMenu>
+      </UserMenus>
+      {showRank && <RankPopUp />}
+      {showPoint && <PointPopUp />}
+      {showCoupon && <CouponPopUp />}
+      {showOrderedItem && <OrderedItemPopUp />}
+      {showWriteReview && <WriteReviewPopUp />}
+    </ProfileBannerWrapper>
+  );
+};
+
 const ProfileBannerWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -77,63 +122,5 @@ const UserMenu = styled.li`
     transform: scale(1.1);
   }
 `;
-
-const ProfileBanner = () => {
-  const userInfo = useRecoilValue(userState);
-  const [showPoint, setShowPoint] = useRecoilState(showPointState);
-  const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
-  const [showOrderedItem, setShowOrderedItem] =
-    useRecoilState(showOrderedItemState);
-  const setCurrentY = useSetRecoilState(currentY);
-  const showWriteReview = useRecoilValue(showWriteReviewState);
-  const [showRank, setShowRank] = useRecoilState(showRankState);
-
-  const calculatePopUpHeight = () => {
-    setCurrentY(window.scrollY + window.innerHeight * 0.15);
-  };
-
-  const onClickPoint = () => {
-    calculatePopUpHeight();
-    setShowPoint(true);
-  };
-
-  const onClickCoupon = () => {
-    calculatePopUpHeight();
-    setShowCoupon(true);
-  };
-
-  const onClickOrderedItem = () => {
-    calculatePopUpHeight();
-    setShowOrderedItem(true);
-  };
-
-  const onClickRank = () => {
-    calculatePopUpHeight();
-    setShowRank(true);
-  };
-
-  return (
-    <ProfileBannerWrapper>
-      <UserInfo>
-        <UserImage src={userInfo.image} alt="User Image" />
-        <NameAndRankWrapper>
-          <Name>{userInfo.name}님</Name>
-          <Rank>등급 : {userInfo.role}</Rank>
-          <button onClick={onClickRank}>등급 달성 기준</button>
-        </NameAndRankWrapper>
-      </UserInfo>
-      <UserMenus>
-        <UserMenu onClick={onClickPoint}>포인트</UserMenu>
-        <UserMenu onClick={onClickCoupon}>쿠폰</UserMenu>
-        <UserMenu onClick={onClickOrderedItem}>주문한 상품</UserMenu>
-      </UserMenus>
-      {showRank && <RankPopUp />}
-      {showPoint && <PointPopUp />}
-      {showCoupon && <CouponPopUp />}
-      {showOrderedItem && <OrderedItemPopUp />}
-      {showWriteReview && <WriteReviewPopUp />}
-    </ProfileBannerWrapper>
-  );
-};
 
 export default ProfileBanner;

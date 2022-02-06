@@ -29,10 +29,6 @@ const AnswerPopUp = () => {
   const [answer, setAnswer] = useState("");
   const [getAllAnswer, setGetAllAnswer] = useRecoilState(getAllAnswerState);
 
-  const onClickClose = () => {
-    setShowAnswerPopUp(false);
-  };
-
   const onChangeAnswer = (event) => {
     setAnswer(event.target.value);
   };
@@ -53,7 +49,7 @@ const AnswerPopUp = () => {
 
   return (
     <AnswerPopUpWrapper>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowAnswerPopUp} />
       <h1>상품명 : {currentAnswerItem.title}</h1>
       <h1>질문 : {currentAnswerItem.question}</h1>
       <input type="text" onChange={onChangeAnswer} />

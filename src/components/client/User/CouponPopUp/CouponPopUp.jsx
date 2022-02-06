@@ -8,6 +8,34 @@ import {
 import { currentY } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
+const CouponPopUp = () => {
+  const coupons = useRecoilValue(userCouponState);
+  const setShowCoupon = useSetRecoilState(showCouponState);
+  const scrollY = useRecoilValue(currentY);
+
+  return (
+    <CouponPopUpWrapper top={scrollY}>
+      <CloseButton onClick={setShowCoupon} />
+      <Title>보유 쿠폰 목록</Title>
+      <CouponWrapper>
+        <h1>쿠폰 명</h1>
+        <h1>할인율</h1>
+      </CouponWrapper>
+      {coupons.map((coupon) => (
+        <CouponWrapper key={coupon.id}>
+          <h3>{coupon.name}</h3>
+          <h3>{coupon.discount}%</h3>
+        </CouponWrapper>
+      ))}
+      <Title>쿠폰 등록하기</Title>
+      <EnrollCouponWrapper>
+        <input type="text" />
+        <button>등록하기</button>
+      </EnrollCouponWrapper>
+    </CouponPopUpWrapper>
+  );
+};
+
 const CouponPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
   left: 20vw;
@@ -40,37 +68,5 @@ const CouponWrapper = styled.div`
 const EnrollCouponWrapper = styled.div`
   display: flex;
 `;
-
-const CouponPopUp = () => {
-  const coupons = useRecoilValue(userCouponState);
-  const setShowCoupon = useSetRecoilState(showCouponState);
-  const scrollY = useRecoilValue(currentY);
-
-  const onClickClose = () => {
-    setShowCoupon(false);
-  };
-
-  return (
-    <CouponPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
-      <Title>보유 쿠폰 목록</Title>
-      <CouponWrapper>
-        <h1>쿠폰 명</h1>
-        <h1>할인율</h1>
-      </CouponWrapper>
-      {coupons.map((coupon) => (
-        <CouponWrapper key={coupon.id}>
-          <h3>{coupon.name}</h3>
-          <h3>{coupon.discount}%</h3>
-        </CouponWrapper>
-      ))}
-      <Title>쿠폰 등록하기</Title>
-      <EnrollCouponWrapper>
-        <input type="text" />
-        <button>등록하기</button>
-      </EnrollCouponWrapper>
-    </CouponPopUpWrapper>
-  );
-};
 
 export default CouponPopUp;

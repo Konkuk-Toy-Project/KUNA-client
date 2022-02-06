@@ -5,6 +5,21 @@ import { showRankState } from "../../../../store/client/user";
 import { currentY } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
+const RankPopUp = () => {
+  const scrollY = useRecoilValue(currentY);
+  const setShowRank = useSetRecoilState(showRankState);
+
+  return (
+    <RankPopUpWrapper top={scrollY}>
+      <CloseButton onClick={setShowRank} />
+      <h1>등급 목록</h1>
+      <h1>Gold : 누적 결제 금액 500,000원</h1>
+      <h1>Silver : 누적 결제 금액 300,000원</h1>
+      <h1>Bronze : 누적 결제 금액 200,000원</h1>
+    </RankPopUpWrapper>
+  );
+};
+
 const RankPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
   left: 30vw;
@@ -19,24 +34,5 @@ const RankPopUpWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-const RankPopUp = () => {
-  const scrollY = useRecoilValue(currentY);
-  const setShowRank = useSetRecoilState(showRankState);
-
-  const onClickClose = () => {
-    setShowRank(false);
-  };
-
-  return (
-    <RankPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
-      <h1>등급 목록</h1>
-      <h1>Gold : 누적 결제 금액 500,000원</h1>
-      <h1>Silver : 누적 결제 금액 300,000원</h1>
-      <h1>Bronze : 누적 결제 금액 200,000원</h1>
-    </RankPopUpWrapper>
-  );
-};
 
 export default RankPopUp;

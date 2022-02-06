@@ -31,10 +31,6 @@ const AddCouponPopUp = () => {
   const [enrollNumber, setEnrollNumber] = useState("");
   const setShowCouponPopUp = useSetRecoilState(showCouponPopUpState);
 
-  const onClickClose = () => {
-    setShowCouponPopUp(false);
-  };
-
   const onChange = (dispatcher) => (event) => {
     dispatcher(event.target.value);
   };
@@ -54,7 +50,7 @@ const AddCouponPopUp = () => {
 
   return (
     <AddCouponPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowCouponPopUp} />
       <div>
         <h1>쿠폰명 </h1>
         <input type="text" onChange={onChange(setName)} />

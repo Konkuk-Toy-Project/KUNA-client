@@ -9,21 +9,6 @@ import {
 } from "../../../../store/owner/product";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
-const AddItemPopUpWrapper = styled.div`
-  top: ${(props) => props.top + "px"};
-  left: 20vw;
-  width: 60vw;
-  height: 60vh;
-  border: 1px solid black;
-  background-color: white;
-  position: absolute;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const AddItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const setShowAddPopUp = useSetRecoilState(showAddPopUpState);
@@ -33,19 +18,27 @@ const AddItemPopUp = () => {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useRecoilState(productState);
 
-  const onChange = (dispatcher) => (event) => {
-    dispatcher(event.target.value);
+  const onChange = (handleChange) => (event) => {
+    handleChange(event.target.value);
   };
 
   const addItem = () => {
-    const currentItem = { id: category.length, title, image, discount, price };
+    const currentItem = {
+      id: new Date(),
+      title,
+      image,
+      discount,
+      price,
+    };
     setCategory([currentItem, ...category]);
   };
 
   const onClickSubmit = () => {
-    addItem();
-    alert("상품이 추가되었습니다.");
-    setShowAddPopUp(false);
+    if (window.confirm("해당 상품을 등록하시겠습니까?")) {
+      addItem();
+      alert("상품이 추가되었습니다.");
+      setShowAddPopUp(false);
+    }
   };
 
   return (
@@ -71,5 +64,20 @@ const AddItemPopUp = () => {
     </AddItemPopUpWrapper>
   );
 };
+
+const AddItemPopUpWrapper = styled.div`
+  top: ${(props) => props.top + "px"};
+  left: 20vw;
+  width: 60vw;
+  height: 60vh;
+  border: 1px solid black;
+  background-color: white;
+  position: absolute;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default AddItemPopUp;

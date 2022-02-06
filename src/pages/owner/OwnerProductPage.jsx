@@ -10,10 +10,6 @@ import {
   showEditPopUpState,
 } from "../../store/owner/product";
 
-const OwnerProductPageWrapper = styled.div`
-  text-align: center;
-`;
-
 const OwnerProductPage = () => {
   const items = useRecoilValue(productState);
   const showEditPopUp = useRecoilValue(showEditPopUpState);
@@ -33,5 +29,9 @@ const OwnerProductPage = () => {
     </OwnerProductPageWrapper>
   );
 };
+
+const OwnerProductPageWrapper = styled.div`
+  text-align: center;
+`;
 
 export default OwnerProductPage;

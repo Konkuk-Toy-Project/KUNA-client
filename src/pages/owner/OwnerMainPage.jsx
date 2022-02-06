@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import MenuCategory from "../../components/owner/Main/MenuCategory/MenuCategory";
 
-const MainPage = () => {
+const OwnerMainPage = () => {
   return (
     <OwnerMainPageWrapper>
       <Title>원하는 작업을 선택하세요</Title>
@@ -43,4 +43,4 @@ const MenuCategoryWrapper = styled.div`
   align-items: center;
 `;
 
-export default MainPage;
+export default OwnerMainPage;

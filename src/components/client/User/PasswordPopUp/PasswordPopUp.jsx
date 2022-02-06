@@ -6,33 +6,14 @@ import { passwordPopUpState } from "../../../../store/client/user";
 import { currentY } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
-const PasswordPopUpWrapper = styled.div`
-  top: ${(props) => props.top + "px"};
-  left: 10vw;
-  width: 80vw;
-  height: 60vh;
-  border: 1px solid black;
-  background-color: white;
-  position: absolute;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const PasswordPopUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const setEditPassword = useSetRecoilState(passwordPopUpState);
   const scrollY = useRecoilValue(currentY);
 
-  const onChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const onChangeConfirmPassword = (event) => {
-    setConfirmPassword(event.target.value);
+  const onChange = (handleState) => (event) => {
+    handleState(event.target.value);
   };
 
   const isValidPassword = (inputValue) => {
@@ -62,12 +43,27 @@ const PasswordPopUp = () => {
     <PasswordPopUpWrapper top={scrollY}>
       <CloseButton onClick={setEditPassword} />
       <h1>변경할 비밀번호</h1>
-      <input onChange={onChangePassword} type="password" />
+      <input onChange={onChange(setPassword)} type="password" />
       <h1>변경할 비밀번호 확인</h1>
-      <input onChange={onChangeConfirmPassword} type="password" />
+      <input onChange={onChange(setConfirmPassword)} type="password" />
       <button onClick={onClickChangePassword}>변경하기</button>
     </PasswordPopUpWrapper>
   );
 };
+
+const PasswordPopUpWrapper = styled.div`
+  top: ${(props) => props.top + "px"};
+  left: 10vw;
+  width: 80vw;
+  height: 60vh;
+  border: 1px solid black;
+  background-color: white;
+  position: absolute;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default PasswordPopUp;

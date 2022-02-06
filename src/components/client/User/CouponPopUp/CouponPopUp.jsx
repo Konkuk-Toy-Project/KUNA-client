@@ -46,13 +46,9 @@ const CouponPopUp = () => {
   const setShowCoupon = useSetRecoilState(showCouponState);
   const scrollY = useRecoilValue(currentY);
 
-  const onClickClose = () => {
-    setShowCoupon(false);
-  };
-
   return (
     <CouponPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowCoupon} />
       <Title>보유 쿠폰 목록</Title>
       <CouponWrapper>
         <h1>쿠폰 명</h1>

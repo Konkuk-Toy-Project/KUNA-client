@@ -41,10 +41,6 @@ const EditItemPopUp = () => {
   const [price, setPrice] = useState(currentItem.price);
   const [product, setProduct] = useRecoilState(productState);
 
-  const onClickClose = () => {
-    setShowEditPopUp(false);
-  };
-
   const onChangeDiscount = (event) => {
     setDiscount(event.target.value);
   };
@@ -67,7 +63,7 @@ const EditItemPopUp = () => {
 
   return (
     <EditItemPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowEditPopUp} />
       <div>
         <h1>상품명 : {currentItem.title}</h1>
         <EditContentWrapper>

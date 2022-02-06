@@ -24,13 +24,9 @@ const RankPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const setShowRank = useSetRecoilState(showRankState);
 
-  const onClickClose = () => {
-    setShowRank(false);
-  };
-
   return (
     <RankPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowRank} />
       <h1>등급 목록</h1>
       <h1>Gold : 누적 결제 금액 500,000원</h1>
       <h1>Silver : 누적 결제 금액 300,000원</h1>

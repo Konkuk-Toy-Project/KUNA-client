@@ -33,10 +33,6 @@ const AddItemPopUp = () => {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useRecoilState(productState);
 
-  const onClickClose = () => {
-    setShowAddPopUp(false);
-  };
-
   const onChange = (dispatcher) => (event) => {
     dispatcher(event.target.value);
   };
@@ -54,7 +50,7 @@ const AddItemPopUp = () => {
 
   return (
     <AddItemPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowAddPopUp} />
       <div>
         <h1>상품명 </h1>
         <input type="text" onChange={onChange(setTitle)} />

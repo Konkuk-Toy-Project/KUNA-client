@@ -23,16 +23,11 @@ const PointPopUpWrapper = styled.div`
 const PointPopUp = () => {
   const points = useRecoilValue(userPointState);
   const setShowPoint = useSetRecoilState(showPointState);
-
   const scrollY = useRecoilValue(currentY);
-
-  const onClickClose = () => {
-    setShowPoint(false);
-  };
 
   return (
     <PointPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowPoint} />
       <h1>보유 포인트 : {points}</h1>
       <h3>구매 금액의 1%가 포인트로 적립됩니다.</h3>
     </PointPopUpWrapper>

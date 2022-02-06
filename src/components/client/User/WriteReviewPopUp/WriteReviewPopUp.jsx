@@ -39,10 +39,6 @@ const WriteReviewPopUp = () => {
   const currentReviewItem = useRecoilValue(currentReviewItemState);
   const scrollY = useRecoilValue(currentY);
 
-  const onClickClose = () => {
-    setShowWriteReview(false);
-  };
-
   const onClickSubmit = () => {
     alert("리뷰가 작성되었습니다. 가격의 1% 금액이 포인트로 충전됩니다.");
     setShowWriteReview(false);
@@ -50,7 +46,7 @@ const WriteReviewPopUp = () => {
 
   return (
     <WriteReviewPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickClose} />
+      <CloseButton onClick={setShowWriteReview} />
       <Title>상품명 : {currentReviewItem.title}</Title>
       <ReviewInput type="text" />
       <button onClick={onClickSubmit}>작성하기</button>

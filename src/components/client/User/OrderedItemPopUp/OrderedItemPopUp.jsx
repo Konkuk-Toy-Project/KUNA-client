@@ -41,10 +41,6 @@ const OrderedItemPopUp = () => {
   const setShowWriteReviewState = useSetRecoilState(showWriteReviewState);
   const setCurrentReviewItem = useSetRecoilState(currentReviewItemState);
 
-  const onClickCancel = () => {
-    setShowOrderedItemPopUp(false);
-  };
-
   const onClickWriteReview = (item) => {
     setShowOrderedItemPopUp(false);
     setShowWriteReviewState(true);
@@ -53,7 +49,7 @@ const OrderedItemPopUp = () => {
 
   return (
     <OrderedItemPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickCancel} />
+      <CloseButton onClick={setShowOrderedItemPopUp} />
       <h1>주문한 제품</h1>
       {orderedItem.map((item, index) => (
         <OrderedItemWrapper key={index}>

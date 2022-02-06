@@ -35,10 +35,6 @@ const PasswordPopUp = () => {
     setConfirmPassword(event.target.value);
   };
 
-  const onClickCancel = () => {
-    setEditPassword(false);
-  };
-
   const isValidPassword = (inputValue) => {
     return (
       inputValue !== "" &&
@@ -64,7 +60,7 @@ const PasswordPopUp = () => {
 
   return (
     <PasswordPopUpWrapper top={scrollY}>
-      <CloseButton onClick={onClickCancel} />
+      <CloseButton onClick={setEditPassword} />
       <h1>변경할 비밀번호</h1>
       <input onChange={onChangePassword} type="password" />
       <h1>변경할 비밀번호 확인</h1>

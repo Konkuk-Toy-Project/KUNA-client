@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const CloseButton = ({ onClick }) => {
-  return <CloseButtonWrapper onClick={onClick}>✕</CloseButtonWrapper>;
+  return (
+    <CloseButtonWrapper onClick={() => onClick(false)}>✕</CloseButtonWrapper>
+  );
 };
 
 const CloseButtonWrapper = styled.p`

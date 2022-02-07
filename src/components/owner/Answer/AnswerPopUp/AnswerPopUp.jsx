@@ -8,21 +8,6 @@ import {
 } from "../../../../store/owner/answer";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
-const AnswerPopUpWrapper = styled.div`
-  top: ${(props) => props.top + "px"};
-  left: 20vw;
-  width: 60vw;
-  height: 60vh;
-  border: 1px solid black;
-  background-color: white;
-  position: absolute;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const AnswerPopUp = () => {
   const setShowAnswerPopUp = useSetRecoilState(showAnswerPopUpState);
   const currentAnswerItem = useRecoilValue(currentAnswerItemState);
@@ -57,5 +42,20 @@ const AnswerPopUp = () => {
     </AnswerPopUpWrapper>
   );
 };
+
+const AnswerPopUpWrapper = styled.div`
+  top: ${(props) => props.top + "px"};
+  left: 20vw;
+  width: 60vw;
+  height: 60vh;
+  border: 1px solid black;
+  background-color: white;
+  position: absolute;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default AnswerPopUp;

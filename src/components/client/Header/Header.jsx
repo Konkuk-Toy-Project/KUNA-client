@@ -72,9 +72,6 @@ const Header = () => {
         </MenuCategories>
       </ShortcutMenuWrapper>
       <PageMenus>
-        <PageLink to="/outer">
-          <PageMenu>아우터</PageMenu>
-        </PageLink>
         <PageLink to="/top">
           <PageMenu>상의</PageMenu>
         </PageLink>

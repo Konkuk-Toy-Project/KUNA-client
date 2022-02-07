@@ -7,44 +7,6 @@ import {
   showCouponPopUpState,
 } from "../../store/owner/coupon";
 
-const OwnerCouponPageWrapper = styled.div`
-  height: 65vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10vh;
-`;
-
-const Title = styled.p`
-  margin: 1em 0;
-  font-size: 24px;
-`;
-
-const CouponWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 75%;
-`;
-
-const Description = styled.p`
-  font-size: 14px;
-  width: 100%;
-  height: 20px;
-  padding: 1em;
-  text-align: center;
-  line-height: 20px;
-`;
-
-const DeleteButton = styled.button`
-  border: 0;
-  outline: 0;
-  background-color: transparent;
-  width: 110%;
-  border: 1px solid black;
-  cursor: pointer;
-`;
-
 const OwnerCouponPage = () => {
   const [enrolledCoupons, setEnrolledCoupons] =
     useRecoilState(enrolledCouponState);
@@ -95,5 +57,43 @@ const OwnerCouponPage = () => {
     </OwnerCouponPageWrapper>
   );
 };
+
+const OwnerCouponPageWrapper = styled.div`
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10vh;
+`;
+
+const Title = styled.p`
+  margin: 1em 0;
+  font-size: 24px;
+`;
+
+const CouponWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+`;
+
+const Description = styled.p`
+  font-size: 14px;
+  width: 100%;
+  height: 20px;
+  padding: 1em;
+  text-align: center;
+  line-height: 20px;
+`;
+
+const DeleteButton = styled.button`
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  width: 110%;
+  border: 1px solid black;
+  cursor: pointer;
+`;
 
 export default OwnerCouponPage;

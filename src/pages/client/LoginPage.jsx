@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
-const ID = "id";
-const PW = "pw";
+const ID = "email";
+const PW = "password";
 
 const LoginPage = () => {
   const [account, setAccount] = useState({ [ID]: "", [PW]: "" });
@@ -26,9 +27,21 @@ const LoginPage = () => {
   };
 
   // login btn click event
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    sendAccount();
+  };
 
-  const { id, pw } = account;
+  const sendAccount = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/member/login",
+        account
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <LoginWrapper>
@@ -70,7 +83,7 @@ const LoginPage = () => {
         <Button
           type="submit"
           onSubmit={onSubmit}
-          disabled={id === "" || pw.length < 8}
+          disabled={account[ID] === "" || account[PW].length < 8}
         >
           로그인
         </Button>
@@ -156,7 +169,8 @@ const LinkLi = styled.li`
 
 const LinkSpan = styled.span`
   font-size: 14px;
-  color: #424242;
+  color: #6a6d75;
+  text-decoration: underline;
 `;
 
 export default LoginPage;

@@ -91,8 +91,8 @@ const LoginPage = () => {
 
       <LinkUl>
         <LinkLi name="subPageLink">
-          <Link to="/login/signIn" style={{ textDecoration: "none" }}>
-            <LinkSpan id="signIn">회원가입 하기</LinkSpan>
+          <Link to="/login/signUp" style={{ textDecoration: "none" }}>
+            <LinkSpan id="signUp">회원가입 하기</LinkSpan>
           </Link>
         </LinkLi>
         <LinkLi>

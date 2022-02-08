@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { currentY } from "../../../../store/common/user";
@@ -14,8 +14,8 @@ const EditItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const currentItem = useRecoilValue(currentItemState);
   const setShowEditPopUp = useSetRecoilState(showEditPopUpState);
-  const [discount, setDiscount] = useState(currentItem.discount);
-  const [price, setPrice] = useState(currentItem.price);
+  const [discount, setDiscount] = useState("");
+  const [price, setPrice] = useState(0);
   const [product, setProduct] = useRecoilState(productState);
 
   const onChange = (handleChange) => (event) => {
@@ -35,6 +35,11 @@ const EditItemPopUp = () => {
       setShowEditPopUp(false);
     }
   };
+
+  useEffect(() => {
+    setDiscount(currentItem.discount);
+    setPrice(currentItem.price);
+  }, [currentItem.discount, currentItem.price]);
 
   return (
     <EditItemPopUpWrapper top={scrollY}>

@@ -7,21 +7,7 @@ import {
   showCouponPopUpState,
 } from "../../../../store/owner/coupon";
 import CloseButton from "../../../common/CloseButton/CloseButton";
-
-const AddCouponPopUpWrapper = styled.div`
-  top: ${(props) => props.top + "px"};
-  left: 20vw;
-  width: 60vw;
-  height: 60vh;
-  border: 1px solid black;
-  background-color: white;
-  position: absolute;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+import AddCategory from "../AddCategory/AddCategory";
 
 const AddCouponPopUp = () => {
   const scrollY = useRecoilValue(currentY);
@@ -51,21 +37,27 @@ const AddCouponPopUp = () => {
   return (
     <AddCouponPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowCouponPopUp} />
-      <div>
-        <h1>쿠폰명 </h1>
-        <input type="text" onChange={onChange(setName)} />
-      </div>
-      <div>
-        <h1>할인율 </h1>
-        <input type="text" onChange={onChange(setDiscount)} />
-      </div>
-      <div>
-        <h1>등록번호 </h1>
-        <input type="text" onChange={onChange(setEnrollNumber)} />
-      </div>
+      <AddCategory title="쿠폰 명" onChange={onChange(setName)} />
+      <AddCategory title="할인율" onChange={onChange(setDiscount)} />
+      <AddCategory title="등록번호" onChange={onChange(setEnrollNumber)} />
       <button onClick={onClickSubmit}>상품 추가하기</button>
     </AddCouponPopUpWrapper>
   );
 };
+
+const AddCouponPopUpWrapper = styled.div`
+  top: ${(props) => props.top + "px"};
+  left: 20vw;
+  width: 60vw;
+  height: 60vh;
+  border: 1px solid black;
+  background-color: white;
+  position: absolute;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default AddCouponPopUp;

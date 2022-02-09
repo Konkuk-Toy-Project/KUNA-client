@@ -1,13 +1,10 @@
 import React from "react";
+import { Suspense } from "react";
 import { useParams } from "react-router";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
-import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
-import { categoryState } from "../../store/client/category";
+import Category from "../../components/client/Main/Category/Category";
 
 const CategoryPage = () => {
-  const items = useRecoilValue(categoryState);
   const { category } = useParams();
 
   const convertEngTitleToKor = (category) => {
@@ -27,10 +24,13 @@ const CategoryPage = () => {
 
   return (
     <CategoryPageWrapper>
-      <PreviewTitle name={convertEngTitleToKor(category)} />
-      <PreviewItemList listType={"main"} items={items} />
-      <PreviewItemList listType={"main"} items={items} />
-      <PreviewItemList listType={"main"} items={items} />
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Category
+          link="top"
+          name={convertEngTitleToKor(category)}
+          listType="main"
+        />
+      </Suspense>
     </CategoryPageWrapper>
   );
 };

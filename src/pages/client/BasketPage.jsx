@@ -19,9 +19,7 @@ const BasketPage = () => {
 
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
-    items.map((item) => {
-      return (total += item.price * item.count);
-    });
+    items.map((item) => (total += item.price * item.count));
     setWithoutDiscountPrice(total);
     if (withoutDiscountPrice > 50000) {
       setPostPrice(2000);
@@ -32,13 +30,15 @@ const BasketPage = () => {
 
   const calculateDiscountPrice = useCallback(() => {
     let total = 0;
-    items.map((item) => {
-      return (total +=
-        (item.price *
-          item.count *
-          Number(item.discount.substring(0, item.discount.length - 1))) /
-        100);
-    });
+    items.map(
+      (item) =>
+        item.discount > 0 &&
+        (total +=
+          (item.price *
+            item.count *
+            Number(item.discount.substring(0, item.discount.length - 1))) /
+          100)
+    );
     setDiscountPrice(total);
   }, [items]);
 

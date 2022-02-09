@@ -1,17 +1,21 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { likeState } from "../../store/client/like";
 
 const LikePage = () => {
-  const items = useRecoilValue(likeState);
+  const [items, setItems] = useRecoilState(likeState);
+  const onClickDeleteAll = () => {
+    setItems([]);
+  };
 
   return (
     <LikePageWrapper>
       <PreviewTitle name="좋아요" />
       <PreviewItemList listType={"like"} items={items} />
+      <button onClick={onClickDeleteAll}>전체 삭제</button>
     </LikePageWrapper>
   );
 };

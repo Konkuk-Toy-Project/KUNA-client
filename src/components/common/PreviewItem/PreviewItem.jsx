@@ -8,6 +8,10 @@ const PreviewItem = ({ listType, item }) => {
   const [items, setItems] = useRecoilState(likeState);
   const [basketItems, setBasketItems] = useRecoilState(basketItemState);
 
+  const onClickDeleteAll = () => {
+    setItems([]);
+  };
+
   const briefTitle = (listType, title) => {
     return listType === "main"
       ? title.slice(0, 16) + "..."
@@ -17,13 +21,6 @@ const PreviewItem = ({ listType, item }) => {
   const onClickDeleteLike = () => {
     const filterClickedItem = items.filter((current) => current.id !== item.id);
     setItems(filterClickedItem);
-  };
-
-  const onClickDeleteBasket = () => {
-    const filterClickedItem = basketItems.filter(
-      (current) => current.id !== item.id
-    );
-    setBasketItems(filterClickedItem);
   };
 
   const onClickLikeItem = () => {
@@ -36,50 +33,26 @@ const PreviewItem = ({ listType, item }) => {
     }
   };
 
-  const changeItemCount = (item, type) => {
-    const currentItem = { ...item };
-    type === "increase" ? currentItem.count++ : currentItem.count--;
-    let currentItemIndex;
-    basketItems.find((item, index) =>
-      item.id === currentItem.id ? (currentItemIndex = index) : null
-    );
-
-    let existingItem = basketItems.filter((item) => item.id !== currentItem.id);
-    if (currentItem.count !== 0) {
-      existingItem.splice(currentItemIndex, 0, currentItem);
-    }
-
-    setBasketItems([...existingItem]);
-  };
-
   return (
     <PreviewItemWrapper listType={listType}>
       <PreviewItemImage
         src={`http://localhost:8080/image/thumbnail/${item.thumbnailUrl}`}
-        listType={listType}
       />
       <PreviewItemDescription listType={listType}>
         <PreviewItemTitle>{briefTitle(listType, item.name)}</PreviewItemTitle>
         <PreviewItemPriceWrapper listType={listType}>
-          <p>{item.sale}</p>
-          <p>{item.price}</p>
+          <h1>할인율 : {item.sale}%</h1>
+          <h1>{item.price}원</h1>
         </PreviewItemPriceWrapper>
       </PreviewItemDescription>
-      {listType === "like" ? (
+      {listType === "like" && (
         <button onClick={onClickDeleteLike}>Delete Like</button>
-      ) : null}
-      {listType === "basket" ? (
-        <button onClick={onClickDeleteBasket}>Delete Basket</button>
-      ) : null}
-      {listType === "main" ? (
+      )}
+      {listType === "main" && (
         <button onClick={onClickLikeItem}>장바구니 추가</button>
-      ) : null}
-      {listType === "basket" ? <span>{item.count}</span> : null}
-      {listType === "basket" ? (
-        <button onClick={() => changeItemCount(item, "increase")}>+</button>
-      ) : null}
-      {listType === "basket" ? (
-        <button onClick={() => changeItemCount(item, "decrease")}>-</button>
+      )}
+      {listType === "like" ? (
+        <button onClick={onClickDeleteAll}>전체 삭제</button>
       ) : null}
     </PreviewItemWrapper>
   );
@@ -96,7 +69,7 @@ const PreviewItemWrapper = styled.li`
 `;
 
 const PreviewItemImage = styled.img`
-  width: ${(props) => (props.listType === "main" ? "10em" : "5em")};
+  width: 10em;
   border-radius: 10px;
 `;
 
@@ -104,6 +77,7 @@ const PreviewItemDescription = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0.2em;
+  width: 12em;
 `;
 
 const PreviewItemTitle = styled.p`

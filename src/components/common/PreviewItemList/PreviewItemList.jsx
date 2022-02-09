@@ -1,24 +1,19 @@
 import React from "react";
-import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { likeState } from "../../../store/client/like";
+
+import BasketItem from "../../client/Basket/BasketItem/BasketItem";
 import PreviewItem from "../PreviewItem/PreviewItem";
 
 const PreviewItemList = ({ listType, items }) => {
-  const setLikeItems = useSetRecoilState(likeState);
-
-  const onClickDeleteAll = () => {
-    setLikeItems([]);
-  };
-
   return (
     <PreviewItemListWrapper>
-      {items.map((item) => (
-        <PreviewItem key={item.itemId} listType={listType} item={item} />
-      ))}
-      {listType === "like" ? (
-        <button onClick={onClickDeleteAll}>전체 삭제</button>
-      ) : null}
+      {items.map((item) =>
+        listType === "main" ? (
+          <PreviewItem key={item.itemId} listType={listType} item={item} />
+        ) : (
+          <BasketItem key={item.itemId} item={item} />
+        )
+      )}
     </PreviewItemListWrapper>
   );
 };

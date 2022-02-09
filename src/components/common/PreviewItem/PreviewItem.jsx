@@ -54,11 +54,14 @@ const PreviewItem = ({ listType, item }) => {
 
   return (
     <PreviewItemWrapper listType={listType}>
-      <PreviewItemImage src={item.image} listType={listType} />
+      <PreviewItemImage
+        src={`http://localhost:8080/image/thumbnail/${item.thumbnailUrl}`}
+        listType={listType}
+      />
       <PreviewItemDescription listType={listType}>
-        <PreviewItemTitle>{briefTitle(listType, item.title)}</PreviewItemTitle>
+        <PreviewItemTitle>{briefTitle(listType, item.name)}</PreviewItemTitle>
         <PreviewItemPriceWrapper listType={listType}>
-          <p>{item.discount}</p>
+          <p>{item.sale}</p>
           <p>{item.price}</p>
         </PreviewItemPriceWrapper>
       </PreviewItemDescription>

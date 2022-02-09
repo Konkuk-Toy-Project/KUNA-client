@@ -14,7 +14,7 @@ const PreviewItemList = ({ listType, items }) => {
   return (
     <PreviewItemListWrapper>
       {items.map((item) => (
-        <PreviewItem key={item.id} listType={listType} item={item} />
+        <PreviewItem key={item.itemId} listType={listType} item={item} />
       ))}
       {listType === "like" ? (
         <button onClick={onClickDeleteAll}>전체 삭제</button>

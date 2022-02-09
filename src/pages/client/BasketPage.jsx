@@ -33,11 +33,14 @@ const BasketPage = () => {
   const calculateDiscountPrice = useCallback(() => {
     let total = 0;
     items.map((item) => {
-      return (total +=
-        (item.price *
-          item.count *
-          Number(item.discount.substring(0, item.discount.length - 1))) /
-        100);
+      if (item.discount > 0) {
+        return (total +=
+          (item.price *
+            item.count *
+            Number(item.discount.substring(0, item.discount.length - 1))) /
+          100);
+      }
+      return (total += item.price);
     });
     setDiscountPrice(total);
   }, [items]);

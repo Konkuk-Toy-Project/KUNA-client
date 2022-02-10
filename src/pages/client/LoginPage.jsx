@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
+import { userTokenState } from "../../store/common/user";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
 const ID = "email";
 const PW = "password";
+
+// 추가할 사항
+// 1. 사용자 계정이 아닌 경우 처리
 
 const LoginPage = () => {
   const [account, setAccount] = useState({ [ID]: "", [PW]: "" });
@@ -35,12 +39,13 @@ const LoginPage = () => {
 
   const sendAccount = async () => {
     try {
+      console.log("클릭");
       const response = await axios.post(
         "http://localhost:8080/member/login",
         account
       );
-      setUserToken(response.data);
       console.log(response.data);
+      // setUserToken(response.data);
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +90,7 @@ const LoginPage = () => {
         ) : null}
         <Button
           type="submit"
-          onSubmit={onSubmit}
+          onClick={onSubmit}
           disabled={account[ID] === "" || account[PW].length < 8}
         >
           로그인

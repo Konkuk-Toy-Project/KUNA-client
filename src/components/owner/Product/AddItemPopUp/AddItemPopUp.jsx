@@ -51,6 +51,7 @@ const AddItemPopUp = () => {
       <div>
         <h1>사진 </h1>
         <input type="text" onChange={onChange(setImage)} />
+        <input type="file" name="" id="" />
       </div>
       <div>
         <h1>할인율 </h1>

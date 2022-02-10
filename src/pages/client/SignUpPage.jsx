@@ -97,9 +97,8 @@ const SignUpPage = () => {
     const name = e.target.name;
     let value = e.target.value;
 
-    if (name === PH_MID || name === PH_LAST) {
-      if (value.length > 4) value = value.toString().slice(0, 4);
-    }
+    if (name === PH_MID || name === PH_LAST)
+      value = value.toString().replace(/[^0-9]/gi, "");
 
     if ((name === ID || name === EMAIL_ADDR) && isEmailDupChecked) {
       setIsEmailDupChecked(false);

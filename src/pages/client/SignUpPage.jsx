@@ -21,6 +21,10 @@ const BIRTH_Y = "birth_year";
 const BIRTH_M = "birth_month";
 const BIRTH_D = "birth_day";
 
+// 수정 및 추가해야할 사항
+// 1. 비밀번호 7자리면 넘어감
+// 2. 아이디중복체크 시, 로딩상태 추가
+
 const SignUpPage = () => {
   const [info, setInfo] = useState({
     [ID]: "",
@@ -134,6 +138,7 @@ const SignUpPage = () => {
       );
       setIsEmailUnique(!response.data.isDuplication);
     } catch (err) {
+      console.log(err);
       alert("오류가 발생하였습니다. 다시 시도해주세요");
       window.location.reload();
     }
@@ -141,10 +146,12 @@ const SignUpPage = () => {
 
   // 비밀번호 관련
   const isProperPw = useCallback(() => {
-    return !(
-      info[PW].match(/[a-z]+?/) === null ||
-      info[PW].match(/[0-9]+?/) === null ||
-      info[PW].match(/[`~!@#$%^&*|\\\'\";:\/?]+?/) === null
+    return (
+      !(
+        info[PW].match(/[a-z]+?/) === null ||
+        info[PW].match(/[0-9]+?/) === null ||
+        info[PW].match(/[`~!@#$%^&*|\\\'\";:\/?]+?/) === null
+      ) && info[PW].length >= 8
     );
   }, [info]);
 

@@ -87,10 +87,13 @@ const SignUpPage = () => {
 
       if (
         response.data.hasOwnProperty("memberId") &&
-        response.data.hasOwnProperty("role") &&
-        response.data.role === "user"
+        response.data.hasOwnProperty("role")
       )
         navigate("/login/signUp/complete");
+      else {
+        alert("오류가 발생하였습니다. 다시 시도해주세요");
+        window.location.reload();
+      }
       // 관리자의 경우는?
     } catch (err) {
       alert("오류가 발생하였습니다. 다시 시도해주세요");

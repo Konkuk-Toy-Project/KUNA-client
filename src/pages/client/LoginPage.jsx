@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { useSetRecoilState } from "recoil";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
@@ -11,6 +12,7 @@ const PW = "password";
 const LoginPage = () => {
   const [account, setAccount] = useState({ [ID]: "", [PW]: "" });
   const [isWrong, setIsWrong] = useState(false); // when user fail to login
+  const setUserToken = useSetRecoilState(userTokenState);
 
   // changing input about id & pw
   const onChange = (e) => {
@@ -37,6 +39,7 @@ const LoginPage = () => {
         "http://localhost:8080/member/login",
         account
       );
+      setUserToken(response.data);
       console.log(response.data);
     } catch (err) {
       console.log(err);

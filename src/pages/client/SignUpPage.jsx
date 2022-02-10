@@ -22,7 +22,6 @@ const BIRTH_M = "birth_month";
 const BIRTH_D = "birth_day";
 
 // 수정 및 추가해야할 사항
-// 1. 비밀번호 7자리면 넘어감
 // 2. 아이디중복체크 시, 로딩상태 추가
 
 const SignUpPage = () => {
@@ -40,6 +39,7 @@ const SignUpPage = () => {
     [BIRTH_D]: "",
   });
   const [loading, setLoading] = useState(false);
+  const [emailDupLoading, setEmailDupLoading] = useState(false);
   const [isEmailUnique, setIsEmailUnique] = useState(false);
   const [isEmailDupChecked, setIsEmailDupChecked] = useState(false);
   const [isEmailTypingMode, setIsEmailTypingMode] = useState(true);
@@ -111,6 +111,10 @@ const SignUpPage = () => {
 
   // 이메일 관련
   const onSelectEmail = (e) => {
+    if (isEmailDupChecked) {
+      setIsEmailDupChecked(false);
+      setIsEmailUnique(false);
+    }
     const value = e.target.value;
     if (value !== TYPE_MANUALLY) {
       setIsEmailTypingMode(false);
@@ -131,6 +135,7 @@ const SignUpPage = () => {
   };
 
   const CheckEmailDup = useCallback(async () => {
+    setEmailDupLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:8080/member/duplication/email",
@@ -142,6 +147,7 @@ const SignUpPage = () => {
       alert("오류가 발생하였습니다. 다시 시도해주세요");
       window.location.reload();
     }
+    setEmailDupLoading(false);
   }, [isEmailDupChecked]);
 
   // 비밀번호 관련
@@ -189,6 +195,8 @@ const SignUpPage = () => {
           <p>
             {!isEmailDupChecked
               ? "   "
+              : emailDupLoading
+              ? "확인 중..."
               : isEmailUnique
               ? "사용가능한 이메일입니다✅"
               : "중복된 이메일입니다"}

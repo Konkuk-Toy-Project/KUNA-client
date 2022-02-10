@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from "react";
 import BirthSelectBox from "../../components/client/Login/BirthSelectBox";
 import PhoneInput from "../../components/client/Login/PhoneInput";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 const TYPE_MANUALLY = "직접입력";
@@ -21,7 +23,7 @@ const BIRTH_Y = "birth_year";
 const BIRTH_M = "birth_month";
 const BIRTH_D = "birth_day";
 
-// 추후 리팩토링 필요
+// 추후 리팩토링 필요 - 기능 컴포넌트 화
 
 const SignUpPage = () => {
   const [info, setInfo] = useState({
@@ -42,6 +44,8 @@ const SignUpPage = () => {
   const [isEmailUnique, setIsEmailUnique] = useState(false);
   const [isEmailDupChecked, setIsEmailDupChecked] = useState(false);
   const [isEmailTypingMode, setIsEmailTypingMode] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   const onSignIn = () => {
     if (!isProperInfo) {
@@ -61,6 +65,14 @@ const SignUpPage = () => {
     SendInfos();
   };
   const SendInfos = async () => {
+    console.log({
+      email: info[ID] + "@" + info[EMAIL_ADDR],
+      password: info[PW],
+      name: info[NAME],
+      phone: info[PH_FIRST] + info[PH_MID] + info[PH_LAST],
+      birth: info[BIRTH_Y] + info[BIRTH_M] + info[BIRTH_D],
+      role: isAdmin ? "admin" : "user",
+    });
     setLoading(true);
     try {
       const response = await axios.post("http://localhost:8080/member/signup", {
@@ -69,10 +81,17 @@ const SignUpPage = () => {
         name: info[NAME],
         phone: info[PH_FIRST] + info[PH_MID] + info[PH_LAST],
         birth: info[BIRTH_Y] + info[BIRTH_M] + info[BIRTH_D],
-        role: "user",
+        role: isAdmin ? "admin" : "user",
       });
-      console.log(response.data); // 어떻게 처리할지
       setLoading(false);
+
+      if (
+        response.data.hasOwnProperty("memberId") &&
+        response.data.hasOwnProperty("role") &&
+        response.data.role === "user"
+      )
+        navigate("/login/signUp/complete");
+      // 관리자의 경우는?
     } catch (err) {
       alert("오류가 발생하였습니다. 다시 시도해주세요");
       window.location.reload();
@@ -132,6 +151,10 @@ const SignUpPage = () => {
     CheckEmailDup();
   };
 
+  const onCheckAdmin = () => {
+    setIsAdmin((cur) => !cur);
+  };
+
   const CheckEmailDup = useCallback(async () => {
     setEmailDupLoading(true);
     try {
@@ -158,7 +181,7 @@ const SignUpPage = () => {
       ) && info[PW].length >= 8
     );
   }, [info]);
-
+  console.log(isAdmin);
   return (
     <div>
       {/* 로딩중 샘플 */}
@@ -274,6 +297,10 @@ const SignUpPage = () => {
           일
         </li>
       </ul>
+      <div>
+        <p>관리자이신가요? </p>
+        <input type="checkbox" checked={isAdmin} onChange={onCheckAdmin} />
+      </div>
       <div id="signInBtn-container">
         <button id="signIn" onClick={onSignIn}>
           가입하기

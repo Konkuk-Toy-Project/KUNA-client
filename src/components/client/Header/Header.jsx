@@ -67,7 +67,7 @@ const Header = () => {
               <p>찜목록</p>
             </MenuCategory>
           </MenuIcon>
-          <MenuIcon to="/login">
+          <MenuIcon onClick={() => navigate("/login")}>
             <MenuCategory>
               <img
                 src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"

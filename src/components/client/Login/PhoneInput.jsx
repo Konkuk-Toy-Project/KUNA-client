@@ -16,7 +16,7 @@ const PhoneInput = ({ name, onChange, data }) => {
         id={name[1]}
         name={name[1]}
         onChange={onChange}
-        type="number"
+        type="text"
         maxLength={4}
         value={data[name[1]]}
       />
@@ -25,7 +25,7 @@ const PhoneInput = ({ name, onChange, data }) => {
         id={name[2]}
         name={name[2]}
         onChange={onChange}
-        type="number"
+        type="text"
         value={data[name[2]]}
         maxLength={4}
       />

@@ -8,7 +8,6 @@ import LikePage from "../pages/client/LikePage";
 import LoginPage from "../pages/client/LoginPage";
 import MainPage from "../pages/client/MainPage";
 import SearchPage from "../pages/client/SearchPage";
-import SignInPage from "../pages/client/SignInPage";
 import UserPage from "../pages/client/UserPage";
 
 const ClientRouter = () => {
@@ -18,7 +17,6 @@ const ClientRouter = () => {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="login/signIn" element={<SignInPage />} />
         <Route path="login/findAccount" element={<FindAccountPage />} />
         <Route path="/search/:content" element={<SearchPage />} />
         <Route path=":category" element={<CategoryPage />} />

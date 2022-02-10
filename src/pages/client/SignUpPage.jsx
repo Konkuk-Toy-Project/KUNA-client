@@ -21,8 +21,7 @@ const BIRTH_Y = "birth_year";
 const BIRTH_M = "birth_month";
 const BIRTH_D = "birth_day";
 
-// 수정 및 추가해야할 사항
-// 2. 아이디중복체크 시, 로딩상태 추가
+// 추후 리팩토링 필요
 
 const SignUpPage = () => {
   const [info, setInfo] = useState({

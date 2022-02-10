@@ -65,14 +65,6 @@ const SignUpPage = () => {
     SendInfos();
   };
   const SendInfos = async () => {
-    console.log({
-      email: info[ID] + "@" + info[EMAIL_ADDR],
-      password: info[PW],
-      name: info[NAME],
-      phone: info[PH_FIRST] + info[PH_MID] + info[PH_LAST],
-      birth: info[BIRTH_Y] + info[BIRTH_M] + info[BIRTH_D],
-      role: isAdmin ? "admin" : "user",
-    });
     setLoading(true);
     try {
       const response = await axios.post("http://localhost:8080/member/signup", {
@@ -184,7 +176,6 @@ const SignUpPage = () => {
       ) && info[PW].length >= 8
     );
   }, [info]);
-  console.log(isAdmin);
   return (
     <div>
       {/* 로딩중 샘플 */}

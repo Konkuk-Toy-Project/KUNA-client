@@ -178,6 +178,7 @@ const SignUpPage = () => {
           <button onClick={onEmailDupClick} disabled={isEmailUnique}>
             중복확인
           </button>
+          {/* 로딩상태 추가해주기---------------------------------------------------- */}
           <p>
             {!isEmailDupChecked
               ? "   "

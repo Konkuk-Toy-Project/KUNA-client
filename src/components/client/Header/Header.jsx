@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { basketItemState } from "../../../store/client/basket";
+import { userTokenState } from "../../../store/common/user";
 
 const Header = () => {
   const basketItems = useRecoilValue(basketItemState);
   const [searchValue, setSearchValue] = useState("");
+  const userToken = useRecoilValue(userTokenState);
   const navigate = useNavigate();
 
   const onChangeSearch = (event) => {
@@ -16,6 +18,20 @@ const Header = () => {
   const onClickSearch = () => {
     navigate(`/search/${searchValue}`);
   };
+
+  const onClickCategory = (choice) => {
+    if (userToken.length) {
+      return navigate(`/${choice}`);
+    }
+    if (
+      window.confirm(
+        "로그인을 해야 사용할 수 있는 서비스입니다. 로그인 페이지로 이동하시겠습니까?"
+      )
+    ) {
+      navigate("/login");
+    }
+  };
+
   return (
     <HeaderWrapper>
       <ShortcutMenuWrapper>
@@ -32,7 +48,7 @@ const Header = () => {
           </SearchIcon>
         </SearchBar>
         <MenuCategories>
-          <PageLink to="/basket">
+          <MenuIcon onClick={() => onClickCategory("basket")}>
             <MenuCategory>
               <img
                 src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
@@ -41,8 +57,8 @@ const Header = () => {
               <p>장바구니</p>
               <p>{basketItems.length}</p>
             </MenuCategory>
-          </PageLink>
-          <PageLink to="/like">
+          </MenuIcon>
+          <MenuIcon onClick={() => onClickCategory("like")}>
             <MenuCategory>
               <img
                 src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
@@ -50,8 +66,8 @@ const Header = () => {
               />
               <p>찜목록</p>
             </MenuCategory>
-          </PageLink>
-          <PageLink to="/login">
+          </MenuIcon>
+          <MenuIcon to="/login">
             <MenuCategory>
               <img
                 src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
@@ -59,8 +75,8 @@ const Header = () => {
               />
               <p>로그인</p>
             </MenuCategory>
-          </PageLink>
-          <PageLink to="/user">
+          </MenuIcon>
+          <MenuIcon onClick={() => onClickCategory("user")}>
             <MenuCategory>
               <img
                 src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon5.png"
@@ -68,7 +84,7 @@ const Header = () => {
               />
               <p>프로필</p>
             </MenuCategory>
-          </PageLink>
+          </MenuIcon>
         </MenuCategories>
       </ShortcutMenuWrapper>
       <PageMenus>
@@ -102,6 +118,11 @@ const ShortcutMenuWrapper = styled.div`
 `;
 
 const PageLink = styled(Link)`
+  color: black;
+  text-decoration: none;
+`;
+
+const MenuIcon = styled.div`
   color: black;
   text-decoration: none;
 `;

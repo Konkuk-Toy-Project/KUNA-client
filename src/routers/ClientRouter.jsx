@@ -8,6 +8,7 @@ import LikePage from "../pages/client/LikePage";
 import LoginPage from "../pages/client/LoginPage";
 import MainPage from "../pages/client/MainPage";
 import SearchPage from "../pages/client/SearchPage";
+import SignUpFinPage from "../pages/client/SignUpFinPage";
 import SignUpPage from "../pages/client/SignUpPage";
 import UserPage from "../pages/client/UserPage";
 
@@ -19,6 +20,7 @@ const ClientRouter = () => {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="login/signUp" element={<SignUpPage />} />
+        <Route path="login/signUp/complete" element={<SignUpFinPage />} />
         <Route path="login/findAccount" element={<FindAccountPage />} />
         <Route path="/search/:content" element={<SearchPage />} />
         <Route path=":category" element={<CategoryPage />} />

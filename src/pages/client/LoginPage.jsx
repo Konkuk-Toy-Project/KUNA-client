@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
-import { userTokenState } from "../../store/common/user";
+import { isClientState, userTokenState } from "../../store/common/user";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
@@ -17,11 +17,11 @@ const LoginPage = () => {
   const [account, setAccount] = useState({ [ID]: "", [PW]: "" });
   const [isWrong, setIsWrong] = useState(false); // when user fail to login
   const setUserToken = useSetRecoilState(userTokenState);
+  const setIsClientState = useSetRecoilState(isClientState);
 
   // changing input about id & pw
   const onChange = (e) => {
     setAccount({ ...account, [e.target.name]: e.target.value });
-    console.log(account);
   };
 
   const [pwInputType, setPwInputType] = useState(INPUT_TYPE_PW);
@@ -44,10 +44,24 @@ const LoginPage = () => {
         "http://localhost:8080/member/login",
         account
       );
-      console.log(response.data);
-      // setUserToken(response.data);
-    } catch (err) {
-      console.log(err);
+      const data = response.data;
+      console.log(response.data); // 회원 로그인 완료시 로그인페이지 접근 막기
+      setUserToken(data.token);
+      if (data.role === "admin") setIsClientState(false);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        switch (error.response.data.errorCode) {
+          case "M003":
+          case "M003":
+          case "M004":
+          case "M005":
+            setIsWrong(true);
+            return;
+        }
+      }
+      alert("오류가 발생하였습니다. 다시 시도해주세요");
+      window.location.reload();
     }
   };
 
@@ -84,8 +98,11 @@ const LoginPage = () => {
         </ul>
         {isWrong ? (
           <div id="warningStr">
-            아이디 또는 비밀번호가 잘못 입력 되었습니다. 아이디와 비밀번호를
-            정확히 입력해 주세요.
+            <p style={{ whiteSpace: "pre-line" }}>
+              {
+                " 아이디 또는 비밀번호가 잘못 입력 되었습니다. \n아이디와 비밀번호를 정확히 입력해 주세요."
+              }
+            </p>
           </div>
         ) : null}
         <Button

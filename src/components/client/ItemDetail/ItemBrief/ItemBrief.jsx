@@ -55,7 +55,7 @@ const ItemBrief = ({ itemObj }) => {
           sale={item.sale}
         />
         {/* 찜개수+사용자의 찜 내역에 포함 해야함--------------------------------- */}
-        <LikeBtn num={item.preference} />
+        <LikeBtn itemId={item.itemId} num={item.preference} />
         <Option item={item} chosen={chosenOpts} setChosen={setChosenOpts} />
         <div name="submit-btns">
           <button onClick={onBasketClick}>장바구니</button>

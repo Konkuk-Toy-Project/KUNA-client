@@ -48,7 +48,7 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   const onSignIn = () => {
-    if (!isProperInfo) {
+    if (!isProperInfo()) {
       if (Object.values(info).filter((val) => val === "").length > 0)
         alert("모든 정보를 입력해주세요.");
       else if (!isEmailDupChecked) alert("이메일 중복체크가 필요합니다.");
@@ -56,6 +56,7 @@ const SignUpPage = () => {
       else if (!isProperPw()) alert("비밀번호 형식에 맞지 않습니다.");
       else if (info[PW] !== info["pwCheck"])
         alert("비밀번호와 비밀번호 확인이 불일치합니다.");
+      else if (/\s/.test(info[NAME])) alert("이름에 공백이 없어야합니다.");
       else if (info[PH_MID].length !== 4 || info[PH_LAST].length !== 4)
         alert("전화번호 자리수를 확인해주세요(예시 : 010-1234-0000)");
 
@@ -82,28 +83,39 @@ const SignUpPage = () => {
         response.data.hasOwnProperty("role")
       )
         navigate("/login/signUp/complete");
-      else {
-        alert("오류가 발생하였습니다. 다시 시도해주세요");
-        window.location.reload();
+    } catch (error) {
+      if (error.response) {
+        const data = error.response.data;
+        const errorCode = data.errorCode;
+        switch (errorCode) {
+          case "M009":
+          case "M010":
+          case "M011":
+          case "M012":
+          case "M013":
+          case "M014":
+            alert(data.message);
+            setLoading(false);
+            return;
+        }
       }
-      // 관리자의 경우는?
-    } catch (err) {
       alert("오류가 발생하였습니다. 다시 시도해주세요");
       window.location.reload();
     }
   };
 
-  const isProperInfo = () => {
+  const isProperInfo = useCallback(() => {
     return (
-      isEmailDupChecked ||
-      isEmailUnique ||
-      isProperPw ||
-      info[PW] === info["pwCheck"] ||
-      info[PH_MID].length === 4 ||
-      info[PH_LAST].length === 4 ||
+      isEmailDupChecked &&
+      isEmailUnique &&
+      isProperPw() &&
+      info[PW] === info["pwCheck"] &&
+      info[PH_MID].length === 4 &&
+      info[PH_LAST].length === 4 &&
+      !/\s/.test(info[NAME]) &&
       Object.values(info).filter((val) => val === "").length === 0
     );
-  };
+  }, [info]);
 
   //아이디 중복체크 했는지, 비밀번호 부합하는지, 칸 다 채웠는지 };
   const onChange = (e) => {
@@ -159,12 +171,11 @@ const SignUpPage = () => {
       );
       setIsEmailUnique(!response.data.isDuplication);
     } catch (err) {
-      console.log(err);
       alert("오류가 발생하였습니다. 다시 시도해주세요");
       window.location.reload();
     }
     setEmailDupLoading(false);
-  }, [isEmailDupChecked]);
+  }, [isEmailDupChecked, info]);
 
   // 비밀번호 관련
   const isProperPw = useCallback(() => {

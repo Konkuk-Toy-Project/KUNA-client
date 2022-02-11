@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isClientState, userTokenState } from "../../store/common/user";
 
 const INPUT_TYPE_PW = "password";
@@ -16,8 +16,10 @@ const PW = "password";
 const LoginPage = () => {
   const [account, setAccount] = useState({ [ID]: "", [PW]: "" });
   const [isWrong, setIsWrong] = useState(false); // when user fail to login
+  const userToken = useRecoilValue(userTokenState);
   const setUserToken = useSetRecoilState(userTokenState);
   const setIsClientState = useSetRecoilState(isClientState);
+  const navigate = useNavigate();
 
   // changing input about id & pw
   const onChange = (e) => {
@@ -44,13 +46,15 @@ const LoginPage = () => {
         "http://localhost:8080/member/login",
         account
       );
-      const data = response.data;
-      console.log(response.data); // 회원 로그인 완료시 로그인페이지 접근 막기
+      const data = await response.data;
+      console.log(data.token);
       setUserToken(data.token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
       if (data.role === "admin") setIsClientState(false);
+      else navigate("/item/14");
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
         switch (error.response.data.errorCode) {
           case "M003":
           case "M003":
@@ -64,7 +68,6 @@ const LoginPage = () => {
       window.location.reload();
     }
   };
-
   return (
     <LoginWrapper>
       <div>

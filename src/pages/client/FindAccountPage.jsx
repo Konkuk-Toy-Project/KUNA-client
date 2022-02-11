@@ -82,14 +82,17 @@ const FindAccountPage = () => {
       } else if (response.data.hasOwnProperty("tempPassword")) {
         setTempPW(response.data.tempPassword);
         setShowPopup(true);
-      } else {
-        // 아이디 비밀번호 없는 경우.. 처리 추가해야함
-        alert("오류가 발생하였습니다. 다시 시도해주세요");
-        //window.location.reload();
       }
-
       setLoading(false);
-    } catch (err) {
+    } catch (error) {
+      if (error.response) {
+        const data = error.response.data;
+        switch (data.errorCode) {
+          case "M005":
+            alert(data.message);
+            return;
+        }
+      }
       alert("오류가 발생하였습니다. 다시 시도해주세요");
       window.location.reload();
     }

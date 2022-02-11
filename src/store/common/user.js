@@ -12,5 +12,5 @@ export const currentY = atom({
 
 export const userTokenState = atom({
   key: "userTokenState",
-  default: [],
+  default: "",
 });

@@ -6,7 +6,7 @@ const EnrolledItemList = ({ items }) => {
   return (
     <EnrolledItemListWrapper>
       {items.map((item) => (
-        <EnrolledItem key={item.id} item={item} />
+        <EnrolledItem key={item.itemId} item={item} />
       ))}
     </EnrolledItemListWrapper>
   );

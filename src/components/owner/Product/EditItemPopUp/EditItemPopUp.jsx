@@ -1,8 +1,9 @@
+//import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import {
   currentItemState,
   productState,
@@ -14,32 +15,43 @@ const EditItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const currentItem = useRecoilValue(currentItemState);
   const setShowEditPopUp = useSetRecoilState(showEditPopUpState);
-  const [discount, setDiscount] = useState("");
+  const [sale, setSale] = useState(0);
   const [price, setPrice] = useState(0);
   const [product, setProduct] = useRecoilState(productState);
+  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);
   };
 
-  const editDiscountOrPrice = () => {
+  const editSaleOrPrice = () => {
     const otherItems = product.filter((item) => item.id !== currentItem.id);
-    const editedItem = { ...currentItem, discount, price };
+    const editedItem = { ...currentItem, sale, price };
     setProduct([editedItem, ...otherItems]);
   };
 
   const onClickSubmit = () => {
     if (window.confirm("해당 상품을 수정하시겠습니까?")) {
-      editDiscountOrPrice();
+      // changePriceAndSale();
+      editSaleOrPrice();
       alert("수정이 완료되었습니다.");
       setShowEditPopUp(false);
     }
   };
 
+  // async function changePriceAndSale() {
+  //   await axios
+  //     .put(`http://localhost:8080/admin/price/${currentItem.itemId}`, {
+  //       headers: { Authorization: `Bearer ${userToken.token}` },
+  //       data: { price, sale },
+  //     })
+  //     .then((response) => response.data);
+  // }
+
   useEffect(() => {
-    setDiscount(currentItem.discount);
+    setSale(currentItem.sale);
     setPrice(currentItem.price);
-  }, [currentItem.discount, currentItem.price]);
+  }, [currentItem.sale, currentItem.price]);
 
   return (
     <EditItemPopUpWrapper top={scrollY}>
@@ -48,11 +60,7 @@ const EditItemPopUp = () => {
         <h1>상품명 : {currentItem.title}</h1>
         <EditContentWrapper>
           <p>할인율 </p>
-          <input
-            type="text"
-            value={discount}
-            onChange={onChange(setDiscount)}
-          />
+          <input type="text" value={sale} onChange={onChange(setSale)} />
         </EditContentWrapper>
         <EditContentWrapper>
           <p>가격</p>

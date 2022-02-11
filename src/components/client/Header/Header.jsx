@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   const onClickCategory = (choice) => {
-    if (userToken.length) {
+    if (userToken) {
       return navigate(`/${choice}`);
     }
     if (

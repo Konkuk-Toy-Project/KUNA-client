@@ -4,24 +4,43 @@ import ImgSlide from "../../../common/ImgSlide/ImgSlide";
 import LikeBtn from "./BriefInfoComp/LikeBtn";
 import Option from "./BriefInfoComp/Option";
 import BriefHeader from "./BriefInfoComp/BriefHeader";
+import axios from "axios";
+import AskGoToBasketPopup from "./AskGoToBasketPopup";
 
 const ItemBrief = ({ itemObj }) => {
   const [item, setItem] = useState(itemObj);
   const [chosenOpts, setChosenOpts] = useState([]);
-  const onBasketClick = () => {
-    /// 옵션 선택 안했을 경우 판단
-    console.log("서버로 chosenOpts 보내기");
-    const queryString = chosenOpts.map((opt) =>
-      Object.entries(opt)
-        .map((e) => e.join("="))
-        .join("&")
-    );
-    console.log(queryString);
-  };
+  const [openBasketPopup, setOpenBasketPopup] = useState(false);
+
   const onBuyClick = () => {
-    /// 옵션 선택 안했을 경우 판단
-    console.log("쿼리로 선택내용 보내기");
-    // history.pushState({ pathname: "/order", search: "chosenOpts?=" });
+    if (chosenOpts.length === 0) {
+      alert("상품을 선택해 주세요.");
+      return;
+    }
+
+    console.log("atom에 설정");
+  };
+
+  const onBasketClick = () => {
+    if (chosenOpts.length === 0) {
+      alert("상품을 선택해 주세요.");
+      return;
+    }
+    postChosenOpt();
+  };
+
+  const postChosenOpt = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/cart",
+        chosenOpts
+      );
+      if (response.data !== undefined) setOpenBasketPopup(true);
+    } catch (error) {
+      if (error.response) {
+        alert("오류가 발생했습니다. 다시 시도해주세요");
+      }
+    }
   };
 
   return (
@@ -37,7 +56,6 @@ const ItemBrief = ({ itemObj }) => {
         />
         {/* 찜개수+사용자의 찜 내역에 포함 해야함--------------------------------- */}
         <LikeBtn num={item.preference} />
-        {/* 옵션 컴포넌트*/}
         <Option item={item} chosen={chosenOpts} setChosen={setChosenOpts} />
         <div name="submit-btns">
           <button onClick={onBasketClick}>장바구니</button>
@@ -45,6 +63,9 @@ const ItemBrief = ({ itemObj }) => {
         </div>
         <img src={item.infoImg}></img>
       </div>
+      {openBasketPopup ? (
+        <AskGoToBasketPopup setOpenPopUp={setOpenBasketPopup} />
+      ) : null}
     </div>
   );
 };

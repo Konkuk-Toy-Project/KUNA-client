@@ -1,72 +1,52 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
 import ItemBrief from "../../components/client/ItemDetail/ItemBrief/ItemBrief";
 import ItemDetailImg from "../../components/client/ItemDetail/ItemDetailImg";
 import QnAPage from "./QnAPage";
 import ReviewPage from "./ReviewPage";
+import { useParams } from "react-router-dom";
 
 const ItemDetailPage = () => {
-  //sample data
-  const [item, setItem] = useState({
-    itemState: "normality",
-    itemImageUrl: [
-      "https://img.sonyunara.com/files/goods/139373/1637742098_0.jpg",
-      "https://img.sonyunara.com/files/goods/139373/1637652166_2.jpg",
-      "https://img.sonyunara.com/files/goods/139373/1637657482_3.jpg",
-      "https://img.sonyunara.com/files/goods/139373/1637715429_4.jpg",
-      "https://img.sonyunara.com/files/goods/139373/1637740513_16.jpg",
-    ],
-    name: "sts9717 [1+1기획] 맨살에 닿아도 부드러운 핫팩 기모 폴라티 2종",
-    price: 15000,
-    preference: 7,
-    registryDate: 220102,
-    sale: 15,
-    itemId: "121935",
-    categoryName: "shirt",
-    categoryId: 1,
-    option1: [
-      {
-        name: "Size M",
-        option1Id: 18,
-        stock: 16,
-        option2: [],
-      },
-      {
-        name: "Size L",
-        option1Id: 15,
-        stock: 5,
-        option2: [
-          {
-            name: "빨간색",
-            stock: 3,
-            option2Id: 12,
-          },
-          {
-            name: "노란색",
-            stock: 2,
-            option2Id: 10,
-          },
-        ],
-      },
-    ],
-    detailImageUrl: [
-      "https://img.sonyunara.com/files/goodsm/171893/1643275899_1.jpg",
-    ],
-  });
+  const { itemId } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [item, setItem] = useState();
+
+  useEffect(() => {
+    getItem();
+  }, []);
+
+  const getItem = useCallback(async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/item/${itemId}`);
+      console.log(response.data);
+      setItem(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  }, [itemId]);
+
   return (
     <div>
-      <ItemBrief itemObj={item} />
-      <ul>
-        <li>제품상세</li>
-        <li>리뷰</li>
-        <li>Q&A</li>
-      </ul>
-      <ItemDetailImg imgSrc={item.detailImageUrl} />
-      <ReviewPage itemId={item.itemId} />
-      <QnAPage
-        itemName={item.name}
-        thumbnail={item.itemImageUrl[0]}
-        itemId={item.itemId}
-      />
+      {loading ? (
+        <div>Loading</div>
+      ) : (
+        <>
+          <ItemBrief itemObj={item} />
+          <ul>
+            <li>제품상세</li>
+            <li>리뷰</li>
+            <li>Q&A</li>
+          </ul>
+          <ItemDetailImg imgSrc={item.detailImageUrl} />
+          <ReviewPage itemId={item.itemId} />
+          <QnAPage
+            itemName={item.name}
+            thumbnail={item.itemImageUrl[0]}
+            itemId={item.itemId}
+          />
+        </>
+      )}
     </div>
   );
 };

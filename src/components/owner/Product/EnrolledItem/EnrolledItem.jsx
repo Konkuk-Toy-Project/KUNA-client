@@ -50,7 +50,7 @@ const EnrolledItem = ({ item }) => {
         <h1>카테고리 : {item.categoryName}</h1>
         <ItemPriceWrapper>
           <p>가격 : {item.price}</p>
-          <p>할인율 : {item.sale}</p>
+          <p>할인율 : {item.sale}%</p>
         </ItemPriceWrapper>
         <div>
           <button onClick={onClickEditItem}>상품 수정</button>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router";
 import { useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -20,6 +21,7 @@ const AddItemPopUp = () => {
   const [mainImg, setMainImg] = useState([]);
   const [detailImg, setDetailImg] = useState([]);
   const [thumbnailImg, setThumbnailImg] = useState([]);
+  const navigate = useNavigate();
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);
@@ -61,8 +63,9 @@ const AddItemPopUp = () => {
     if (window.confirm("해당 상품을 등록하시겠습니까?")) {
       const data = getItem();
       await addNewItem(data);
-      alert("상품이 추가되었습니다.");
+      alert("상품이 추가되었습니다. 홈페이지로 이동합니다.");
       setShowAddPopUp(false);
+      navigate("/");
     }
   };
 

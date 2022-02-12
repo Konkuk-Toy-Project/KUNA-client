@@ -1,4 +1,4 @@
-//import axios from "axios";
+import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -30,23 +30,29 @@ const EditItemPopUp = () => {
     setProduct([editedItem, ...otherItems]);
   };
 
-  const onClickSubmit = () => {
+  const onClickSubmit = async () => {
     if (window.confirm("해당 상품을 수정하시겠습니까?")) {
-      // changePriceAndSale();
+      await changePriceAndSale();
       editSaleOrPrice();
       alert("수정이 완료되었습니다.");
       setShowEditPopUp(false);
     }
   };
 
-  // async function changePriceAndSale() {
-  //   await axios
-  //     .put(`http://localhost:8080/admin/price/${currentItem.itemId}`, {
-  //       headers: { Authorization: `Bearer ${userToken.token}` },
-  //       data: { price, sale },
-  //     })
-  //     .then((response) => response.data);
-  // }
+  function changePriceAndSale() {
+    axios
+      .put(
+        `http://localhost:8080/admin/price/${currentItem.itemId}`,
+        { price, sale },
+        {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${userToken.token}`,
+          },
+        }
+      )
+      .then((response) => response.data);
+  }
 
   useEffect(() => {
     setSale(currentItem.sale);

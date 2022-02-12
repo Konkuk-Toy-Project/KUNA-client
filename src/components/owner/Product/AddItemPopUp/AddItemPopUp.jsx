@@ -14,13 +14,12 @@ const AddItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const setShowAddPopUp = useSetRecoilState(showAddPopUpState);
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
   const [discount, setDiscount] = useState("");
   const [price, setPrice] = useState("");
+  const [category, setCategory] = useState(4);
   const [mainImg, setMainImg] = useState([]);
   const [detailImg, setDetailImg] = useState([]);
   const [thumbnailImg, setThumbnailImg] = useState([]);
-  const [category, setCategory] = useRecoilState(productState);
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);
@@ -29,25 +28,6 @@ const AddItemPopUp = () => {
   const onChangeImage = (handleChange) => (event) => {
     const images = event.target.files;
     handleChange(images);
-    console.log(images);
-    const formData = new FormData();
-    for (const image of images) {
-      formData.append("img", image);
-    }
-    for (const keyValue of formData) {
-      console.log(keyValue);
-    }
-  };
-
-  const addItem = () => {
-    const currentItem = {
-      id: new Date(),
-      title,
-      image,
-      discount,
-      price,
-    };
-    setCategory([currentItem, ...category]);
   };
 
   const getItem = () => {
@@ -55,7 +35,7 @@ const AddItemPopUp = () => {
     formData.append("name", title);
     formData.append("price", price);
     formData.append("sale", discount);
-    formData.append("categoryId", 4);
+    formData.append("categoryId", category);
     for (const image of mainImg) {
       formData.append("itemImages", image);
     }
@@ -79,7 +59,6 @@ const AddItemPopUp = () => {
 
   const onClickSubmit = async () => {
     if (window.confirm("해당 상품을 등록하시겠습니까?")) {
-      addItem();
       const data = getItem();
       await addNewItem(data);
       alert("상품이 추가되었습니다.");
@@ -104,7 +83,11 @@ const AddItemPopUp = () => {
       </div>
       <div>
         <h1>카테고리</h1>
-        <input type="text" />
+        <select name="category" onChange={onChange(setCategory)}>
+          <option value="4">상의</option>
+          <option value="5">하의</option>
+          <option value="6">신발</option>
+        </select>
       </div>
       <div>
         <h1>상품 메인 이미지</h1>

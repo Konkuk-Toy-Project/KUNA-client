@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY, userTokenState } from "../../../../store/common/user";
+import { currentY } from "../../../../store/common/user";
 import {
   currentItemState,
   productState,
@@ -18,7 +18,6 @@ const EditItemPopUp = () => {
   const [sale, setSale] = useState(0);
   const [price, setPrice] = useState(0);
   const [product, setProduct] = useRecoilState(productState);
-  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);

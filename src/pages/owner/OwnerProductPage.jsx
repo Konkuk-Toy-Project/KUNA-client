@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import AddItemPopUp from "../../components/owner/Product/AddItemPopUp/AddItemPopUp";
+import AddOptionPopUp from "../../components/owner/Product/AddOptionPopUp/AddOptionPopUp";
 import EditItemPopUp from "../../components/owner/Product/EditItemPopUp/EditItemPopUp";
 import EnrolledItemList from "../../components/owner/Product/EnrolledItemList/EnrolledItemList";
 import { userTokenState } from "../../store/common/user";
@@ -10,9 +11,11 @@ import {
   productState,
   showAddPopUpState,
   showEditPopUpState,
+  showOptionPopUpState,
 } from "../../store/owner/product";
 
 const OwnerProductPage = () => {
+  const showOptionPopUp = useRecoilValue(showOptionPopUpState);
   const [items, setItems] = useRecoilState(productState);
   const showEditPopUp = useRecoilValue(showEditPopUpState);
   const [showAddPopUp, setShowAddPopUp] = useRecoilState(showAddPopUpState);
@@ -39,6 +42,7 @@ const OwnerProductPage = () => {
       <EnrolledItemList items={items} />
       {showAddPopUp && <AddItemPopUp />}
       {showEditPopUp && <EditItemPopUp />}
+      {showOptionPopUp && <AddOptionPopUp />}
     </OwnerProductPageWrapper>
   );
 };

@@ -6,12 +6,14 @@ import {
   currentItemState,
   productState,
   showEditPopUpState,
+  showOptionPopUpState,
 } from "../../../../store/owner/product";
 
 const EnrolledItem = ({ item }) => {
   const [items, setItems] = useRecoilState(productState);
   const setCurrentItem = useSetRecoilState(currentItemState);
   const setShowEditPopUp = useSetRecoilState(showEditPopUpState);
+  const setShowOptionPopUp = useSetRecoilState(showOptionPopUpState);
   const setCurrentY = useSetRecoilState(currentY);
 
   const calculatePopUpHeight = () => {
@@ -40,6 +42,12 @@ const EnrolledItem = ({ item }) => {
     }
   };
 
+  const onClickAddOption = () => {
+    calculatePopUpHeight();
+    setCurrentItem(item);
+    setShowOptionPopUp(true);
+  };
+
   return (
     <ItemWrapper>
       <ItemImage
@@ -55,6 +63,7 @@ const EnrolledItem = ({ item }) => {
         <div>
           <button onClick={onClickEditItem}>상품 수정</button>
           <button onClick={onClickDeleteItem}>상품 삭제</button>
+          <button onClick={onClickAddOption}>옵션 추가</button>
         </div>
       </ItemDescription>
     </ItemWrapper>

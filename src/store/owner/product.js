@@ -19,3 +19,8 @@ export const showEditPopUpState = atom({
   key: "showEditPopUpState",
   default: false,
 });
+
+export const showOptionPopUpState = atom({
+  key: "showOptionPopUpState",
+  default: false,
+});

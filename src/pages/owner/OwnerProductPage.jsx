@@ -25,9 +25,7 @@ const OwnerProductPage = () => {
   useEffect(() => {
     async function getData() {
       const data = await axios
-        .get("http://localhost:8080/admin/items", {
-          headers: { Authorization: `Bearer ${userToken.token}` },
-        })
+        .get("http://localhost:8080/admin/items")
         .then((response) => response.data);
       setItems(data);
     }

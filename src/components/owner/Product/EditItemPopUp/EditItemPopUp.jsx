@@ -25,7 +25,9 @@ const EditItemPopUp = () => {
   };
 
   const editSaleOrPrice = () => {
-    const otherItems = product.filter((item) => item.id !== currentItem.id);
+    const otherItems = product.filter(
+      (item) => item.itemId !== currentItem.itemId
+    );
     const editedItem = { ...currentItem, sale, price };
     setProduct([editedItem, ...otherItems]);
   };
@@ -41,16 +43,10 @@ const EditItemPopUp = () => {
 
   function changePriceAndSale() {
     axios
-      .put(
-        `http://localhost:8080/admin/price/${currentItem.itemId}`,
-        { price, sale },
-        {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${userToken.token}`,
-          },
-        }
-      )
+      .put(`http://localhost:8080/admin/price/${currentItem.itemId}`, {
+        price,
+        sale,
+      })
       .then((response) => response.data);
   }
 

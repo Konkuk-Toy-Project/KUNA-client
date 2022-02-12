@@ -1,4 +1,6 @@
+import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router";
 import { useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -13,31 +15,57 @@ const AddItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const setShowAddPopUp = useSetRecoilState(showAddPopUpState);
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
   const [discount, setDiscount] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useRecoilState(productState);
+  const [category, setCategory] = useState(4);
+  const [mainImg, setMainImg] = useState([]);
+  const [detailImg, setDetailImg] = useState([]);
+  const [thumbnailImg, setThumbnailImg] = useState([]);
+  const navigate = useNavigate();
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);
   };
 
-  const addItem = () => {
-    const currentItem = {
-      id: new Date(),
-      title,
-      image,
-      discount,
-      price,
-    };
-    setCategory([currentItem, ...category]);
+  const onChangeImage = (handleChange) => (event) => {
+    const images = event.target.files;
+    handleChange(images);
   };
 
-  const onClickSubmit = () => {
+  const getItem = () => {
+    const formData = new FormData();
+    formData.append("name", title);
+    formData.append("price", price);
+    formData.append("sale", discount);
+    formData.append("categoryId", category);
+    for (const image of mainImg) {
+      formData.append("itemImages", image);
+    }
+    for (const image of detailImg) {
+      formData.append("detailImages", image);
+    }
+    formData.append("thumbnail", thumbnailImg[0]);
+    return formData;
+  };
+
+  function addNewItem(data) {
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    axios
+      .post("http://localhost:8080/item", data, config)
+      .then((response) => response.data);
+  }
+
+  const onClickSubmit = async () => {
     if (window.confirm("해당 상품을 등록하시겠습니까?")) {
-      addItem();
-      alert("상품이 추가되었습니다.");
+      const data = getItem();
+      await addNewItem(data);
+      alert("상품이 추가되었습니다. 홈페이지로 이동합니다.");
       setShowAddPopUp(false);
+      navigate("/");
     }
   };
 
@@ -49,17 +77,32 @@ const AddItemPopUp = () => {
         <input type="text" onChange={onChange(setTitle)} />
       </div>
       <div>
-        <h1>사진 </h1>
-        <input type="text" onChange={onChange(setImage)} />
-        <input type="file" name="" id="" />
+        <h1>가격 </h1>
+        <input type="text" onChange={onChange(setPrice)} />
       </div>
       <div>
         <h1>할인율 </h1>
         <input type="text" onChange={onChange(setDiscount)} />
       </div>
       <div>
-        <h1>가격 </h1>
-        <input type="text" onChange={onChange(setPrice)} />
+        <h1>카테고리</h1>
+        <select name="category" onChange={onChange(setCategory)}>
+          <option value="4">상의</option>
+          <option value="5">하의</option>
+          <option value="6">신발</option>
+        </select>
+      </div>
+      <div>
+        <h1>상품 메인 이미지</h1>
+        <input type="file" multiple onChange={onChangeImage(setMainImg)} />
+      </div>
+      <div>
+        <h1>상품 세부 이미지</h1>
+        <input type="file" multiple onChange={onChangeImage(setDetailImg)} />
+      </div>
+      <div>
+        <h1>썸네일 이미지</h1>
+        <input type="file" name="" onChange={onChangeImage(setThumbnailImg)} />
       </div>
       <button onClick={onClickSubmit}>상품 추가하기</button>
     </AddItemPopUpWrapper>

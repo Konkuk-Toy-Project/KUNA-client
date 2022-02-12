@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY, userTokenState } from "../../../../store/common/user";
+import { currentY } from "../../../../store/common/user";
 import {
   currentItemState,
   productState,
@@ -18,14 +18,15 @@ const EditItemPopUp = () => {
   const [sale, setSale] = useState(0);
   const [price, setPrice] = useState(0);
   const [product, setProduct] = useRecoilState(productState);
-  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);
   };
 
   const editSaleOrPrice = () => {
-    const otherItems = product.filter((item) => item.id !== currentItem.id);
+    const otherItems = product.filter(
+      (item) => item.itemId !== currentItem.itemId
+    );
     const editedItem = { ...currentItem, sale, price };
     setProduct([editedItem, ...otherItems]);
   };
@@ -41,16 +42,10 @@ const EditItemPopUp = () => {
 
   function changePriceAndSale() {
     axios
-      .put(
-        `http://localhost:8080/admin/price/${currentItem.itemId}`,
-        { price, sale },
-        {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${userToken.token}`,
-          },
-        }
-      )
+      .put(`http://localhost:8080/admin/price/${currentItem.itemId}`, {
+        price,
+        sale,
+      })
       .then((response) => response.data);
   }
 

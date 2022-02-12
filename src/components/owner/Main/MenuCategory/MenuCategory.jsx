@@ -1,14 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { showCouponPopUpState } from "../../../../store/owner/coupon";
 
-const MenuCategory = ({ link, imageUrl, title }) => {
+const MenuCategory = ({ link, imageUrl, title, type }) => {
+  const setShowCouponPopUp = useSetRecoilState(showCouponPopUpState);
+
+  const onClickAdd = () => {
+    setShowCouponPopUp(true);
+  };
   return (
     <MenuCategoryWrapper>
-      <PageLink to={link}>
-        <Image src={imageUrl} alt="Category" />
-        <Title>{title}</Title>
-      </PageLink>
+      {type === "coupon" ? (
+        <div onClick={onClickAdd}>
+          <Image src={imageUrl} alt="Category" />
+          <Title>{title}</Title>
+        </div>
+      ) : (
+        <PageLink to={link}>
+          <Image src={imageUrl} alt="Category" />
+          <Title>{title}</Title>
+        </PageLink>
+      )}
     </MenuCategoryWrapper>
   );
 };

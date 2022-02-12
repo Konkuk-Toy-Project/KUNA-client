@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useCallback } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { currentY } from "../../../../store/common/user";
@@ -35,11 +36,11 @@ const AddCouponPopUp = () => {
       .then((response) => response.data);
   };
 
-  const calculateExpiredDate = () => {
+  const calculateExpiredDate = useCallback(() => {
     const today = new Date();
     today.setDate(today.getDate() + Number(date));
     setExpiredDate(today.toISOString().replace("T", " ").replace("Z", ""));
-  };
+  }, [date]);
 
   const onClickSubmit = () => {
     calculateExpiredDate();
@@ -52,7 +53,7 @@ const AddCouponPopUp = () => {
 
   useEffect(() => {
     calculateExpiredDate();
-  }, []);
+  }, [calculateExpiredDate]);
 
   return (
     <AddCouponPopUpWrapper top={scrollY}>

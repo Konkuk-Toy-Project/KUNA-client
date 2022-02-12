@@ -1,8 +1,12 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import AddCouponPopUp from "../../components/owner/Coupon/AddCouponPopUp/AddCouponPopUp";
 import MenuCategory from "../../components/owner/Main/MenuCategory/MenuCategory";
+import { showCouponPopUpState } from "../../store/owner/coupon";
 
 const OwnerMainPage = () => {
+  const showCouponPopUp = useRecoilValue(showCouponPopUpState);
   return (
     <OwnerMainPageWrapper>
       <Title>원하는 작업을 선택하세요</Title>
@@ -13,9 +17,10 @@ const OwnerMainPage = () => {
           title="상품 관리"
         />
         <MenuCategory
-          link="/coupons"
+          type="coupon"
           imageUrl="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
-          title="쿠폰 관리"
+          title="쿠폰 등록하기"
+          onClick={() => console.log("Coupon")}
         />
         <MenuCategory
           link="/answers"
@@ -23,6 +28,7 @@ const OwnerMainPage = () => {
           title="Q&A 답변"
         />
       </MenuCategoryWrapper>
+      {showCouponPopUp && <AddCouponPopUp />}
     </OwnerMainPageWrapper>
   );
 };

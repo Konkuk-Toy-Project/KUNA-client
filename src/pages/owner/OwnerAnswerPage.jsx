@@ -38,8 +38,6 @@ const OwnerAnswerPage = () => {
     getData();
   }, []);
 
-  console.log(items);
-
   return (
     <OwnerAnswerPageWrapper>
       <Title>질문 내역</Title>

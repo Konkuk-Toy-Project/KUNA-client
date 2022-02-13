@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   currentAnswerItemState,
-  getAllAnswerState,
   showAnswerPopUpState,
 } from "../../store/owner/answer";
 import AnswerPopUp from "../../components/owner/Answer/AnswerPopUp/AnswerPopUp";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const OwnerAnswerPage = () => {
-  const getAnswers = useRecoilValue(getAllAnswerState);
+  const [items, setItems] = useState([]);
   const [showAnswerPopUp, setShowAnswerPopUp] =
     useRecoilState(showAnswerPopUpState);
   const setCurrentAnswerItem = useSetRecoilState(currentAnswerItemState);
@@ -20,22 +21,43 @@ const OwnerAnswerPage = () => {
     setCurrentAnswerItem(answer);
   };
 
+  const convertDate = (date) => {
+    return `${date.substring(0, 4)}년 ${date.substring(
+      5,
+      7
+    )}월 ${date.substring(8, 10)}일`;
+  };
+
+  useEffect(() => {
+    async function getData() {
+      const data = await axios
+        .get("http://localhost:8080/admin/qna/false")
+        .then((response) => response.data);
+      setItems(data);
+    }
+    getData();
+  }, []);
+
   return (
     <OwnerAnswerPageWrapper>
       <Title>질문 내역</Title>
       <CouponWrapper>
         <Description>상품명</Description>
-        <Description>질문</Description>
-        <Description>답변 내용</Description>
+        <Description>질문명</Description>
+        <Description>질문 내용</Description>
+        <Description>질문 등록 날짜</Description>
+        <Description>답변 유무</Description>
       </CouponWrapper>
-      {getAnswers.map((answer, index) => (
-        <CouponWrapper key={index}>
-          <Description>{answer.title}</Description>
-          <Description>{answer.question}</Description>
-          {answer.answer ? (
-            <Description>{answer.answer}</Description>
+      {items.map((item) => (
+        <CouponWrapper key={item.qnaId}>
+          <Description>{item.itemName}</Description>
+          <Description>{item.title}</Description>
+          <Description>{item.question}</Description>
+          <Description>{convertDate(item.registryDate)}</Description>
+          {item.answered ? (
+            <Description>답변 완료</Description>
           ) : (
-            <AnswerButton onClick={() => onClickAnswer(answer)}>
+            <AnswerButton onClick={() => onClickAnswer(item)}>
               답변하기
             </AnswerButton>
           )}

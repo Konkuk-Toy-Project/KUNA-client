@@ -6,17 +6,17 @@ const UP = "up";
 const DOWN = "down";
 const SEP = "_"; // seperator
 
-const Option = ({ item, chosen, setChosen }) => {
+const Option = ({ item, chosen, setChosen, setChosenSubInfo }) => {
   const optionOnes = item.option1;
-
   const [optionTwos, setOptionTwos] = useState([]); // 선택한 옵션1의 child
+
   const [isOpt1Chosen, setIsOpt1Chosen] = useState(false);
   const [isItemSelected, setIsItemSelected] = useState(false);
 
   const [option1, setOption1] = useState(["", ""]); // 선택한 옵션1[옵션명, id]
   const [option2, setOption2] = useState(["", ""]); // 선택한 옵션2
+  const [stock, setStock] = useState();
 
-  const [stack, setStack] = useState("");
   const [selItems, setSelItems] = useState([]);
 
   const onChange = (e) => {
@@ -33,11 +33,11 @@ const Option = ({ item, chosen, setChosen }) => {
 
       if (tempOptTwos.length === 0) {
         // option2 없음
-        setStack(optionOnes[optIdx].stock);
+        setStock(optionOnes[optIdx].stock);
         setIsItemSelected(true);
       }
     } else {
-      setStack(optionTwos[optIdx].stock);
+      setStock(optionTwos[optIdx].stock);
       setIsItemSelected(true);
       setOption2([target.value, target.children[optIdx + 1].dataset.id]);
     }
@@ -50,7 +50,7 @@ const Option = ({ item, chosen, setChosen }) => {
 
     switch (btnType) {
       case UP:
-        if (selItems[itemIdx].count < selItems[itemIdx].stack) {
+        if (selItems[itemIdx].count < selItems[itemIdx].stock) {
           setSelItems(
             selItems.map((sel, idx) =>
               idx === itemIdx ? { ...sel, count: sel.count + 1 } : sel
@@ -101,7 +101,7 @@ const Option = ({ item, chosen, setChosen }) => {
           option1: option1[0],
           option2: option2[0],
           count: 1,
-          stack: stack,
+          stock: stock,
         })
       );
       setChosen((cur) =>
@@ -120,6 +120,10 @@ const Option = ({ item, chosen, setChosen }) => {
     setIsOpt1Chosen(false);
     setIsItemSelected(false);
   }, [isItemSelected]);
+
+  useEffect(() => {
+    setChosenSubInfo(selItems);
+  }, [selItems]);
 
   return (
     <div>
@@ -200,7 +204,9 @@ const Option = ({ item, chosen, setChosen }) => {
 
 Option.propTypes = {
   item: PropTypes.object.isRequired,
+  chosen: PropTypes.arrayOf(PropTypes.object).isRequired,
   setChosen: PropTypes.func.isRequired,
+  setChosenSubInfo: PropTypes.func.isRequired,
 };
 
 export default Option;

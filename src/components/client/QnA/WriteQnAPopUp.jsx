@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import IconX from "../Icon/IconX";
 import QnAItemInfo from "./QnAItemInfo";
 import PropTypes from "prop-types";
+import axios from "axios";
 
-const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
+const WriteQnAPopUp = ({ itemData, setNewQnaIds, setPopWriteQnA }) => {
   const [isSecret, setIsSecret] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  //const [loading, setLoading] = useState(false);
 
   const onSecretClick = () => setIsSecret((cur) => !cur);
   const onTitleChange = (e) => setTitle(e.target.value);
@@ -19,19 +21,30 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
   };
 
   const onSubmitClick = () => {
-    console.log("서버 등록");
+    if (title === "" || text === "") {
+      alert("제목과 문의사항을 모두 입력해주세요.");
+      return;
+    }
     setPopWriteQnA(false);
-    setQnA((cur) =>
-      cur.concat({
-        question: text,
-        answer: null,
-        registryDate: "질문 일시", //---------------------- 날짜 형식에 맞게 받아오는 걸로 수정
-        memberName: "질문자 이름", // --------------------- 서버에서 이름 받아오는 걸로 수정
-        answered: false,
+    postNewQnA();
+  };
+
+  const postNewQnA = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/qna", {
+        itemId: itemData.itemId,
         secret: isSecret,
+        question: text,
         title: title,
-      })
-    );
+      });
+      setNewQnaIds((cur) => cur.concat(response.data.qnaId));
+    } catch (error) {
+      alert(
+        error.response && error.response.message !== undefined
+          ? error.response.message
+          : "오류가 발생했습니다. 다시 시도해주세요"
+      );
+    }
   };
 
   return (
@@ -50,7 +63,7 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
         />
         <label>
           비밀글
-          <input type="checkbox" checked={isSecret} onClick={onSecretClick} />
+          <input type="checkbox" checked={isSecret} onChange={onSecretClick} />
         </label>
 
         <div name="main">
@@ -67,7 +80,7 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
       </div>
 
       <div>
-        <button onSubmit={onSubmitClick}>확인</button>
+        <button onClick={onSubmitClick}>확인</button>
         <button onClick={onClosePopClick}>취소</button>
       </div>
     </div>
@@ -76,7 +89,7 @@ const WriteQnAPopUp = ({ itemData, setQnA, setPopWriteQnA }) => {
 
 WriteQnAPopUp.propTypes = {
   itemData: PropTypes.object.isRequired,
-  setQnA: PropTypes.func.isRequired,
+  setNewQnaIds: PropTypes.func.isRequired,
   setPopWriteQnA: PropTypes.func.isRequired,
 };
 

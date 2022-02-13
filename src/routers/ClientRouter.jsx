@@ -12,6 +12,7 @@ import ItemDetailPage from "../pages/client/ItemDetailPage";
 import SignUpFinPage from "../pages/client/SignUpFinPage";
 import SignUpPage from "../pages/client/SignUpPage";
 import UserPage from "../pages/client/UserPage";
+import OrderPage from "../pages/client/OrderPage";
 
 const ClientRouter = () => {
   return (

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import CouponSelector from "./CouponSelector.jsx";
-import OrderedItem from "./OrderedItem.jsx";
-import OrderWriteInfo from "./OrderWriteInfo.jsx";
-import PayMthdSelector from "./PayMthdSelector.jsx";
-import UsingPoint from "./UsingPoint.jsx";
+import CouponSelector from "../../components/client/Order/CouponSelector.jsx";
+import OrderedItem from "../../components/client/Order/OrderedItem.jsx";
+import OrderWriteInfo from "../../components/client/Order/OrderWriteInfo.jsx";
+import PayMthdSelector from "../../components/client/Order/PayMthdSelector.jsx";
+import UsingPoint from "../../components/client/Order/UsingPoint.jsx";
 
 const OrderPage = () => {
   const [items, setItems] = useState([

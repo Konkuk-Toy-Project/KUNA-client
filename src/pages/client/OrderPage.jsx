@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import CouponSelector from "../../components/client/Order/CouponSelector.jsx";
-import OrderedItem from "../../components/client/Order/OrderedItem.jsx";
+import OrderedItems from "../../components/client/Order/OrderedItems.jsx";
 import OrderWriteInfo from "../../components/client/Order/OrderWriteInfo.jsx";
 import PayMthdSelector from "../../components/client/Order/PayMthdSelector.jsx";
+import PriceBar from "../../components/client/Order/PriceBar.jsx";
 import UsingPoint from "../../components/client/Order/UsingPoint.jsx";
+import { buyingState } from "../../store/client/buying.js";
 
 const OrderPage = () => {
   const [items, setItems] = useState([
-    { itemId: 1214, option1Id: 2351, option2Id: 21523, count: 2 }, //price 추가요청하기
+    { itemId: 1214, option1Id: 2351, option2Id: 21523, count: 2 },
     { itemId: 1213, option1Id: 23451, option2Id: 2523, count: 1 },
   ]);
 
   const [defaultPrice, setDefaultPrice] = useState(30000);
   const [totalPrice, setTotalPrice] = useState(defaultPrice);
+  const [shippingCharge, setShippingCharge] = useState(3000);
 
   const [inputData, setInputData] = useState({});
   const [couponId, setCouponId] = useState({ couponId: "" });
@@ -21,6 +26,9 @@ const OrderPage = () => {
 
   const [isInputFilled, setIsInputFilled] = useState(false);
   const [isPayMthdChecked, setIsPayMthdChecked] = useState(false);
+
+  const buying = useRecoilValue(buyingState);
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     address: "", //배송지 주소
@@ -32,44 +40,19 @@ const OrderPage = () => {
     shippingCharge: 0, //택배비
     couponId: "", //쿠폰 사용 Id
     orderItems: {
-      //주문 상품들
-      itemId: "", //상품 고유 Id
-      option1Id: "", //옵션1 고유 id
-      option2Id: "", //옵션2 고유 id
-      count: "", //구매 개수
+      // //주문 상품들
+      // itemId: "", //상품 고유 Id
+      // option1Id: "", //옵션1 고유 id
+      // option2Id: "", //옵션2 고유 id
+      // count: "", //구매 개수
     },
   });
 
   useEffect(() => {
-    console.log("아이템 정보들 받아오기");
+    if (buying.length === 0) navigate("/");
+
     console.log("input관련 정보들 받아오기(주소 등))"); // => input 관련 컴포넌트로 넘겨주기
-    const tempItemsDetails = items.map((item) => {}); // 각 아이템 마다 조회해서 아래정보 받아오기
-    // name: "sbs927 자꾸자꾸 파스텔 스탠다드핏 셔츠 7colors",
-    //   thumbnail:
-    //     "https://img.sonyunara.com/files/goods/69048/1611793473_21.jpg",
-    //   price: 30000,
-    //   rate: 15,
-    //   option1: "SizeM",
-    //   option2: "파란색",
-    //   count: 2,
-    //   stock: 15,
-
-    // setDefaultPrice(
-    //   items.map((i) => i.count * i.price).reduce((prev, post) => prev + post)
-    // );
-    // console.log(
-    //   items.map((i) => i.count * i.price).reduce((prev, post) => prev + post) +
-    //     "원"
-    // );
-  }, []);
-
-  // useEffect(() => {
-  //   console.log("defaultPrice 다시 설정하기");
-  //   console.log(items.map((i) => i.count * i.price));
-  //   setDefaultPrice(
-  //     items.map((i) => i.count * i.price).reduce((prev, post) => prev + post)
-  //   );
-  // }, [items]);
+  }, [buying]);
 
   const onPayBtnClick = () => {
     if (isInputFilled && isPayMthdChecked) {
@@ -89,7 +72,6 @@ const OrderPage = () => {
 
   // console.log(inputData);
   // console.log(couponId);
-  // console.log("할인 금액: " + totalPrice);
   // console.log(payMethod);
   // console.log(items);
   console.log(data);
@@ -105,13 +87,16 @@ const OrderPage = () => {
       결제 방식 컴포넌트 
       결제하기 버튼  
     */}
-      {items.map((item, idx) => (
-        <OrderedItem
-          key={"o_item_" + idx}
-          itemData={item}
-          setDefaultPrice={setDefaultPrice}
-        />
-      ))}
+      <OrderedItems
+        setDefaultPrice={setDefaultPrice}
+        setTotalPrice={setTotalPrice}
+      />
+      <PriceBar
+        defaultPrice={defaultPrice}
+        totalPrice={totalPrice}
+        shippingCharge={shippingCharge}
+      />
+
       <OrderWriteInfo setData={setInputData} setIsFilled={setIsInputFilled} />
       <CouponSelector
         items={items}

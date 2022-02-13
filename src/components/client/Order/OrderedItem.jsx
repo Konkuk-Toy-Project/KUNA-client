@@ -69,7 +69,24 @@ const OrderedItem = ({ item }) => {
             ? item.option1
             : item.option1 + ", " + item.option2}
         </div>
-        <div>{(item.price * (100 - item.sale)) / 100}원</div>
+
+        {item.sale > 0 ? (
+          <div name="price-wrapper">
+            <span
+              name="price"
+              style={{ display: "block", textDecoration: "line-through" }}
+            >
+              {item.price}원
+            </span>
+            <span name="sale">{item.sale}%</span>
+            <span name="sale-price">
+              {(item.price * (100 - item.sale)) / 100}원
+            </span>
+          </div>
+        ) : (
+          <div id="non-sale">{item.price}원</div>
+        )}
+
         <div>
           <label>수량</label>
           <span>{item.count}</span>

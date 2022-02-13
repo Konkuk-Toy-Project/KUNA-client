@@ -19,17 +19,12 @@ const LikePage = () => {
     getData();
   }, [getData]);
 
-  const onClickDeleteAll = () => {
-    setItems([]);
-  };
-
   console.log(items);
 
   return (
     <LikePageWrapper>
       <PreviewTitle name="좋아요" />
       <PreviewItemList listType={"like"} items={items} />
-      <button onClick={onClickDeleteAll}>전체 삭제</button>
     </LikePageWrapper>
   );
 };

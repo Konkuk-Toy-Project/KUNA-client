@@ -99,7 +99,7 @@ const OrderPage = () => {
 
       <OrderWriteInfo setData={setInputData} setIsFilled={setIsInputFilled} />
       <CouponSelector
-        items={items}
+        totalPrice={totalPrice}
         defaultPrice={defaultPrice}
         setTotalPrice={setTotalPrice}
         setCouponId={setCouponId}

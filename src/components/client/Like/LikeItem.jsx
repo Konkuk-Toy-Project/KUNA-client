@@ -1,15 +1,8 @@
 import React from "react";
-import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { likeState } from "../../../store/client/like";
 
 const LikeItem = ({ item }) => {
-  const [items, setItems] = useRecoilState(likeState);
-
-  const onClickDeleteLike = () => {
-    const filterClickedItem = items.filter((current) => current.id !== item.id);
-    setItems(filterClickedItem);
-  };
+  const onClickDeleteLike = () => {};
   return (
     <Wrapper>
       <Image

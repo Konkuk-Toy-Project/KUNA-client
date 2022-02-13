@@ -1,15 +1,29 @@
-import React from "react";
-import { useRecoilState } from "recoil";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
-import { likeState } from "../../store/client/like";
 
 const LikePage = () => {
-  const [items, setItems] = useRecoilState(likeState);
+  const [items, setItems] = useState([]);
+
+  const getData = useCallback(async () => {
+    const data = await axios
+      .get(`http://localhost:8080/preference`)
+      .then((response) => response.data);
+    setItems(data);
+    return data;
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
   const onClickDeleteAll = () => {
     setItems([]);
   };
+
+  console.log(items);
 
   return (
     <LikePageWrapper>

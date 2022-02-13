@@ -10,14 +10,13 @@ import UsingPoint from "../../components/client/Order/UsingPoint.jsx";
 import { buyingState } from "../../store/client/buying.js";
 
 const OrderPage = () => {
-  const [items, setItems] = useState([
-    { itemId: 1214, option1Id: 2351, option2Id: 21523, count: 2 },
-    { itemId: 1213, option1Id: 23451, option2Id: 2523, count: 1 },
-  ]);
+  const navigate = useNavigate();
 
   const [defaultPrice, setDefaultPrice] = useState(30000);
-  const [totalPrice, setTotalPrice] = useState(defaultPrice);
+  const [saledPrice, setSaledPrice] = useState(defaultPrice);
+  const [additonalSale, setAdditonalSale] = useState({ coupon: 0, point: 0 });
   const [shippingCharge, setShippingCharge] = useState(3000);
+  const [totalPrice, setTotalPrice] = useState(defaultPrice);
 
   const [inputData, setInputData] = useState({});
   const [couponId, setCouponId] = useState({ couponId: "" });
@@ -39,13 +38,12 @@ const OrderPage = () => {
     totalPrice: 0, //전체 주문 금액(택배비 미포함)
     shippingCharge: 0, //택배비
     couponId: "", //쿠폰 사용 Id
-    orderItems: {
-      // //주문 상품들
-      // itemId: "", //상품 고유 Id
-      // option1Id: "", //옵션1 고유 id
-      // option2Id: "", //옵션2 고유 id
-      // count: "", //구매 개수
-    },
+    orderItems: [],
+    //주문 상품들
+    // itemId: "", //상품 고유 Id
+    // option1Id: "", //옵션1 고유 id
+    // option2Id: "", //옵션2 고유 id
+    // count: "", //구매 개수
   });
 
   useEffect(() => {
@@ -55,20 +53,49 @@ const OrderPage = () => {
   }, [buying]);
 
   const onPayBtnClick = () => {
-    if (isInputFilled && isPayMthdChecked) {
-      setData({
-        ...inputData,
-        ...payMethod,
-        ...usePoint,
-        ...couponId,
-        totalPrice: totalPrice, //전체 주문 금액(택배비 미포함)
-        shippingChage: 0, //택배비
-        orderItems: {
-          ...items,
-        },
-      });
+    if (!isInputFilled || !isPayMthdChecked) {
+      alert(
+        !isInputFilled
+          ? "주문 정보를 모두 채워주세요."
+          : "결제수단을 선택해주세요."
+      );
+      return;
     }
+
+    setData({
+      ...inputData,
+      ...payMethod,
+      ...usePoint,
+      ...couponId,
+      totalPrice: totalPrice, //전체 주문 금액(택배비 미포함)
+      shippingCharge: shippingCharge, //택배비
+      orderItems: [
+        buying.map((item) => {
+          return {
+            itemId: item.itemId,
+            option1Id: item.option1Id,
+            option2Id: item.option2Id,
+            count: item.count,
+          };
+        }),
+      ],
+    });
   };
+  useEffect(async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/order", data);
+      console.log(response.data);
+      //navigate(`order/result?쿼리 스트링 전달하기`);
+    } catch (error) {
+      const response = error.respose;
+      alert(
+        respose && response.errorCode !== undefined
+          ? response.message
+          : "오류가 발생하였습니다. 다시 시도해주세요"
+      );
+      window.location.reload();
+    }
+  }, [data]);
 
   // console.log(inputData);
   // console.log(couponId);

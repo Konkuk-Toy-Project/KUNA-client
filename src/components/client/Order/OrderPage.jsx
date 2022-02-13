@@ -10,15 +10,14 @@ const OrderPage = () => {
     { itemId: 1214, option1Id: 2351, option2Id: 21523, count: 2 }, //price 추가요청하기
     { itemId: 1213, option1Id: 23451, option2Id: 2523, count: 1 },
   ]);
-  const [itemsDetails, setItemsDetails] = useState([]);
 
   const [defaultPrice, setDefaultPrice] = useState(30000);
   const [totalPrice, setTotalPrice] = useState(defaultPrice);
 
   const [inputData, setInputData] = useState({});
-  const [couponId, setCouponId] = useState({ ["couponId"]: "" });
-  const [usePoint, setUsePoint] = useState({ ["usePoint"]: 0 });
-  const [payMethod, setPayMethod] = useState({ ["payMethod"]: "" });
+  const [couponId, setCouponId] = useState({ couponId: "" });
+  const [usePoint, setUsePoint] = useState({ usePoint: 0 });
+  const [payMethod, setPayMethod] = useState({ payMethod: "" });
 
   const [isInputFilled, setIsInputFilled] = useState(false);
   const [isPayMthdChecked, setIsPayMthdChecked] = useState(false);
@@ -30,7 +29,7 @@ const OrderPage = () => {
     payMethod: "", //결제 방법(card, bankbook)
     usePoint: "", //포인트 사용액
     totalPrice: 0, //전체 주문 금액(택배비 미포함)
-    shippingChage: 0, //택배비
+    shippingCharge: 0, //택배비
     couponId: "", //쿠폰 사용 Id
     orderItems: {
       //주문 상품들
@@ -42,7 +41,6 @@ const OrderPage = () => {
   });
 
   useEffect(() => {
-    console.log("로그인 상태인지 판단");
     console.log("아이템 정보들 받아오기");
     console.log("input관련 정보들 받아오기(주소 등))"); // => input 관련 컴포넌트로 넘겨주기
     const tempItemsDetails = items.map((item) => {}); // 각 아이템 마다 조회해서 아래정보 받아오기
@@ -111,8 +109,6 @@ const OrderPage = () => {
         <OrderedItem
           key={"o_item_" + idx}
           itemData={item}
-          itemsData={items}
-          setItems={setItems}
           setDefaultPrice={setDefaultPrice}
         />
       ))}

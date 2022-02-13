@@ -1,93 +1,52 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import QnATable from "../../components/client/QnA/QnATable";
 import WriteQnAPopUp from "../../components/client/QnA/WriteQnAPopUp";
 import AnswCheckPopup from "../../components/client/QnA/AnswCheckPopup";
+import axios from "axios";
 
 const QnAPage = ({ itemName, thumbnail, itemId }) => {
+  const [loading, setLoading] = useState(false);
   const [itemData, setItemData] = useState({
-    ["itemId"]: itemId,
-    ["name"]: itemName,
-    ["img"]: thumbnail,
+    itemId: itemId,
+    name: itemName,
+    img: thumbnail,
   });
 
-  const [qnAs, setQnAs] = useState([
-    {
-      question: null,
-      answer: null,
-      registryDate: null,
-      memberName: "testMember1",
-      title: null,
-      answered: false,
-      secret: true,
-    },
-    {
-      question: "질문이다!2",
-      answer: "답변쓰2",
-      registryDate: "20220202",
-      memberName: "어피치",
-      answered: true,
-      secret: false,
-      title: "제품문제",
-    },
-    {
-      question: "질문이다!3",
-      answer: "답변쓰3",
-      registryDate: "20220203",
-      memberName: "제이지",
-      answered: true,
-      secret: false,
-      title: "카카오톡",
-    },
-    {
-      question: "질문이다!4",
-      answer: "답변쓰4",
-      registryDate: "20220203",
-      memberName: "튜브",
-      answered: false,
-      secret: false,
-      title: "배송문제",
-    },
-    {
-      question: "질문이다!5",
-      answer: "답변쓰5",
-      registryDate: "20220204",
-      memberName: "라이언",
-      answered: false,
-      secret: true,
-      title: "건의사항",
-    },
-    {
-      question: null,
-      answer: null,
-      registryDate: null,
-      memberName: "testMember2s",
-      title: null,
-      answered: true,
-      secret: true,
-    },
-  ]);
+  const [qnAs, setQnAs] = useState([]);
 
   const [popWriteQnA, setPopWriteQnA] = useState(false);
   const [popAnswer, setPopAnswer] = useState(false);
   const [selAnswIdx, setSelAnswIdx] = useState(null);
+  const [newQnaIds, setNewQnaIds] = useState([]);
 
   const onWriteQClick = () => setPopWriteQnA(true);
   const onAnswerQClick = () => setPopAnswer(true);
 
-  useEffect(() => {
-    console.log("item id로 qna정보 받아오기 ");
-  }, []);
+  useEffect(async () => {
+    getQnAs();
+  }, [newQnaIds]);
+
+  const getQnAs = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`http://localhost:8080/qna/${itemId}`);
+      setQnAs(response.data);
+    } catch (error) {
+      alert(error.response.message);
+    }
+    setLoading(false);
+  }, [newQnaIds]);
   return (
     <div>
-      <QnATable data={qnAs} setSelAnswIdx={setSelAnswIdx} />
+      <QnATable qnAs={qnAs} setSelAnswIdx={setSelAnswIdx} />
       <button onClick={onWriteQClick}>Q&A 작성하기</button>
 
       {/* 팝업창 */}
       {popWriteQnA ? (
         <WriteQnAPopUp
           itemData={itemData}
-          setQnA={setQnAs}
+          setNewQnaIds={setNewQnaIds}
           setPopWriteQnA={setPopWriteQnA}
         />
       ) : null}
@@ -106,7 +65,7 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
 QnAPage.propTypes = {
   itemName: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
-  itemId: PropTypes.string.isRequired,
+  itemId: PropTypes.number.isRequired,
 };
 
 export default QnAPage;

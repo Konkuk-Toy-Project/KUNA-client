@@ -28,6 +28,7 @@ const ClientRouter = () => {
         <Route path="/item/:itemId" element={<ItemDetailPage />} />
         <Route path="/like" element={<LikePage />} />
         <Route path="/basket" element={<BasketPage />} />
+        <Route path="/order/:from" element={<OrderPage />} />
         <Route path="/user" element={<UserPage />} />
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>

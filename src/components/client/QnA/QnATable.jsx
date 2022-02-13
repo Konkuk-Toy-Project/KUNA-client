@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import PageChanger from "../../common/PageChanger/PageChanger";
 
 const QNA_NUM_UNIT = 5;
 
-const QnATable = ({ data, setSelAnswIdx }) => {
-  const [qnAs, setQnAs] = useState(data);
+const QnATable = ({ qnAs, setSelAnswIdx }) => {
   const [curPageNum, setCurPageNum] = useState(1);
   const [totalPageNum, setTotalPageNum] = useState(1);
 
@@ -70,6 +69,6 @@ const QnATable = ({ data, setSelAnswIdx }) => {
   );
 };
 
-QnATable.propTypes = { data: PropTypes.array.isRequired };
+QnATable.propTypes = { qnAs: PropTypes.array.isRequired };
 
 export default QnATable;

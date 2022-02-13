@@ -1,77 +1,77 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import IconX from "../Icon/IconX";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { buyingState } from "../../../store/client/buying";
 
 const PER = "percent";
+const TOTAL_PRICE_ = "total_price_";
 
 const CouponSelector = ({
-  items,
+  totalPrice,
   defaultPrice,
   setTotalPrice,
   setCouponId,
 }) => {
   const [didUsedCoupon, setDidUsedCoupon] = useState(false);
-  const [coupons, setCoupons] = useState([]);
+  const [allCoupons, setAllCoupons] = useState([]);
+  const [availCoupons, setAvailCoupons] = useState([]);
+  const [saledMoney, setSaledMoney] = useState(0);
+  const buying = useRecoilValue(buyingState);
 
   const onCouponSel = (e) => {
-    console.log(e.target.value);
-    const selCp = coupons.find((c) => c.couponId == e.target.value);
-    console.log(selCp);
-    setTotalPrice(
-      selCp.couponKind === PER
-        ? (defaultPrice * (100 - selCp.rate)) / 100
-        : defaultPrice - selCp.rate
+    const selCp = availCoupons.find((c) => c.couponId == e.target.value);
+    setSaledMoney(
+      selCp.couponKind === PER ? (totalPrice * selCp.rate) / 100 : selCp.rate
     );
     setDidUsedCoupon(true);
-    setCouponId({ ["couponID"]: selCp.couponId }); // orderPage로 선택쿠폰 정보 보내주기
+    setCouponId({ couponID: selCp.couponId }); // orderPage로 선택쿠폰 정보 보내주기
   };
 
   const onRemoveCoupon = () => {
     setDidUsedCoupon(false);
-    setTotalPrice(defaultPrice);
-    setCouponId({ ["couponID"]: "" }); //orderPage로 쿠폰 제거 정보 보내주기
+    setTotalPrice((cur) => cur + saledMoney);
+    setSaledMoney(0);
+    setCouponId({ couponID: "" }); //orderPage로 쿠폰 제거 정보 보내주기
   };
 
   useEffect(() => {
-    console.log(
-      "쿠폰정보 받아오기-> 사용가능한 쿠폰만 setCoupons 로 넣어주기 " //---------------- 미구현
-    );
+    if (saledMoney > 0) setTotalPrice((cur) => cur - setSaledMoney);
+  }, [saledMoney]);
+
+  // 고려사항 : 만료날짜 충족, 총금액 충족, 사용여부 no
+  // couponKind: 쿠폰 종류(percent-퍼센트 할인, static-고정 할인액)
+  // rate: 할인 정도
+  // expiredDate: 만료일자
+  // couponCondition: 쿠폰 사용 조건(total_price_숫자)
+  // name: 쿠폰 이름
+  // isUsed: 사용 여부
+  // couponId: 쿠폰 고유 id
+
+  useEffect(async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/coupon");
+      console.log(response.data);
+      setAllCoupons(response.data);
+    } catch (error) {
+      alert(
+        error.response
+          ? error.response.message
+          : "오류가 발생했습니다. 다시 시도해주세요"
+      );
+    }
   }, []);
 
   useEffect(() => {
-    //---------------- 미구현
-    console.log("setTotalPrice이용해서 총 금액 받아오기");
-    console.log("아이템 수량 바뀔때 마다 total price 바꿔주기");
-    console.log("쿠폰 관련 정보들 받아오기 - 사용 가능한 쿠폰들만");
-    setCoupons([
-      {
-        couponKind: "percent",
-        rate: 40,
-        name: "신규회원 할인 쿠폰",
-        couponId: 1111,
-      },
-      {
-        couponKind: "static",
-        rate: 1500,
-        name: "그냥 할인 쿠폰",
-        couponId: 1131,
-      },
-      {
-        couponKind: "percent",
-        rate: 20,
-        name: "신규회원 할인 쿠폰",
-        couponId: 1121,
-      },
-    ]);
-    // 고려사항 : 만료날짜 충족, 총금액 충족, 사용여부 no
-    // couponKind: 쿠폰 종류(percent-퍼센트 할인, static-고정 할인액)
-    // rate: 할인 정도
-    // expiredDate: 만료일자
-    // couponCondition: 쿠폰 사용 조건(total_price_숫자)
-    // name: 쿠폰 이름
-    // isUsed: 사용 여부
-    // couponId: 쿠폰 고유 id
-  }, [items]);
+    setAvailCoupons(
+      allCoupons.filter(
+        (c) =>
+          c.isUsed === false &&
+          parseInt(c.couponCondition.replace(TOTAL_PRICE_, "")) >= totalPrice // 만료날짜 어떻게 추가할건지
+      )
+    );
+  }, [buying, allCoupons]);
 
   return (
     <div>
@@ -80,7 +80,7 @@ const CouponSelector = ({
         <option disabled selected={!didUsedCoupon}>
           쿠폰 선택하기
         </option>
-        {coupons.map((coupon) => (
+        {availCoupons.map((coupon) => (
           <option key={coupon.couponId} value={coupon.couponId}>
             {coupon.name}
             {` (${coupon.rate}${coupon.couponKind === PER ? "%" : "원"} 할인)`}
@@ -93,7 +93,7 @@ const CouponSelector = ({
 };
 
 CouponSelector.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  totalPrice: PropTypes.number.isRequired,
   defaultPrice: PropTypes.number.isRequired,
   setTotalPrice: PropTypes.func.isRequired,
   setCouponId: PropTypes.func.isRequired,

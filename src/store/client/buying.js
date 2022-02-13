@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-export const BuyNowState = atom([]);
+export const buyingState = atom({ key: "buyingState", default: [] });
 // {
-//     itemImageUrl: 상품 이미지 저장 이름,
+//     thumbnailImg: 상품 이미지 저장 이름,
 //     name: 아이템 이름,
 //     price: 판매 가격,
 //     sale: 세일 % 지수,

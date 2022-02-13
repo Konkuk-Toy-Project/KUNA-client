@@ -1,15 +1,25 @@
+import axios from "axios";
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { likeState } from "../../../store/client/like";
 
 const LikeItem = ({ item }) => {
-  const [items, setItems] = useRecoilState(likeState);
+  const navigate = useNavigate();
 
-  const onClickDeleteLike = () => {
-    const filterClickedItem = items.filter((current) => current.id !== item.id);
-    setItems(filterClickedItem);
+  const onClickDeleteLike = async () => {
+    if (window.confirm(`${item.name} 삭제하시겠습니까?`)) {
+      await deleteData();
+      alert("상품이 삭제되었습니다. 홈페이지로 이동합니다.");
+      navigate("/");
+    }
   };
+
+  const deleteData = () => {
+    axios
+      .delete(`http://localhost:8080/preference/${item.preferenceId}`)
+      .then((response) => response.data);
+  };
+
   return (
     <Wrapper>
       <Image

@@ -1,27 +1,20 @@
 import React from "react";
-import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { basketItemState } from "../../../../store/client/basket";
+import { useNavigate } from "react-router";
 
 const MainItem = ({ item }) => {
-  const [basketItems, setBasketItems] = useRecoilState(basketItemState);
+  const navigate = useNavigate();
 
   const briefTitle = (title) => {
     return title.slice(0, 16) + "...";
   };
 
-  const onClickLikeItem = () => {
-    const currentItem = { ...item, count: 1 };
-    const existingItem = basketItems.find((item) => item.id === currentItem.id);
-    if (!existingItem) {
-      setBasketItems([...basketItems, currentItem]);
-    } else {
-      alert("이미 장바구니에 추가된 아이템입니다.");
-    }
+  const onClickItem = () => {
+    navigate(`/item/${item.itemId}`);
   };
 
   return (
-    <Wrapper>
+    <Wrapper onClick={onClickItem}>
       <Image
         src={`http://localhost:8080/image/thumbnail/${item.thumbnailUrl}`}
       />
@@ -32,7 +25,6 @@ const MainItem = ({ item }) => {
           <h1>{item.price}원</h1>
         </PriceWrapper>
       </Description>
-      <button onClick={onClickLikeItem}>장바구니 추가</button>
     </Wrapper>
   );
 };
@@ -45,6 +37,11 @@ const Wrapper = styled.li`
   border: 1px solid black;
   padding: 1em;
   border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in;
+  }
 `;
 
 const Image = styled.img`

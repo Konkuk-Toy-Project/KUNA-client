@@ -9,12 +9,18 @@ import { useRecoilValue } from "recoil";
 const Category = ({ link, name, listType }) => {
   const items = useRecoilValue(itemState);
 
+  const filteredData = (type) => {
+    let filteredItems = [...items];
+    filteredItems = filteredItems.filter((item) => item.categoryName === type);
+    return filteredItems;
+  };
+
   return (
     <CategoryWrapper>
       <CategoryLink to={link}>
         <PreviewTitle name={name} />
       </CategoryLink>
-      <PreviewItemList listType={listType} items={items} />
+      <PreviewItemList listType={listType} items={filteredData(name)} />
     </CategoryWrapper>
   );
 };

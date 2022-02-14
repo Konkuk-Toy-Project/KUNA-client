@@ -15,7 +15,7 @@ const OwnerHeader = () => {
             <h1>관리자 페이지</h1>
           </PageLink>
         </div>
-        <button>로그아웃</button>
+        <button onClick={() => window.location.reload()}>로그아웃</button>
       </ShortcutMenuWrapper>
     </HeaderWrapper>
   );

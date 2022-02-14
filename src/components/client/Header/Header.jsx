@@ -15,8 +15,6 @@ const Header = () => {
     setSearchValue(event.target.value);
   };
 
-  console.log(userToken);
-
   const onClickSearch = () => {
     navigate(`/search/${searchValue}`);
   };
@@ -102,13 +100,13 @@ const Header = () => {
         </MenuCategories>
       </ShortcutMenuWrapper>
       <PageMenus>
-        <PageLink to="/top">
+        <PageLink to="category/top">
           <PageMenu>상의</PageMenu>
         </PageLink>
-        <PageLink to="/pants">
+        <PageLink to="category/pants">
           <PageMenu>하의</PageMenu>
         </PageLink>
-        <PageLink to="/shoes">
+        <PageLink to="category/shoes">
           <PageMenu>신발</PageMenu>
         </PageLink>
       </PageMenus>

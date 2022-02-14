@@ -21,11 +21,11 @@ const ClientRouter = () => {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="login/signUp" element={<SignUpPage />} />
-        <Route path="login/signUp/complete" element={<SignUpFinPage />} />
-        <Route path="login/findAccount" element={<FindAccountPage />} />
+        <Route path="/login/signUp" element={<SignUpPage />} />
+        <Route path="/login/signUp/complete" element={<SignUpFinPage />} />
+        <Route path="/login/findAccount" element={<FindAccountPage />} />
         <Route path="/search/:content" element={<SearchPage />} />
-        <Route path="/:category" element={<CategoryPage />} />
+        <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/item/:itemId" element={<ItemDetailPage />} />
         <Route path="/like" element={<LikePage />} />
         <Route path="/basket" element={<BasketPage />} />

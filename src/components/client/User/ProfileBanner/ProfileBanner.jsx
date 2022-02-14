@@ -33,8 +33,6 @@ const ProfileBanner = ({ userInfo }) => {
     handleState(true);
   };
 
-  console.log(userInfo);
-
   return (
     <ProfileBannerWrapper>
       <UserInfo>

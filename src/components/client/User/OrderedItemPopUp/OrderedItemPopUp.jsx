@@ -1,10 +1,9 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   currentReviewItemState,
-  orderedItemState,
   showOrderedItemState,
   showWriteReviewState,
 } from "../../../../store/client/user";
@@ -13,7 +12,7 @@ import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const OrderedItemPopUp = () => {
   const setShowOrderedItemPopUp = useSetRecoilState(showOrderedItemState);
-  const orderedItem = useRecoilValue(orderedItemState);
+  const [orderedItems, setOrderedItems] = useState([]);
   const scrollY = useRecoilValue(currentY);
   const setShowWriteReviewState = useSetRecoilState(showWriteReviewState);
   const setCurrentReviewItem = useSetRecoilState(currentReviewItemState);
@@ -26,9 +25,9 @@ const OrderedItemPopUp = () => {
 
   const getOrderedItem = async () => {
     const data = await axios
-      .get("http://localhost:8080/order")
+      .get("http://localhost:8080/order/item")
       .then((response) => response.data);
-    console.log(data);
+    setOrderedItems(data);
   };
 
   useEffect(() => {
@@ -38,11 +37,11 @@ const OrderedItemPopUp = () => {
   return (
     <OrderedItemPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowOrderedItemPopUp} />
-      <h1>주문한 제품</h1>
-      {orderedItem.map((item, index) => (
+      {orderedItems.length ? <h1>주문한 제품</h1> : <h1>주문한 상품 없음</h1>}
+      {orderedItems.map((item, index) => (
         <OrderedItemWrapper key={index}>
-          <h1>{item.title}</h1>
-          {item.review ? (
+          <h1>{item.itemName}</h1>
+          {item.isReviewed ? (
             <h1>리뷰 작성 완료</h1>
           ) : (
             <button onClick={() => onClickWriteReview(item)}>

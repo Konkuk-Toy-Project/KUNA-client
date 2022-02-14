@@ -24,22 +24,6 @@ export const showPointState = atom({
   default: false,
 });
 
-export const userCouponState = atom({
-  key: "userCouponState",
-  default: [
-    {
-      id: 123123123,
-      name: "신규 가입 유저 환영 쿠폰",
-      discount: 30,
-    },
-    {
-      id: 321321321,
-      name: "새해 기념 쿠폰",
-      discount: 20,
-    },
-  ],
-});
-
 export const showCouponState = atom({
   key: "showCouponState",
   default: false,

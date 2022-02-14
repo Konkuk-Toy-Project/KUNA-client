@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
@@ -12,6 +13,41 @@ const CouponPopUp = () => {
   const coupons = useRecoilValue(userCouponState);
   const setShowCoupon = useSetRecoilState(showCouponState);
   const scrollY = useRecoilValue(currentY);
+  const [serialNumber, setSerialNumber] = useState("");
+
+  const getCoupons = async () => {
+    const data = await axios
+      .get("http://localhost:8080/coupon")
+      .then((response) => response.data);
+    console.log(data);
+  };
+
+  const registerCoupon = async () => {
+    try {
+      await axios
+        .post("http://localhost:8080/coupon/user", {
+          serialNumber,
+        })
+        .then((response) => response.data);
+      alert("쿠폰이 등록되었습니다.");
+    } catch (err) {
+      alert("이미 사용했거나 존재하지 않는 쿠폰입니다.");
+    }
+  };
+
+  const onChangeRegisterInput = (event) => {
+    setSerialNumber(event.target.value);
+  };
+
+  const onClickRegisterCoupon = () => {
+    if (window.confirm("쿠폰을 등록하시겠습니까?")) {
+      registerCoupon();
+    }
+  };
+
+  useEffect(() => {
+    getCoupons();
+  }, []);
 
   return (
     <CouponPopUpWrapper top={scrollY}>
@@ -29,8 +65,8 @@ const CouponPopUp = () => {
       ))}
       <Title>쿠폰 등록하기</Title>
       <EnrollCouponWrapper>
-        <input type="text" />
-        <button>등록하기</button>
+        <input type="text" onChange={onChangeRegisterInput} />
+        <button onClick={onClickRegisterCoupon}>등록하기</button>
       </EnrollCouponWrapper>
     </CouponPopUpWrapper>
   );

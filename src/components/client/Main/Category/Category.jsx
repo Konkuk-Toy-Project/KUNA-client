@@ -17,7 +17,7 @@ const Category = ({ link, name, listType }) => {
 
   return (
     <CategoryWrapper>
-      <CategoryLink to={link}>
+      <CategoryLink to={`category/${link}`}>
         <PreviewTitle name={name} />
       </CategoryLink>
       <PreviewItemList listType={listType} items={filteredData(name)} />

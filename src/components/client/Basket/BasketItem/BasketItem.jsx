@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { useEffect } from "react/cjs/react.development";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -40,6 +41,7 @@ const PriceWrapper = styled.div`
 const BasketItem = ({ item }) => {
   const [buyingItems, setBuyingItems] = useRecoilState(buyingItemState);
   const [itemCount, setItemCount] = useState(0);
+  const navigate = useNavigate();
 
   const deleteItem = async () => {
     await axios
@@ -51,6 +53,7 @@ const BasketItem = ({ item }) => {
     if (window.confirm("장바구니에서 삭제하시겠습니까?")) {
       deleteItem();
       alert("삭제 되었습니다.");
+      navigate("/");
     }
   };
 

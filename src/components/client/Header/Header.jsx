@@ -67,15 +67,27 @@ const Header = () => {
               <p>찜목록</p>
             </MenuCategory>
           </MenuIcon>
-          <MenuIcon onClick={() => navigate("/login")}>
-            <MenuCategory>
-              <img
-                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
-                alt=""
-              />
-              <p>로그인</p>
-            </MenuCategory>
-          </MenuIcon>
+          {!userToken.length ? (
+            <MenuIcon onClick={() => navigate("/login")}>
+              <MenuCategory>
+                <img
+                  src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+                  alt=""
+                />
+                <p>로그인</p>
+              </MenuCategory>
+            </MenuIcon>
+          ) : (
+            <MenuIcon onClick={() => window.location.reload()}>
+              <MenuCategory>
+                <img
+                  src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+                  alt=""
+                />
+                <p>로그아웃</p>
+              </MenuCategory>
+            </MenuIcon>
+          )}
           <MenuIcon onClick={() => onClickCategory("user")}>
             <MenuCategory>
               <img
@@ -88,13 +100,13 @@ const Header = () => {
         </MenuCategories>
       </ShortcutMenuWrapper>
       <PageMenus>
-        <PageLink to="/top">
+        <PageLink to="category/top">
           <PageMenu>상의</PageMenu>
         </PageLink>
-        <PageLink to="/pants">
+        <PageLink to="category/pants">
           <PageMenu>하의</PageMenu>
         </PageLink>
-        <PageLink to="/shoes">
+        <PageLink to="category/shoes">
           <PageMenu>신발</PageMenu>
         </PageLink>
       </PageMenus>

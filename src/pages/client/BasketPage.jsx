@@ -21,6 +21,8 @@ const BasketPage = () => {
     setItems(data);
   }, [setItems]);
 
+  console.log(items);
+
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
     items.map((item) => (total += item.price * item.count));

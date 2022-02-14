@@ -15,6 +15,8 @@ const Header = () => {
     setSearchValue(event.target.value);
   };
 
+  console.log(userToken);
+
   const onClickSearch = () => {
     navigate(`/search/${searchValue}`);
   };
@@ -67,15 +69,27 @@ const Header = () => {
               <p>찜목록</p>
             </MenuCategory>
           </MenuIcon>
-          <MenuIcon onClick={() => navigate("/login")}>
-            <MenuCategory>
-              <img
-                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
-                alt=""
-              />
-              <p>로그인</p>
-            </MenuCategory>
-          </MenuIcon>
+          {!userToken.length ? (
+            <MenuIcon onClick={() => navigate("/login")}>
+              <MenuCategory>
+                <img
+                  src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+                  alt=""
+                />
+                <p>로그인</p>
+              </MenuCategory>
+            </MenuIcon>
+          ) : (
+            <MenuIcon onClick={() => window.location.reload()}>
+              <MenuCategory>
+                <img
+                  src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+                  alt=""
+                />
+                <p>로그아웃</p>
+              </MenuCategory>
+            </MenuIcon>
+          )}
           <MenuIcon onClick={() => onClickCategory("user")}>
             <MenuCategory>
               <img

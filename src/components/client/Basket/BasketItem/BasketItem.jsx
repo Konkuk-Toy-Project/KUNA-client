@@ -1,7 +1,9 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { basketItemState } from "../../../../store/client/basket";
+import { buyingItemState } from "../../../../store/client/basket";
 
 const Wrapper = styled.li`
   display: flex;
@@ -36,30 +38,59 @@ const PriceWrapper = styled.div`
 `;
 
 const BasketItem = ({ item }) => {
-  const [basketItems, setBasketItems] = useRecoilState(basketItemState);
+  const [buyingItems, setBuyingItems] = useRecoilState(buyingItemState);
+  const [itemCount, setItemCount] = useState(0);
+
+  const deleteItem = async () => {
+    await axios
+      .delete(`http://localhost:8080/cart/${item.cartItemId}`)
+      .then((response) => response.data);
+  };
 
   const onClickDeleteBasket = () => {
-    const filterClickedItem = basketItems.filter(
-      (current) => current.id !== item.id
-    );
-    setBasketItems(filterClickedItem);
-  };
-
-  const changeItemCount = (item, type) => {
-    const currentItem = { ...item };
-    type === "increase" ? currentItem.count++ : currentItem.count--;
-    let currentItemIndex;
-    basketItems.find((item, index) =>
-      item.id === currentItem.id ? (currentItemIndex = index) : null
-    );
-
-    let existingItem = basketItems.filter((item) => item.id !== currentItem.id);
-    if (currentItem.count !== 0) {
-      existingItem.splice(currentItemIndex, 0, currentItem);
+    if (window.confirm("장바구니에서 삭제하시겠습니까?")) {
+      deleteItem();
+      alert("삭제 되었습니다.");
     }
-
-    setBasketItems([...existingItem]);
   };
+
+  const changeItemCount = async (count) => {
+    await axios
+      .put(`http://localhost:8080/cart/${item.cartItemId}`, { count })
+      .then((response) => response.data);
+  };
+
+  const changeCountOnClient = (count) => {
+    let changingItem = buyingItems.find(
+      (buyingItem) => buyingItem.cartItemId === item.cartItemId
+    );
+    const otherItems = buyingItems.filter(
+      (buyingItem) => buyingItem.cartItemId !== item.cartItemId
+    );
+    changingItem = { ...changingItem, count };
+    setBuyingItems([changingItem, ...otherItems]);
+  };
+
+  const onClickChangeCount = (type) => {
+    let count = itemCount;
+    if (type === "increase") {
+      count++;
+      changeItemCount(count);
+      changeCountOnClient(count);
+    } else {
+      if (count === 1) {
+        return alert("수량은 1보다 작을수 없습니다.");
+      }
+      count--;
+      changeItemCount(count);
+      changeCountOnClient(count);
+    }
+  };
+
+  useEffect(() => {
+    setItemCount(item.count);
+  }, [item.count]);
+
   return (
     <Wrapper>
       <Image
@@ -72,10 +103,10 @@ const BasketItem = ({ item }) => {
           <h1>{item.price}원</h1>
         </PriceWrapper>
       </Description>
+      <button onClick={() => onClickChangeCount("decrease")}>-</button>
+      <span>{itemCount}</span>
+      <button onClick={() => onClickChangeCount("increase")}>+</button>
       <button onClick={onClickDeleteBasket}>Delete Basket</button>
-      <span>{item.count}</span>
-      <button onClick={() => changeItemCount(item, "increase")}>+</button>
-      <button onClick={() => changeItemCount(item, "decrease")}>-</button>
     </Wrapper>
   );
 };

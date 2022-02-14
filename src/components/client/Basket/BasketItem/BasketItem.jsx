@@ -105,6 +105,9 @@ const BasketItem = ({ item }) => {
           <h1>할인율 : {item.sale}%</h1>
           <h1>{item.price}원</h1>
         </PriceWrapper>
+        <h1>
+          {item?.option1} {item?.option2}
+        </h1>
       </Description>
       <button onClick={() => onClickChangeCount("decrease")}>-</button>
       <span>{itemCount}</span>

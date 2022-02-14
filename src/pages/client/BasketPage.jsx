@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { buyingItemState } from "../../store/client/basket";
+import { buyingState } from "../../store/client/buying";
 
 const BasketPage = () => {
   const [items, setItems] = useRecoilState(buyingItemState);
@@ -13,6 +15,8 @@ const BasketPage = () => {
   const [postPrice, setPostPrice] = useState(3000);
   const [withoutDiscountPrice, setWithoutDiscountPrice] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
+  const setBuying = useSetRecoilState(buyingState);
+  const navigate = useNavigate();
 
   const getBasketData = useCallback(async () => {
     const data = await axios
@@ -43,6 +47,13 @@ const BasketPage = () => {
     setDiscountPrice(total);
   }, [items]);
 
+  const onClickPurchaseItems = () => {
+    if (window.confirm("상품을 구매하시겠습니까?")) {
+      setBuying(items);
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
     getBasketData();
   }, [getBasketData]);
@@ -63,7 +74,7 @@ const BasketPage = () => {
     <BasketPageWrapper>
       <PreviewTitle name="장바구니" />
       <PreviewItemList listType={"basket"} items={items} />
-      <button>결제하기</button>
+      <button onClick={onClickPurchaseItems}>결제하기</button>
       <p>기존 금액 : {withoutDiscountPrice}원</p>
       <p>할인된 금액 : {discountPrice}원</p>
       <p>배송비 : {postPrice}원</p>

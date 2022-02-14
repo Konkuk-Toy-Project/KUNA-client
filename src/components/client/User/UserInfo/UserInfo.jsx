@@ -1,13 +1,12 @@
 import React from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { passwordPopUpState, userState } from "../../../../store/client/user";
+import { passwordPopUpState } from "../../../../store/client/user";
 import { currentY } from "../../../../store/common/user";
 import PasswordPopUp from "../PasswordPopUp/PasswordPopUp";
 import UserCertainInfo from "../UserCertainInfo/UserCertainInfo";
 
-const UserInfo = () => {
-  const user = useRecoilValue(userState);
+const UserInfo = ({ user }) => {
   const [editPassword, setEditPassword] = useRecoilState(passwordPopUpState);
   const setCurrentY = useSetRecoilState(currentY);
 

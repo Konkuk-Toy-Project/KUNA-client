@@ -1,21 +1,25 @@
+import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
-import { basketItemState } from "../../store/client/basket";
+import { buyingItemState } from "../../store/client/basket";
 
 const BasketPage = () => {
-  const [items, setItems] = useRecoilState(basketItemState);
+  const [items, setItems] = useRecoilState(buyingItemState);
   const [totalPrice, setTotalPrice] = useState(0);
   const [postPrice, setPostPrice] = useState(3000);
   const [withoutDiscountPrice, setWithoutDiscountPrice] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
 
-  const onClickDeleteAll = () => {
-    setItems([]);
-  };
+  const getBasketData = useCallback(async () => {
+    const data = await axios
+      .get(`http://localhost:8080/cart`)
+      .then((response) => response.data);
+    setItems(data);
+  }, [setItems]);
 
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
@@ -32,15 +36,14 @@ const BasketPage = () => {
     let total = 0;
     items.map(
       (item) =>
-        item.discount > 0 &&
-        (total +=
-          (item.price *
-            item.count *
-            Number(item.discount.substring(0, item.discount.length - 1))) /
-          100)
+        item.sale > 0 && (total += (item.price * item.count * item.sale) / 100)
     );
     setDiscountPrice(total);
   }, [items]);
+
+  useEffect(() => {
+    getBasketData();
+  }, [getBasketData]);
 
   useEffect(() => {
     calculateTotalPrice();
@@ -58,7 +61,6 @@ const BasketPage = () => {
     <BasketPageWrapper>
       <PreviewTitle name="장바구니" />
       <PreviewItemList listType={"basket"} items={items} />
-      <button onClick={onClickDeleteAll}>전체 삭제</button>
       <button>결제하기</button>
       <p>기존 금액 : {withoutDiscountPrice}원</p>
       <p>할인된 금액 : {discountPrice}원</p>

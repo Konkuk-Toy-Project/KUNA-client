@@ -7,7 +7,7 @@ const LikeItem = ({ item }) => {
   const navigate = useNavigate();
 
   const onClickDeleteLike = async () => {
-    if (window.confirm(`${item.name} 삭제하시겠습니까?`)) {
+    if (window.confirm(`${item.name} 찜목록에서 삭제하시겠습니까?`)) {
       await deleteData();
       alert("상품이 삭제되었습니다. 홈페이지로 이동합니다.");
       navigate("/");

@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
@@ -22,6 +23,17 @@ const OrderedItemPopUp = () => {
     setShowWriteReviewState(true);
     setCurrentReviewItem(item);
   };
+
+  const getOrderedItem = async () => {
+    const data = await axios
+      .get("http://localhost:8080/order")
+      .then((response) => response.data);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    getOrderedItem();
+  }, []);
 
   return (
     <OrderedItemPopUpWrapper top={scrollY}>

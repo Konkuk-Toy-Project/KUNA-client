@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -16,7 +17,8 @@ const PasswordPopUp = () => {
     handleState(event.target.value);
   };
 
-  const isValidPassword = (inputValue) => {
+  const inValidPassword = (inputValue) => {
+    if (inputValue === "") return true;
     return (
       inputValue !== "" &&
       (inputValue.match(/[a-z]+?/) === null ||
@@ -25,18 +27,29 @@ const PasswordPopUp = () => {
     );
   };
 
+  const changePassword = async () => {
+    await axios
+      .post("http://localhost:8080/member/change/password", {
+        newPassword: password,
+      })
+      .then((response) => response.data);
+  };
+
   const onClickChangePassword = (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       return alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요");
     }
-    if (isValidPassword(password)) {
+    if (inValidPassword(password)) {
       return alert(
         "비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다."
       );
     }
-    setEditPassword(false);
-    return alert("변경 되었습니다.");
+    if (window.confirm("비밀번호를 등록하시겠습니까?")) {
+      changePassword();
+      setEditPassword(false);
+      alert("변경 되었습니다.");
+    }
   };
 
   return (

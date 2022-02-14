@@ -19,11 +19,6 @@ export const passwordPopUpState = atom({
   default: false,
 });
 
-export const userPointState = atom({
-  key: "userPointState",
-  default: 35000,
-});
-
 export const showPointState = atom({
   key: "showPointState",
   default: false,

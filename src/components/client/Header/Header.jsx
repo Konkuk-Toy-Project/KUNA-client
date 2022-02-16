@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { basketItemState } from "../../../store/client/basket";
 import { userTokenState } from "../../../store/common/user";
 
 const Header = () => {
   const basketItems = useRecoilValue(basketItemState);
   const [searchValue, setSearchValue] = useState("");
-  const userToken = useRecoilValue(userTokenState);
+  const [userToken, setUserToken] = useRecoilState(userTokenState);
   const navigate = useNavigate();
+
+  const onClickLogout = () => {
+    setUserToken([]);
+    navigate("/");
+    window.location.reload();
+  };
 
   const onChangeSearch = (event) => {
     setSearchValue(event.target.value);
@@ -20,7 +26,7 @@ const Header = () => {
   };
 
   const onClickCategory = (choice) => {
-    if (userToken) {
+    if (userToken.length > 0) {
       return navigate(`/${choice}`);
     }
     if (
@@ -67,15 +73,27 @@ const Header = () => {
               <p>찜목록</p>
             </MenuCategory>
           </MenuIcon>
-          <MenuIcon onClick={() => navigate("/login")}>
-            <MenuCategory>
-              <img
-                src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
-                alt=""
-              />
-              <p>로그인</p>
-            </MenuCategory>
-          </MenuIcon>
+          {!userToken.length ? (
+            <MenuIcon onClick={() => navigate("/login")}>
+              <MenuCategory>
+                <img
+                  src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+                  alt=""
+                />
+                <p>로그인</p>
+              </MenuCategory>
+            </MenuIcon>
+          ) : (
+            <MenuIcon onClick={onClickLogout}>
+              <MenuCategory>
+                <img
+                  src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+                  alt=""
+                />
+                <p>로그아웃</p>
+              </MenuCategory>
+            </MenuIcon>
+          )}
           <MenuIcon onClick={() => onClickCategory("user")}>
             <MenuCategory>
               <img
@@ -88,13 +106,13 @@ const Header = () => {
         </MenuCategories>
       </ShortcutMenuWrapper>
       <PageMenus>
-        <PageLink to="/top">
+        <PageLink to="category/top">
           <PageMenu>상의</PageMenu>
         </PageLink>
-        <PageLink to="/pants">
+        <PageLink to="category/pants">
           <PageMenu>하의</PageMenu>
         </PageLink>
-        <PageLink to="/shoes">
+        <PageLink to="category/shoes">
           <PageMenu>신발</PageMenu>
         </PageLink>
       </PageMenus>

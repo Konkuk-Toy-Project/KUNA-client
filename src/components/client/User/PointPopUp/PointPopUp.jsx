@@ -1,14 +1,29 @@
-import React from "react";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showPointState, userPointState } from "../../../../store/client/user";
-import { currentY } from "../../../../store/common/user";
+import { showPointState } from "../../../../store/client/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const PointPopUp = () => {
-  const points = useRecoilValue(userPointState);
+  const [points, setPoints] = useState("");
   const setShowPoint = useSetRecoilState(showPointState);
   const scrollY = useRecoilValue(currentY);
+  const userToken = useRecoilValue(userTokenState);
+
+  const getPoints = useCallback(async () => {
+    const data = await axios
+      .get("http://localhost:8080/member/point", {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+      .then((response) => response.data);
+    setPoints(data.point);
+  }, [userToken]);
+
+  useEffect(() => {
+    getPoints();
+  }, [getPoints]);
 
   return (
     <PointPopUpWrapper top={scrollY}>

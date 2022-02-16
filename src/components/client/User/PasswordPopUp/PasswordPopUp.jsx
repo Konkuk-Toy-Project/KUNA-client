@@ -1,9 +1,10 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { passwordPopUpState } from "../../../../store/client/user";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const PasswordPopUp = () => {
@@ -11,12 +12,14 @@ const PasswordPopUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const setEditPassword = useSetRecoilState(passwordPopUpState);
   const scrollY = useRecoilValue(currentY);
+  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (handleState) => (event) => {
     handleState(event.target.value);
   };
 
-  const isValidPassword = (inputValue) => {
+  const inValidPassword = (inputValue) => {
+    if (inputValue === "") return true;
     return (
       inputValue !== "" &&
       (inputValue.match(/[a-z]+?/) === null ||
@@ -25,18 +28,30 @@ const PasswordPopUp = () => {
     );
   };
 
+  const changePassword = async () => {
+    await axios
+      .post("http://localhost:8080/member/change/password", {
+        headers: { Authorization: `Bearer ${userToken}` },
+        newPassword: password,
+      })
+      .then((response) => response.data);
+  };
+
   const onClickChangePassword = (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       return alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요");
     }
-    if (isValidPassword(password)) {
+    if (inValidPassword(password)) {
       return alert(
         "비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다."
       );
     }
-    setEditPassword(false);
-    return alert("변경 되었습니다.");
+    if (window.confirm("비밀번호를 등록하시겠습니까?")) {
+      changePassword();
+      setEditPassword(false);
+      alert("변경 되었습니다.");
+    }
   };
 
   return (

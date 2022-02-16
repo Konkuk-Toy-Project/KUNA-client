@@ -1,7 +1,11 @@
-import React from "react";
-import { useRecoilState } from "recoil";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import { useEffect } from "react/cjs/react.development";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { basketItemState } from "../../../../store/client/basket";
+import { buyingItemState } from "../../../../store/client/basket";
+import { userTokenState } from "../../../../store/common/user";
 
 const Wrapper = styled.li`
   display: flex;
@@ -36,30 +40,67 @@ const PriceWrapper = styled.div`
 `;
 
 const BasketItem = ({ item }) => {
-  const [basketItems, setBasketItems] = useRecoilState(basketItemState);
+  const [buyingItems, setBuyingItems] = useRecoilState(buyingItemState);
+  const [itemCount, setItemCount] = useState(0);
+  const navigate = useNavigate();
+  const userToken = useRecoilValue(userTokenState);
+
+  const deleteItem = async () => {
+    await axios
+      .delete(`http://localhost:8080/cart/${item.cartItemId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+      .then((response) => response.data);
+  };
 
   const onClickDeleteBasket = () => {
-    const filterClickedItem = basketItems.filter(
-      (current) => current.id !== item.id
-    );
-    setBasketItems(filterClickedItem);
-  };
-
-  const changeItemCount = (item, type) => {
-    const currentItem = { ...item };
-    type === "increase" ? currentItem.count++ : currentItem.count--;
-    let currentItemIndex;
-    basketItems.find((item, index) =>
-      item.id === currentItem.id ? (currentItemIndex = index) : null
-    );
-
-    let existingItem = basketItems.filter((item) => item.id !== currentItem.id);
-    if (currentItem.count !== 0) {
-      existingItem.splice(currentItemIndex, 0, currentItem);
+    if (window.confirm("장바구니에서 삭제하시겠습니까?")) {
+      deleteItem();
+      alert("삭제 되었습니다.");
+      navigate("/");
     }
-
-    setBasketItems([...existingItem]);
   };
+
+  const changeItemCount = async (count) => {
+    await axios
+      .put(`http://localhost:8080/cart/${item.cartItemId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+        count,
+      })
+      .then((response) => response.data);
+  };
+
+  const changeCountOnClient = (count) => {
+    let changingItem = buyingItems.find(
+      (buyingItem) => buyingItem.cartItemId === item.cartItemId
+    );
+    const otherItems = buyingItems.filter(
+      (buyingItem) => buyingItem.cartItemId !== item.cartItemId
+    );
+    changingItem = { ...changingItem, count };
+    setBuyingItems([changingItem, ...otherItems]);
+  };
+
+  const onClickChangeCount = (type) => {
+    let count = itemCount;
+    if (type === "increase") {
+      count++;
+      changeItemCount(count);
+      changeCountOnClient(count);
+    } else {
+      if (count === 1) {
+        return alert("수량은 1보다 작을수 없습니다.");
+      }
+      count--;
+      changeItemCount(count);
+      changeCountOnClient(count);
+    }
+  };
+
+  useEffect(() => {
+    setItemCount(item.count);
+  }, [item.count]);
+
   return (
     <Wrapper>
       <Image
@@ -71,11 +112,14 @@ const BasketItem = ({ item }) => {
           <h1>할인율 : {item.sale}%</h1>
           <h1>{item.price}원</h1>
         </PriceWrapper>
+        <h1>
+          {item?.option1} {item?.option2}
+        </h1>
       </Description>
+      <button onClick={() => onClickChangeCount("decrease")}>-</button>
+      <span>{itemCount}</span>
+      <button onClick={() => onClickChangeCount("increase")}>+</button>
       <button onClick={onClickDeleteBasket}>Delete Basket</button>
-      <span>{item.count}</span>
-      <button onClick={() => changeItemCount(item, "increase")}>+</button>
-      <button onClick={() => changeItemCount(item, "decrease")}>-</button>
     </Wrapper>
   );
 };

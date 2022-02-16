@@ -7,7 +7,6 @@ import {
   showPointState,
   showRankState,
   showWriteReviewState,
-  userState,
 } from "../../../../store/client/user";
 import PointPopUp from "../PointPopUp/PointPopUp";
 import CouponPopUp from "../CouponPopUp/CouponPopUp";
@@ -16,8 +15,7 @@ import WriteReviewPopUp from "../WriteReviewPopUp/WriteReviewPopUp";
 import RankPopUp from "../RankPopUp/RankPopUp";
 import { currentY } from "../../../../store/common/user";
 
-const ProfileBanner = () => {
-  const userInfo = useRecoilValue(userState);
+const ProfileBanner = ({ userInfo }) => {
   const [showRank, setShowRank] = useRecoilState(showRankState);
   const [showPoint, setShowPoint] = useRecoilState(showPointState);
   const [showCoupon, setShowCoupon] = useRecoilState(showCouponState);
@@ -38,7 +36,6 @@ const ProfileBanner = () => {
   return (
     <ProfileBannerWrapper>
       <UserInfo>
-        <UserImage src={userInfo.image} alt="User Image" />
         <NameAndRankWrapper>
           <Name>{userInfo.name}님</Name>
           <Rank>등급 : {userInfo.role}</Rank>
@@ -76,13 +73,6 @@ const UserInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const UserImage = styled.img`
-  width: 10em;
-  height: 10em;
-  border-radius: 50%;
-  border: 1px solid black;
 `;
 
 const NameAndRankWrapper = styled.div`

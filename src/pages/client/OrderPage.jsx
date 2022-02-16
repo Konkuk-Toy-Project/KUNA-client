@@ -8,7 +8,11 @@ import OrderWriteInfo from "../../components/client/Order/OrderWriteInfo.jsx";
 import PayMthdSelector from "../../components/client/Order/PayMthdSelector.jsx";
 import PriceBar from "../../components/client/Order/PriceBar.jsx";
 import UsingPoint from "../../components/client/Order/UsingPoint.jsx";
-import { buyingState } from "../../store/client/buying.js";
+import {
+  buyingDefaultPrice,
+  buyingSalePrice,
+  buyingState,
+} from "../../store/client/buying.js";
 
 const SHIPPING = 3000;
 const SHIP_FREE_PRICE = 50000;
@@ -16,8 +20,10 @@ const SHIP_FREE_PRICE = 50000;
 const OrderPage = () => {
   const navigate = useNavigate();
 
-  const [defaultPrice, setDefaultPrice] = useState(0);
-  const [salePrice, setSalePrice] = useState(defaultPrice);
+  const [defaultPrice, setDefaultPrice] = useState(
+    useRecoilValue(buyingDefaultPrice)
+  );
+  const [salePrice, setSalePrice] = useState(useRecoilValue(buyingSalePrice));
   const [couponSale, setCouponSale] = useState(0);
   const [shippingCharge, setShippingCharge] = useState(SHIPPING);
 

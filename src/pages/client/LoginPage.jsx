@@ -16,7 +16,6 @@ const PW = "password";
 const LoginPage = () => {
   const [account, setAccount] = useState({ [ID]: "", [PW]: "" });
   const [isWrong, setIsWrong] = useState(false); // when user fail to login
-  const userToken = useRecoilValue(userTokenState);
   const setUserToken = useSetRecoilState(userTokenState);
   const setIsClientState = useSetRecoilState(isClientState);
   const navigate = useNavigate();
@@ -49,10 +48,9 @@ const LoginPage = () => {
       const data = await response.data;
       console.log(data.token);
       setUserToken(data.token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
       if (data.role === "admin") setIsClientState(false);
-      else navigate("/item/14");
+      else navigate("/");
     } catch (error) {
       if (error.response) {
         switch (error.response.data.errorCode) {

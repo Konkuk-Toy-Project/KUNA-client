@@ -1,6 +1,28 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 export const buyingState = atom({ key: "buyingState", default: [] });
+
+export const buyingDefaultPrice = selector({
+  key: "defaultPriceState",
+  get: ({ get }) => {
+    const buyings = get(buyingState);
+    const _defaultPrice = buyings
+      .map((b) => b.price)
+      .reduce((prev, post) => prev + post);
+    return _defaultPrice;
+  },
+});
+
+export const buyingSalePrice = selector({
+  key: "salePriceState",
+  get: ({ get }) => {
+    const buyings = get(buyingState);
+    const _salePrice = buyings
+      .map((b) => (b.price * (100 - b.sale)) / 100)
+      .reduce((prev, post) => prev + post);
+    return _salePrice;
+  },
+});
 // {
 //     thumbnailImg: 상품 이미지 저장 이름,
 //     name: 아이템 이름,

@@ -43,7 +43,7 @@ const Review = ({ reviewObj, setPopup }) => {
             <img
               name={key}
               key={key}
-              src={img}
+              src={`http://localhost:8080/image/review/${img}`}
               onClick={onImgClick}
               width={100}
               height={100}

@@ -16,7 +16,9 @@ const ReviewPopup = ({ data, setData }) => {
             <IconX />
           </button>
           <ImgSlide
-            imgsrcs={data.reviewImagesUrl}
+            imgsrcs={data.reviewImagesUrl.map(
+              (src) => `http://localhost:8080/image/review/${src}`
+            )}
             defaultIdx={data.selImgIdx}
           />
 

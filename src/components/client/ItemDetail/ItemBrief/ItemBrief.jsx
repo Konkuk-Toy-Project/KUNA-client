@@ -66,7 +66,12 @@ const ItemBrief = ({ itemObj }) => {
 
   return (
     <div>
-      <ImgSlide imgsrcs={item.itemImageUrl} defaultIdx={0} />
+      <ImgSlide
+        imgsrcs={item.itemImageUrl.map(
+          (url) => `http://localhost:8080/image/item/${url}`
+        )}
+        defaultIdx={0}
+      />
 
       <div>
         <BriefHeader
@@ -87,7 +92,6 @@ const ItemBrief = ({ itemObj }) => {
           <button onClick={onBasketClick}>장바구니</button>
           <button onClick={onBuyClick}>바로결제</button>
         </div>
-        <img src={item.infoImg}></img>
       </div>
       {openBasketPopup ? (
         <AskGoToBasketPopup setOpenPopUp={setOpenBasketPopup} />

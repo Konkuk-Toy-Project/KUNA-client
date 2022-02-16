@@ -4,7 +4,11 @@ const ItemDetailImg = ({ imgSrc }) => {
   return (
     <div>
       {imgSrc.map((src, idx) => (
-        <img key={"img_" + idx} src={src} alt="상품 상세 정보" />
+        <img
+          key={"img_" + idx}
+          src={`http://localhost:8080/image/detail/${src}`}
+          alt="상품 상세 정보"
+        />
       ))}
     </div>
   );

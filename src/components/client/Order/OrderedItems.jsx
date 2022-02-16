@@ -4,14 +4,14 @@ import { useRecoilState } from "recoil";
 import { buyingState } from "../../../store/client/buying";
 import OrderedItem from "./OrderedItem";
 
-const OrderedItems = ({ setDefaultPrice, setTotalPrice }) => {
+const OrderedItems = ({ setDefaultPrice, setSalePrice }) => {
   const [buying, setBuying] = useRecoilState(buyingState);
 
   useEffect(() => {
     setDefaultPrice(
       buying.map((i) => i.count * i.price).reduce((prev, post) => prev + post)
     );
-    setTotalPrice(
+    setSalePrice(
       buying
         .map((i) => (i.count * i.price * (100 - i.sale)) / 100)
         .reduce((prev, post) => prev + post)

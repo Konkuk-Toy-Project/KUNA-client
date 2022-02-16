@@ -9,36 +9,30 @@ const PER = "percent";
 const TOTAL_PRICE_ = "total_price_";
 
 const CouponSelector = ({
-  totalPrice,
-  defaultPrice,
-  setTotalPrice,
+  salePrice,
+  couponSale,
+  setCouponSale,
   setCouponId,
 }) => {
   const [didUsedCoupon, setDidUsedCoupon] = useState(false);
   const [allCoupons, setAllCoupons] = useState([]);
   const [availCoupons, setAvailCoupons] = useState([]);
-  const [saledMoney, setSaledMoney] = useState(0);
   const buying = useRecoilValue(buyingState);
 
   const onCouponSel = (e) => {
     const selCp = availCoupons.find((c) => c.couponId == e.target.value);
-    setSaledMoney(
-      selCp.couponKind === PER ? (totalPrice * selCp.rate) / 100 : selCp.rate
+    setCouponSale(
+      selCp.couponKind === PER ? (salePrice * selCp.rate) / 100 : selCp.rate
     );
     setDidUsedCoupon(true);
-    setCouponId({ couponID: selCp.couponId }); // orderPage로 선택쿠폰 정보 보내주기
+    setCouponId(selCp.couponId); // orderPage로 선택쿠폰 정보 보내주기
   };
 
   const onRemoveCoupon = () => {
     setDidUsedCoupon(false);
-    setTotalPrice((cur) => cur + saledMoney);
-    setSaledMoney(0);
-    setCouponId({ couponID: "" }); //orderPage로 쿠폰 제거 정보 보내주기
+    setCouponSale(0);
+    setCouponId(""); //orderPage로 쿠폰 제거 정보 보내주기
   };
-
-  useEffect(() => {
-    if (saledMoney > 0) setTotalPrice((cur) => cur - setSaledMoney);
-  }, [saledMoney]);
 
   // 고려사항 : 만료날짜 충족, 총금액 충족, 사용여부 no
   // couponKind: 쿠폰 종류(percent-퍼센트 할인, static-고정 할인액)
@@ -68,10 +62,14 @@ const CouponSelector = ({
       allCoupons.filter(
         (c) =>
           c.isUsed === false &&
-          parseInt(c.couponCondition.replace(TOTAL_PRICE_, "")) >= totalPrice // 만료날짜 어떻게 추가할건지
+          parseInt(c.couponCondition.replace(TOTAL_PRICE_, "")) >= salePrice &&
+          c.couponKind === PER
+            ? true
+            : salePrice - c.rate >= 0
+        // 만료날짜 어떻게 추가할건지
       )
     );
-  }, [buying, allCoupons]);
+  }, [buying, allCoupons, salePrice]);
 
   return (
     <div>

@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useEffect } from "react/cjs/react.development";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { buyingItemState } from "../../../../store/client/basket";
+import { userTokenState } from "../../../../store/common/user";
 
 const Wrapper = styled.li`
   display: flex;
@@ -42,10 +43,13 @@ const BasketItem = ({ item }) => {
   const [buyingItems, setBuyingItems] = useRecoilState(buyingItemState);
   const [itemCount, setItemCount] = useState(0);
   const navigate = useNavigate();
+  const userToken = useRecoilValue(userTokenState);
 
   const deleteItem = async () => {
     await axios
-      .delete(`http://localhost:8080/cart/${item.cartItemId}`)
+      .delete(`http://localhost:8080/cart/${item.cartItemId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((response) => response.data);
   };
 
@@ -59,7 +63,10 @@ const BasketItem = ({ item }) => {
 
   const changeItemCount = async (count) => {
     await axios
-      .put(`http://localhost:8080/cart/${item.cartItemId}`, { count })
+      .put(`http://localhost:8080/cart/${item.cartItemId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+        count,
+      })
       .then((response) => response.data);
   };
 

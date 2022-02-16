@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { showCouponState } from "../../../../store/client/user";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const CouponPopUp = () => {
@@ -11,21 +11,29 @@ const CouponPopUp = () => {
   const setShowCoupon = useSetRecoilState(showCouponState);
   const scrollY = useRecoilValue(currentY);
   const [serialNumber, setSerialNumber] = useState("");
+  const userToken = useRecoilValue(userTokenState);
 
-  const getCoupons = async () => {
+  const getCoupons = useCallback(async () => {
     const data = await axios
-      .get("http://localhost:8080/coupon")
+      .get("http://localhost:8080/coupon", {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((response) => response.data);
-    console.log(data);
     setCoupons(data);
-  };
+  }, [userToken]);
 
   const registerCoupon = async () => {
     try {
       await axios
-        .post("http://localhost:8080/coupon/user", {
-          serialNumber,
-        })
+        .post(
+          "http://localhost:8080/coupon/user",
+          {
+            headers: { Authorization: `Bearer ${userToken}` },
+          },
+          {
+            serialNumber,
+          }
+        )
         .then((response) => response.data);
       alert("쿠폰이 등록되었습니다.");
     } catch (err) {
@@ -53,7 +61,7 @@ const CouponPopUp = () => {
 
   useEffect(() => {
     getCoupons();
-  }, []);
+  }, [getCoupons]);
 
   return (
     <CouponPopUpWrapper top={scrollY}>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
@@ -7,7 +7,7 @@ import {
   showOrderedItemState,
   showWriteReviewState,
 } from "../../../../store/client/user";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const OrderedItemPopUp = () => {
@@ -16,6 +16,7 @@ const OrderedItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const setShowWriteReviewState = useSetRecoilState(showWriteReviewState);
   const setCurrentReviewItem = useSetRecoilState(currentReviewItemState);
+  const userToken = useRecoilValue(userTokenState);
 
   const onClickWriteReview = (item) => {
     setShowOrderedItemPopUp(false);
@@ -23,16 +24,18 @@ const OrderedItemPopUp = () => {
     setCurrentReviewItem(item);
   };
 
-  const getOrderedItem = async () => {
+  const getOrderedItem = useCallback(async () => {
     const data = await axios
-      .get("http://localhost:8080/order/item")
+      .get("http://localhost:8080/order/item", {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((response) => response.data);
     setOrderedItems(data);
-  };
+  }, [userToken]);
 
   useEffect(() => {
     getOrderedItem();
-  }, []);
+  }, [getOrderedItem]);
 
   return (
     <OrderedItemPopUpWrapper top={scrollY}>

@@ -4,7 +4,7 @@ import { useState } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { passwordPopUpState } from "../../../../store/client/user";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const PasswordPopUp = () => {
@@ -12,6 +12,7 @@ const PasswordPopUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const setEditPassword = useSetRecoilState(passwordPopUpState);
   const scrollY = useRecoilValue(currentY);
+  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (handleState) => (event) => {
     handleState(event.target.value);
@@ -30,6 +31,7 @@ const PasswordPopUp = () => {
   const changePassword = async () => {
     await axios
       .post("http://localhost:8080/member/change/password", {
+        headers: { Authorization: `Bearer ${userToken}` },
         newPassword: password,
       })
       .then((response) => response.data);

@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
 import { buyingItemState } from "../../store/client/basket";
 import { buyingState } from "../../store/client/buying";
+import { userTokenState } from "../../store/common/user";
 
 const BasketPage = () => {
   const [items, setItems] = useRecoilState(buyingItemState);
@@ -17,13 +18,16 @@ const BasketPage = () => {
   const [discountPrice, setDiscountPrice] = useState(0);
   const setBuying = useSetRecoilState(buyingState);
   const navigate = useNavigate();
+  const userToken = useRecoilValue(userTokenState);
 
   const getBasketData = useCallback(async () => {
     const data = await axios
-      .get(`http://localhost:8080/cart`)
+      .get(`http://localhost:8080/cart`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((response) => response.data);
     setItems(data);
-  }, [setItems]);
+  }, [setItems, userToken]);
 
   console.log(items);
 

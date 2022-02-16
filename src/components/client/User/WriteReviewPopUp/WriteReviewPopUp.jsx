@@ -6,7 +6,7 @@ import {
   currentReviewItemState,
   showWriteReviewState,
 } from "../../../../store/client/user";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const WriteReviewPopUp = () => {
@@ -16,6 +16,7 @@ const WriteReviewPopUp = () => {
   const [description, setDescription] = useState("");
   const [rate, setRate] = useState("");
   const [reviewImage, setReviewImage] = useState([]);
+  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);
@@ -41,6 +42,7 @@ const WriteReviewPopUp = () => {
     const config = {
       headers: {
         "content-type": "multipart/form-data",
+        Authorization: `Bearer ${userToken}`,
       },
     };
     axios

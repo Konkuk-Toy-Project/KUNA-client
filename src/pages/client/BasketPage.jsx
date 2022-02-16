@@ -50,7 +50,7 @@ const BasketPage = () => {
   const onClickPurchaseItems = () => {
     if (window.confirm("상품을 구매하시겠습니까?")) {
       setBuying(items);
-      navigate("/");
+      navigate("/order");
     }
   };
 

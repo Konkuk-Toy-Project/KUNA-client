@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import OrderInput from "./OrderInput";
+import axios from "axios";
 
 const ADDRESS = "address";
 const RECIPIENT = "recipient";
@@ -18,8 +19,18 @@ const OrderWriteInfo = ({ setData, setIsFilled }) => {
     console.log(infos);
   };
 
-  useEffect(() => {
-    console.log("회원인 경우, 사용자 정보 받아와서 inputs에 초기정보 채워넣기");
+  useEffect(async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/member/info");
+      console.log(response.data);
+      setInfos({
+        ...infos,
+        [RECIPIENT]: response.data.name,
+        [PHONE]: response.data.phone,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   useEffect(() => {

@@ -107,8 +107,8 @@ const Option = ({ item, chosen, setChosen, setChosenSubInfo }) => {
       setChosen((cur) =>
         cur.concat({
           itemId: item.itemId,
-          option1Id: option1[1],
-          option2Id: option2[1],
+          option1Id: parseInt(option1[1]),
+          option2Id: parseInt(option2[1]),
           count: 1,
         })
       );

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userTokenState } from "../../../../../store/common/user";
 
 // 로그인했는지 아닌지 판단 how? - 에러코드 보내달라고 하기
 const LikeBtn = ({ itemId, num }) => {
@@ -8,6 +10,30 @@ const LikeBtn = ({ itemId, num }) => {
   const [likeId, setLikeId] = useState();
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const userToken = useRecoilValue(userTokenState);
+
+  useEffect(() => getPreference(), []);
+  const getPreference = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/preference/isPreference/${itemId}`,
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      setIsLogin(response.data.isLogin);
+      setIsLiked(response.data.isPreference);
+      return;
+    } catch (error) {
+      if (error.response) {
+        const message = error.response.message;
+        if (message !== undefined) {
+          alert(error.response.message);
+          return;
+        }
+      }
+      alert("오류가 발생했습니다. 다시 한번 시도해주세요.");
+    }
+  }, []);
 
   const postLike = async () => {
     setLoading(true);
@@ -65,7 +91,7 @@ const LikeBtn = ({ itemId, num }) => {
 
   return (
     <>
-      <button onClick={onClick} disabled={loading}>
+      <button onClick={onClick} disabled={loading || !isLogin}>
         {isLiked ? "💘" : "🤍"}
         {"  "}
         {likesNum}

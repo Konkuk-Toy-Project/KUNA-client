@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const PriceBar = ({ defaultPrice, totalPrice, shippingCharge }) => {
+const PriceBar = ({
+  defaultPrice,
+  salePrice,
+  couponSale,
+  point,
+  totalPrice,
+  shippingCharge,
+}) => {
   return (
     <div>
       <p>
@@ -12,9 +19,23 @@ const PriceBar = ({ defaultPrice, totalPrice, shippingCharge }) => {
       </p>
       -
       <p>
-        할인혜택
+        상품 할인
         <strong>
-          <span>{defaultPrice - totalPrice}</span>원
+          <span>{defaultPrice - salePrice}</span>원
+        </strong>
+      </p>
+      -
+      <p>
+        쿠폰 할인
+        <strong>
+          <span>{couponSale}</span>원
+        </strong>
+      </p>
+      -
+      <p>
+        포인트 사용
+        <strong>
+          <span>{point}</span>원
         </strong>
       </p>
       +

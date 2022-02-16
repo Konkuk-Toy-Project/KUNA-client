@@ -2,13 +2,10 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router";
 import { useState } from "react/cjs/react.development";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { currentY } from "../../../../store/common/user";
-import {
-  productState,
-  showAddPopUpState,
-} from "../../../../store/owner/product";
+import { showAddPopUpState } from "../../../../store/owner/product";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
 const AddItemPopUp = () => {

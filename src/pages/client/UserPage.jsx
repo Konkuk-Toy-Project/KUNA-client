@@ -1,22 +1,27 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import ProfileBanner from "../../components/client/User/ProfileBanner/ProfileBanner";
 import UserInfo from "../../components/client/User/UserInfo/UserInfo";
+import { userTokenState } from "../../store/common/user";
 
 const UserPage = () => {
   const [userInfo, setUserInfo] = useState({});
-  const getUserInfo = async () => {
+  const userToken = useRecoilValue(userTokenState);
+
+  const getUserInfo = useCallback(async () => {
     const data = await axios
-      .get("http://localhost:8080/member/info")
+      .get("http://localhost:8080/member/info", {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((response) => response.data);
     setUserInfo(data);
-    console.log(data);
-  };
+  }, [userToken]);
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [getUserInfo]);
 
   return (
     <UserPageWrapper>

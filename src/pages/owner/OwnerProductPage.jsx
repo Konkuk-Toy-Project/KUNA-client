@@ -28,12 +28,15 @@ const OwnerProductPage = () => {
   useEffect(() => {
     async function getData() {
       const data = await axios
-        .get("http://localhost:8080/admin/items")
+        .get("http://localhost:8080/admin/items", {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
         .then((response) => response.data);
       setItems(data);
     }
+
     getData();
-  }, [userToken.token, setItems]);
+  }, [userToken, setItems]);
 
   return (
     <OwnerProductPageWrapper>

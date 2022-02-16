@@ -1,12 +1,20 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useEffect } from "react/cjs/react.development";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import AddCouponPopUp from "../../components/owner/Coupon/AddCouponPopUp/AddCouponPopUp";
 import MenuCategory from "../../components/owner/Main/MenuCategory/MenuCategory";
+import { isClientState } from "../../store/common/user";
 import { showCouponPopUpState } from "../../store/owner/coupon";
 
 const OwnerMainPage = () => {
   const showCouponPopUp = useRecoilValue(showCouponPopUpState);
+  const setIsClientState = useSetRecoilState(isClientState);
+
+  useEffect(() => {
+    setIsClientState(false);
+  }, [setIsClientState]);
+
   return (
     <OwnerMainPageWrapper>
       <Title>원하는 작업을 선택하세요</Title>

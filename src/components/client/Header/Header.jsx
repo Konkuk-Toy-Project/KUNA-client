@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { basketItemState } from "../../../store/client/basket";
 import { userTokenState } from "../../../store/common/user";
 
 const Header = () => {
   const basketItems = useRecoilValue(basketItemState);
   const [searchValue, setSearchValue] = useState("");
-  const userToken = useRecoilValue(userTokenState);
+  const [userToken, setUserToken] = useRecoilState(userTokenState);
   const navigate = useNavigate();
+
+  const onClickLogout = () => {
+    setUserToken([]);
+    navigate("/");
+    window.location.reload();
+  };
 
   const onChangeSearch = (event) => {
     setSearchValue(event.target.value);
@@ -20,7 +26,7 @@ const Header = () => {
   };
 
   const onClickCategory = (choice) => {
-    if (userToken) {
+    if (userToken.length > 0) {
       return navigate(`/${choice}`);
     }
     if (
@@ -78,7 +84,7 @@ const Header = () => {
               </MenuCategory>
             </MenuIcon>
           ) : (
-            <MenuIcon onClick={() => window.location.reload()}>
+            <MenuIcon onClick={onClickLogout}>
               <MenuCategory>
                 <img
                   src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"

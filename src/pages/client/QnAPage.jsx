@@ -4,13 +4,17 @@ import QnATable from "../../components/client/QnA/QnATable";
 import WriteQnAPopUp from "../../components/client/QnA/WriteQnAPopUp";
 import AnswCheckPopup from "../../components/client/QnA/AnswCheckPopup";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userTokenState } from "../../store/common/user";
 
 const QnAPage = ({ itemName, thumbnail, itemId }) => {
+  const userToken = useRecoilValue(userTokenState);
   const [loading, setLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [itemData, setItemData] = useState({
     itemId: itemId,
     name: itemName,
-    img: thumbnail,
+    img: `http://localhost:8080/image/item/${thumbnail}`,
   });
 
   const [qnAs, setQnAs] = useState([]);
@@ -20,7 +24,10 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
   const [selAnswIdx, setSelAnswIdx] = useState(null);
   const [newQnaIds, setNewQnaIds] = useState([]);
 
-  const onWriteQClick = () => setPopWriteQnA(true);
+  const onWriteQClick = () => {
+    getIsLogin();
+  };
+
   const onAnswerQClick = () => setPopAnswer(true);
 
   useEffect(async () => {
@@ -30,13 +37,40 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
   const getQnAs = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/qna/${itemId}`);
+      const response = await axios.get(`http://localhost:8080/qna/${itemId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
       setQnAs(response.data);
     } catch (error) {
       alert(error.response.message);
     }
     setLoading(false);
   }, [newQnaIds]);
+
+  const getIsLogin = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/member/isLogin`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
+      setIsLogin(response.data.isLogin);
+      if (!response.data.isLogin) {
+        alert("로그인 후 이용해주세요.");
+        return;
+      }
+      setPopWriteQnA(true);
+      return;
+    } catch (error) {
+      if (error.response) {
+        const message = error.response.message;
+        if (message !== undefined) {
+          alert(error.response.message);
+          return;
+        }
+      }
+      alert("오류가 발생했습니다. 다시 한번 시도해주세요.");
+    }
+  };
+
   return (
     <div>
       <QnATable qnAs={qnAs} setSelAnswIdx={setSelAnswIdx} />

@@ -13,14 +13,16 @@ const MenuCategory = ({ link, imageUrl, title, type }) => {
   return (
     <MenuCategoryWrapper>
       {type === "coupon" ? (
-        <div onClick={onClickAdd}>
+        <PageWrapper onClick={onClickAdd}>
           <Image src={imageUrl} alt="Category" />
           <Title>{title}</Title>
-        </div>
+        </PageWrapper>
       ) : (
         <PageLink to={link}>
-          <Image src={imageUrl} alt="Category" />
-          <Title>{title}</Title>
+          <PageWrapper>
+            <Image src={imageUrl} alt="Category" />
+            <Title>{title}</Title>
+          </PageWrapper>
         </PageLink>
       )}
     </MenuCategoryWrapper>
@@ -38,6 +40,7 @@ const MenuCategoryWrapper = styled.div`
   align-items: center;
   border-radius: 20px;
   margin: 0em 0.2em;
+  color: black;
   &:hover {
     transition: all 0.3s ease-in;
     background-color: black;
@@ -46,8 +49,14 @@ const MenuCategoryWrapper = styled.div`
 `;
 
 const PageLink = styled(Link)`
-  color: black;
   text-decoration: none;
+`;
+
+const PageWrapper = styled.div`
+  color: black;
+  &:hover {
+    color: white;
+  }
 `;
 
 const Image = styled.img`

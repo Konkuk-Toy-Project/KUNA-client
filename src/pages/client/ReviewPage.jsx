@@ -12,7 +12,7 @@ const ReviewPage = ({ itemId }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [curPageNum, setCurPageNum] = useState(1);
-  const [totalPageNum, setTotalPageNum] = useState();
+  const [totalPageNum, setTotalPageNum] = useState(1);
 
   const [popUpReview, setPopUpReview] = useState({}); // 클릭한 아이템의 review + default인덱스
   useEffect(async () => {

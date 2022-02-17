@@ -13,6 +13,7 @@ import SignUpFinPage from "../pages/client/SignUpFinPage";
 import SignUpPage from "../pages/client/SignUpPage";
 import UserPage from "../pages/client/UserPage";
 import OrderPage from "../pages/client/OrderPage";
+import OrderFinPage from "../pages/client/OrderFinPage";
 
 const ClientRouter = () => {
   return (
@@ -30,6 +31,7 @@ const ClientRouter = () => {
         <Route path="/like" element={<LikePage />} />
         <Route path="/basket" element={<BasketPage />} />
         <Route path="/order" element={<OrderPage />} />
+        <Route path="/order/complete" element={<OrderFinPage />} />
         <Route path="/user" element={<UserPage />} />
         <Route path="/*" element={<Navigate to="/login" />} />
       </Routes>

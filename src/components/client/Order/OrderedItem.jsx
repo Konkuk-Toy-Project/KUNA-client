@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import IconX from "../Icon/IconX";
 import { useRecoilState } from "recoil";
@@ -63,7 +63,10 @@ const OrderedItem = ({ item }) => {
     <div>
       <div>{item.name}</div>
       <div>
-        <img src={item.thumbnail} alt="사진없음" />
+        <img
+          src={`http://localhost:8080/image/thumbnail/${item.thumbnail}`}
+          alt="사진없음"
+        />
         <div>
           {item.option2 === ""
             ? item.option1

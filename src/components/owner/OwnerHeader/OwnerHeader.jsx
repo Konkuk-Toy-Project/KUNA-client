@@ -1,8 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { isClientState, userTokenState } from "../../../store/common/user";
 
 const OwnerHeader = () => {
+  const setUserToken = useSetRecoilState(userTokenState);
+  const setIsClient = useSetRecoilState(isClientState);
+  const navigate = useNavigate();
+
+  const onClickLogout = () => {
+    setUserToken([]);
+    setIsClient(true);
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <HeaderWrapper>
       <ShortcutMenuWrapper>
@@ -15,7 +28,7 @@ const OwnerHeader = () => {
             <h1>관리자 페이지</h1>
           </PageLink>
         </div>
-        <button onClick={() => window.location.reload()}>로그아웃</button>
+        <button onClick={onClickLogout}>로그아웃</button>
       </ShortcutMenuWrapper>
     </HeaderWrapper>
   );

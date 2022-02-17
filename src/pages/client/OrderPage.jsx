@@ -13,12 +13,14 @@ import {
   buyingSalePrice,
   buyingState,
 } from "../../store/client/buying.js";
+import { userTokenState } from "../../store/common/user.js";
 
 const SHIPPING = 3000;
 const SHIP_FREE_PRICE = 50000;
 
 const OrderPage = () => {
   const navigate = useNavigate();
+  const userToken = useRecoilValue(userTokenState);
 
   const [defaultPrice, setDefaultPrice] = useState(
     useRecoilValue(buyingDefaultPrice)
@@ -80,27 +82,33 @@ const OrderPage = () => {
       }),
     });
     try {
-      const response = await axios.post("http://localhost:8080/order", {
-        ...inputData,
-        payMethod: payMethod,
-        usePoint: usePoint,
-        couponId: couponId === undefined ? "" : couponId,
-        totalPrice: totalPrice, //전체 주문 금액(택배비 미포함)
-        shippingCharge: shippingCharge, //택배비
-        orderItems: buying.map((item) => {
-          return {
-            itemId: item.itemId,
-            option1Id: item.option1Id,
-            option2Id: item.option2Id,
-            count: item.count,
-          };
-        }),
-      });
-      console.log(response.data);
-      //navigate(`order/result?쿼리 스트링 전달하기`);
+      const response = await axios.post(
+        "http://localhost:8080/order",
+        {
+          ...inputData,
+          payMethod: payMethod,
+          usePoint: usePoint,
+          couponId: couponId === undefined ? "" : couponId,
+          totalPrice: totalPrice, //전체 주문 금액(택배비 미포함)
+          shippingCharge: shippingCharge, //택배비
+          orderItems: buying.map((item) => {
+            return {
+              itemId: item.itemId,
+              option1Id: item.option1Id,
+              option2Id: item.option2Id,
+              count: item.count,
+            };
+          }),
+        },
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      const data = response.data;
+      navigate(
+        `/order/complete?orderId=${data.orderId}&totalPrice=${data.totalPrice}&shippingCharge=${data.shippingCharge}&orderDate=${data.orderDate}`
+      );
     } catch (error) {
       const response = error.response;
-      console.log(error.response.errorCode);
+      //console.log(error.response.errorCode);
       alert(
         response && response.errorCode !== undefined
           ? response.message

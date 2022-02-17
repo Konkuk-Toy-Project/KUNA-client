@@ -38,9 +38,11 @@ const LikeBtn = ({ itemId, num }) => {
   const postLike = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:8080/preference", {
-        itemId: itemId,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/preference",
+        { itemId: itemId },
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
       setLikeId(response.data.preferenceId);
       setLoading(false);
       return;

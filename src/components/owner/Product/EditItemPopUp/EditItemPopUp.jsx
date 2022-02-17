@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import {
   currentItemState,
   productState,
@@ -18,6 +18,7 @@ const EditItemPopUp = () => {
   const [sale, setSale] = useState(0);
   const [price, setPrice] = useState(0);
   const [product, setProduct] = useRecoilState(productState);
+  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (handleChange) => (event) => {
     handleChange(event.target.value);
@@ -42,10 +43,16 @@ const EditItemPopUp = () => {
 
   function changePriceAndSale() {
     axios
-      .put(`http://localhost:8080/admin/price/${currentItem.itemId}`, {
-        price,
-        sale,
-      })
+      .put(
+        `http://localhost:8080/admin/price/${currentItem.itemId}`,
+        {
+          price,
+          sale,
+        },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
+      )
       .then((response) => response.data);
   }
 

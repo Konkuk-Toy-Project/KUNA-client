@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useState } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import { showAddPopUpState } from "../../../../store/owner/product";
 import CloseButton from "../../../common/CloseButton/CloseButton";
 
@@ -18,6 +18,7 @@ const AddItemPopUp = () => {
   const [mainImg, setMainImg] = useState([]);
   const [detailImg, setDetailImg] = useState([]);
   const [thumbnailImg, setThumbnailImg] = useState([]);
+  const userToken = useRecoilValue(userTokenState);
   const navigate = useNavigate();
 
   const onChange = (handleChange) => (event) => {
@@ -49,6 +50,7 @@ const AddItemPopUp = () => {
     const config = {
       headers: {
         "content-type": "multipart/form-data",
+        Authorization: `Bearer ${userToken}`,
       },
     };
     axios

@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userTokenState } from "../../../store/common/user";
 
 const UsingPoint = ({ salePrice, couponSale, setUsePoint }) => {
   const [ownPoint, setOwnPoint] = useState(0);
   const [inputPoint, setInputPoint] = useState(0);
   const [availPoint, setAvailPoint] = useState(0);
+  const userToken = useRecoilValue(userTokenState);
 
   const onChange = (e) => {
     const value = e.target.value.toString().replace(/[^0-9]/gi, "");
     const point = value == "" ? 0 : parseInt(value);
 
     if (point > availPoint) setInputPoint(availPoint);
-    // else if (point < 0) setInputPoint(0);
+    else if (point < 0) setInputPoint(0);
     else setInputPoint(point);
   };
 
@@ -20,7 +23,9 @@ const UsingPoint = ({ salePrice, couponSale, setUsePoint }) => {
 
   useEffect(async () => {
     try {
-      const response = await axios.get("http://localhost:8080/member/point");
+      const response = await axios.get("http://localhost:8080/member/point", {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
       const point = response.data.point;
       setOwnPoint(point);
       setAvailPoint(

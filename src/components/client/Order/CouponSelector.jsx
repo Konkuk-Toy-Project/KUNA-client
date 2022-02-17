@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import IconX from "../Icon/IconX";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
 import { buyingState } from "../../../store/client/buying";
+import { useRecoilValue } from "recoil";
+import { userTokenState } from "../../../store/common/user";
 
 const PER = "percent";
 const TOTAL_PRICE_ = "total_price_";
@@ -18,6 +19,7 @@ const CouponSelector = ({
   const [allCoupons, setAllCoupons] = useState([]);
   const [availCoupons, setAvailCoupons] = useState([]);
   const buying = useRecoilValue(buyingState);
+  const userToken = useRecoilValue(userTokenState);
 
   const onCouponSel = (e) => {
     const selCp = availCoupons.find((c) => c.couponId == e.target.value);
@@ -45,7 +47,9 @@ const CouponSelector = ({
 
   useEffect(async () => {
     try {
-      const response = await axios.get("http://localhost:8080/coupon");
+      const response = await axios.get("http://localhost:8080/coupon", {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
       console.log(response.data);
       setAllCoupons(response.data);
     } catch (error) {

@@ -2,26 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const PriceBar = ({
-  defaultPrice,
   salePrice,
   couponSale,
-  point,
   totalPrice,
   shippingCharge,
+  point,
 }) => {
   return (
     <div>
       <p>
-        총 상품가격:
+        총 상품가격
         <strong>
-          <span>{defaultPrice}</span>원
-        </strong>
-      </p>
-      -
-      <p>
-        상품 할인
-        <strong>
-          <span>{defaultPrice - salePrice}</span>원
+          <span>{salePrice}</span>원
         </strong>
       </p>
       -
@@ -48,7 +40,7 @@ const PriceBar = ({
       <p>
         합계
         <strong>
-          <span>{totalPrice + shippingCharge}</span>원
+          <span>{totalPrice + shippingCharge - point}</span>원
         </strong>
       </p>
     </div>

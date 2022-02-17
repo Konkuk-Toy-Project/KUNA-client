@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import QueryString from "qs";
 // orderId: 주문 번호
@@ -10,7 +10,9 @@ import QueryString from "qs";
 const OrderFinPage = () => {
   const location = useLocation();
   const orderInfo = QueryString.parse(location.search, { IgnorePrefix: true });
+  const navigate = useNavigate();
   console.log(orderInfo);
+  const onClick = () => navigate("/");
   return (
     <div>
       <h2>주문이 완료되었습니다!</h2>
@@ -32,6 +34,7 @@ const OrderFinPage = () => {
           </span>
         </li>
       </ul>
+      <button onClick={onClick}>메인페이지로 돌아가기</button>
     </div>
   );
 };

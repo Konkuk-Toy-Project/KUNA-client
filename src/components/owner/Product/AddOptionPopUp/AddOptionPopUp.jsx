@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useState } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { currentY } from "../../../../store/common/user";
+import { currentY, userTokenState } from "../../../../store/common/user";
 import {
   currentItemState,
   showOptionPopUpState,
@@ -21,6 +21,7 @@ const AddOptionPopUp = () => {
   const [detailOptions, setDetailOptions] = useState([]);
   const setShowOptionPopUp = useSetRecoilState(showOptionPopUpState);
   const currentItem = useRecoilValue(currentItemState);
+  const userToken = useRecoilValue(userTokenState);
   const navigate = useNavigate();
 
   const onChange = (handleChange) => (event) => {
@@ -61,7 +62,9 @@ const AddOptionPopUp = () => {
 
   function addNewOption(data) {
     axios
-      .post(`http://localhost:8080/item/${currentItem.itemId}/option`, data)
+      .post(`http://localhost:8080/item/${currentItem.itemId}/option`, data, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((response) => response.data);
   }
 

@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import CouponSelector from "../../components/client/Order/CouponSelector.jsx";
 import OrderedItems from "../../components/client/Order/OrderedItems.jsx";
 import OrderWriteInfo from "../../components/client/Order/OrderWriteInfo.jsx";
 import PayMthdSelector from "../../components/client/Order/PayMthdSelector.jsx";
 import PriceBar from "../../components/client/Order/PriceBar.jsx";
+import PriceBox from "../../components/client/Order/PriceBox.jsx";
 import UsingPoint from "../../components/client/Order/UsingPoint.jsx";
 import {
   buyingDefaultPrice,
@@ -39,7 +40,7 @@ const OrderPage = () => {
   const [isInputFilled, setIsInputFilled] = useState(false);
   const [isPayMthdChecked, setIsPayMthdChecked] = useState(false);
 
-  const buying = useRecoilValue(buyingState);
+  const [buying, setBuying] = useRecoilState(buyingState);
 
   useEffect(() => {
     if (buying.length === 0) navigate("/");
@@ -103,6 +104,7 @@ const OrderPage = () => {
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
       const data = response.data;
+      setBuying([]);
       navigate(
         `/order/complete?orderId=${data.orderId}&totalPrice=${data.totalPrice}&shippingCharge=${data.shippingCharge}&orderDate=${data.orderDate}`
       );
@@ -134,50 +136,51 @@ const OrderPage = () => {
 
   return (
     <div>
-      {/* 
-      아이템 컴포넌트 
-      총 금액 컴포넌트 
-      정보 입력 컴포넌트
-      쿠폰 사용 컴포넌트 
-      포인트 사용 컴포넌트 
-      결제 방식 컴포넌트 
-      결제하기 버튼  
-    */}
-      <OrderedItems
-        setDefaultPrice={setDefaultPrice}
-        setSalePrice={setSalePrice}
-      />
-      <PriceBar
-        defaultPrice={defaultPrice}
-        salePrice={salePrice}
-        couponSale={couponSale}
-        point={usePoint}
-        totalPrice={totalPrice}
-        shippingCharge={shippingCharge}
-      />
+      <div>
+        <OrderedItems
+          setDefaultPrice={setDefaultPrice}
+          setSalePrice={setSalePrice}
+        />
+        <PriceBar
+          salePrice={salePrice}
+          couponSale={couponSale}
+          point={usePoint}
+          totalPrice={totalPrice}
+          shippingCharge={shippingCharge}
+        />
 
-      <OrderWriteInfo setData={setInputData} setIsFilled={setIsInputFilled} />
-      <CouponSelector
-        salePrice={salePrice}
-        couponSale={couponSale}
-        setCouponSale={setCouponSale}
-        setCouponId={setCouponId}
-      />
-      <UsingPoint
-        salePrice={salePrice}
-        couponSale={couponSale}
-        setUsePoint={setUsePoint}
-      />
-      <PayMthdSelector
-        setPayMethod={setPayMethod}
-        setIsChecked={setIsPayMthdChecked}
-      />
-      <button
-        disabled={!isInputFilled || !isPayMthdChecked}
-        onClick={onPayBtnClick}
-      >
-        결제하기
-      </button>
+        <OrderWriteInfo setData={setInputData} setIsFilled={setIsInputFilled} />
+        <CouponSelector
+          salePrice={salePrice}
+          couponSale={couponSale}
+          setCouponSale={setCouponSale}
+          setCouponId={setCouponId}
+        />
+        <UsingPoint
+          salePrice={salePrice}
+          couponSale={couponSale}
+          setUsePoint={setUsePoint}
+        />
+        <PayMthdSelector
+          setPayMethod={setPayMethod}
+          setIsChecked={setIsPayMthdChecked}
+        />
+      </div>
+
+      <div>
+        <PriceBox
+          salePrice={salePrice}
+          couponSale={couponSale}
+          point={usePoint}
+          shippingCharge={shippingCharge}
+        />
+        <button
+          disabled={!isInputFilled || !isPayMthdChecked}
+          onClick={onPayBtnClick}
+        >
+          결제하기
+        </button>
+      </div>
     </div>
   );
 };

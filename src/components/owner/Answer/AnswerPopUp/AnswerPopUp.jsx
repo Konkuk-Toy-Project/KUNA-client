@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { userTokenState } from "../../../../store/common/user";
 import {
   currentAnswerItemState,
   showAnswerPopUpState,
@@ -13,6 +14,7 @@ const AnswerPopUp = () => {
   const setShowAnswerPopUp = useSetRecoilState(showAnswerPopUpState);
   const currentAnswerItem = useRecoilValue(currentAnswerItemState);
   const [answer, setAnswer] = useState("");
+  const userToken = useRecoilValue(userTokenState);
   const navigate = useNavigate();
 
   const onChangeAnswer = (event) => {
@@ -30,9 +32,15 @@ const AnswerPopUp = () => {
 
   function addAnswer() {
     axios
-      .post(`http://localhost:8080/admin/qna/${currentAnswerItem.qnaId}`, {
-        answer,
-      })
+      .post(
+        `http://localhost:8080/admin/qna/${currentAnswerItem.qnaId}`,
+        {
+          answer,
+        },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
+      )
       .then((response) => response.data);
   }
 

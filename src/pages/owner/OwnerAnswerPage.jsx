@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   currentAnswerItemState,
   showAnswerPopUpState,
@@ -9,12 +9,14 @@ import {
 import AnswerPopUp from "../../components/owner/Answer/AnswerPopUp/AnswerPopUp";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { userTokenState } from "../../store/common/user";
 
 const OwnerAnswerPage = () => {
   const [items, setItems] = useState([]);
   const [showAnswerPopUp, setShowAnswerPopUp] =
     useRecoilState(showAnswerPopUpState);
   const setCurrentAnswerItem = useSetRecoilState(currentAnswerItemState);
+  const userToken = useRecoilValue(userTokenState);
 
   const onClickAnswer = (answer) => {
     setShowAnswerPopUp(true);
@@ -31,12 +33,14 @@ const OwnerAnswerPage = () => {
   useEffect(() => {
     async function getData() {
       const data = await axios
-        .get("http://localhost:8080/admin/qna/false")
+        .get("http://localhost:8080/admin/qna/false", {
+          headers: { Authorization: `Bearer ${userToken}` },
+        })
         .then((response) => response.data);
       setItems(data);
     }
     getData();
-  }, []);
+  }, [userToken]);
 
   return (
     <OwnerAnswerPageWrapper>

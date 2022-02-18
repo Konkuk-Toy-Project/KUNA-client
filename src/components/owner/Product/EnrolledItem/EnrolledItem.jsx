@@ -1,16 +1,14 @@
 import React from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { currentY } from "../../../../store/common/user";
 import {
   currentItemState,
-  productState,
   showEditPopUpState,
   showOptionPopUpState,
 } from "../../../../store/owner/product";
 
 const EnrolledItem = ({ item }) => {
-  const [items, setItems] = useRecoilState(productState);
   const setCurrentItem = useSetRecoilState(currentItemState);
   const setShowEditPopUp = useSetRecoilState(showEditPopUpState);
   const setShowOptionPopUp = useSetRecoilState(showOptionPopUpState);
@@ -24,22 +22,6 @@ const EnrolledItem = ({ item }) => {
     calculatePopUpHeight();
     setCurrentItem(item);
     setShowEditPopUp(true);
-  };
-
-  const onClickDeleteItem = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      if (
-        window.confirm(
-          "제품을 삭제하면 다시 복구할 수 없습니다. 정말 삭제 하시겠습니까?"
-        )
-      ) {
-        const filterClickedItem = items.filter(
-          (current) => current.id !== item.id
-        );
-        setItems(filterClickedItem);
-        alert("제품이 삭제되었습니다.");
-      }
-    }
   };
 
   const onClickAddOption = () => {
@@ -62,7 +44,6 @@ const EnrolledItem = ({ item }) => {
         </ItemPriceWrapper>
         <div>
           <button onClick={onClickEditItem}>상품 수정</button>
-          <button onClick={onClickDeleteItem}>상품 삭제</button>
           <button onClick={onClickAddOption}>옵션 추가</button>
         </div>
       </ItemDescription>

@@ -92,6 +92,7 @@ const FindAccountPage = () => {
         switch (data.errorCode) {
           case "M005":
             alert(data.message);
+            setLoading(false);
             return;
         }
       }
@@ -151,16 +152,22 @@ const FindAccountPage = () => {
         </BtnWrapper>
       </ContentUl>
       {showPopup ? (
-        <div>
-          <IconX onClick={onClosePopupClick} />
-          <div>
-            {isFindIdTab && email !== ""
-              ? `${info[NAME]}님의 아이디는 ${email}입니다.`
-              : !isFindIdTab && tempPW !== ""
-              ? "임시비밀번호가 이메일로 발송되었습니다."
-              : ""}
-          </div>
-        </div>
+        <PopupWrapper>
+          <PopupContentWrapper>
+            <IconWrapper>
+              <IconX onClick={onClosePopupClick} />
+            </IconWrapper>
+            <PopupContent>
+              <span>
+                {isFindIdTab && email !== ""
+                  ? `${info[NAME]}님의 아이디는 ${email}입니다.`
+                  : !isFindIdTab && tempPW !== ""
+                  ? "임시비밀번호가 이메일로 발송되었습니다."
+                  : ""}
+              </span>
+            </PopupContent>
+          </PopupContentWrapper>
+        </PopupWrapper>
       ) : null}
     </FindAccountWrapper>
   );
@@ -251,4 +258,39 @@ const SubmitBtn = styled.button`
   color: #f0fbfd;
   cursor: pointer;
 `;
+
+const PopupWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+`;
+const IconWrapper = styled.div`
+  text-align: right;
+`;
+
+const PopupContentWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  box-sizing: border-box;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  height: 30%;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+`;
+const PopupContent = styled.div`
+  display: inline-block;
+  text-align: center;
+  align-self: center;
+`;
+
+const PopupSpan = styled.span``;
 export default FindAccountPage;

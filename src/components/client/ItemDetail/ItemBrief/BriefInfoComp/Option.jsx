@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import IconX from "../../../Icon/IconX";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
-const UP = "up";
-const DOWN = "down";
-const SEP = "_"; // seperator
-
-const Option = ({ item, chosen, setChosen, setChosenSubInfo }) => {
+const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
   const optionOnes = item.option1;
   const [optionTwos, setOptionTwos] = useState([]); // 선택한 옵션1의 child
 
@@ -42,45 +38,39 @@ const Option = ({ item, chosen, setChosen, setChosenSubInfo }) => {
       setOption2([target.value, target.children[optIdx + 1].dataset.id]);
     }
   };
-
-  const onBtnClick = (e) => {
-    const btnName = e.target.name.split(SEP);
-    const btnType = btnName[0];
-    const itemIdx = Number(btnName[1]);
-
-    switch (btnType) {
-      case UP:
-        if (selItems[itemIdx].count < selItems[itemIdx].stock) {
-          setSelItems(
-            selItems.map((sel, idx) =>
-              idx === itemIdx ? { ...sel, count: sel.count + 1 } : sel
-            )
-          );
-          setChosen(
-            chosen.map((chosen, idx) =>
-              idx === itemIdx ? { ...chosen, count: chosen.count + 1 } : chosen
-            )
-          );
-        } else alert("최대 수량입니다");
-        break;
-      case DOWN:
-        if (selItems[itemIdx].count > 1) {
-          setSelItems(
-            selItems.map((sel, idx) =>
-              idx === itemIdx ? { ...sel, count: sel.count - 1 } : sel
-            )
-          );
-          setChosen(
-            chosen.map((chosen, idx) =>
-              idx === itemIdx ? { ...chosen, count: chosen.count - 1 } : chosen
-            )
-          );
-        }
-
-        break;
-    }
+  const onUpBtnClick = (e) => {
+    console.log(e.target);
+    const itemIdx = Number(e.target.name);
+    if (selItems[itemIdx].count < selItems[itemIdx].stock) {
+      setSelItems(
+        selItems.map((sel, idx) =>
+          idx === itemIdx ? { ...sel, count: sel.count + 1 } : sel
+        )
+      );
+      setChosen(
+        chosen.map((chosen, idx) =>
+          idx === itemIdx ? { ...chosen, count: chosen.count + 1 } : chosen
+        )
+      );
+    } else alert("최대 수량입니다");
   };
 
+  const onDownBtnClick = (e) => {
+    console.log(e.target);
+    const itemIdx = Number(e.target.name);
+    if (selItems[itemIdx].count > 1) {
+      setSelItems(
+        selItems.map((sel, idx) =>
+          idx === itemIdx ? { ...sel, count: sel.count - 1 } : sel
+        )
+      );
+      setChosen(
+        chosen.map((chosen, idx) =>
+          idx === itemIdx ? { ...chosen, count: chosen.count - 1 } : chosen
+        )
+      );
+    }
+  };
   const onDelBtnClick = (e) => {
     setSelItems(selItems.filter((sel, idx) => idx != e.target.name));
     setChosen(chosen.filter((chose, idx) => idx != e.target.name));
@@ -127,9 +117,10 @@ const Option = ({ item, chosen, setChosen, setChosenSubInfo }) => {
 
   return (
     <div>
-      <ul>
-        <li>
-          <select
+      <OptionsWrapper>
+        <SelectLi>
+          <Label>옵션 1</Label>
+          <Select
             name="option1"
             id="option1"
             onChange={onChange}
@@ -148,10 +139,11 @@ const Option = ({ item, chosen, setChosen, setChosenSubInfo }) => {
                 {optOne.count == 0 ? "(품절)" : null}
               </option>
             ))}
-          </select>
-        </li>
-        <li>
-          <select
+          </Select>
+        </SelectLi>
+        <SelectLi>
+          <Label>옵션 2</Label>
+          <Select
             name="option2"
             id="option2"
             onChange={onChange}
@@ -172,31 +164,44 @@ const Option = ({ item, chosen, setChosen, setChosenSubInfo }) => {
                   </option>
                 ))
               : null}
-          </select>
-        </li>
-      </ul>
+          </Select>
+        </SelectLi>
+      </OptionsWrapper>
 
       <div name="option-counter">
-        <ul>
+        <OptionAndCounterWrapper>
           {selItems.map((item, idx) => (
-            <li key={item.option1 + idx} id={idx}>
-              {item.option1}
-              {item.option2 === "" ? " " : ", " + item.option2}
-              <span>{item.count}</span>
-              <div>
-                <button name={UP + SEP + idx} onClick={onBtnClick}>
-                  🔼
-                </button>
-                <button name={DOWN + SEP + idx} onClick={onBtnClick}>
-                  🔽
-                </button>
-                <button name={idx} key={"x_" + idx} onClick={onDelBtnClick}>
-                  ❌
-                </button>
-              </div>
-            </li>
+            <ItemLi key={item.option1 + idx} id={idx}>
+              <ItemName>
+                {item.option1}
+                {item.option2 === "" ? " " : ", " + item.option2}
+              </ItemName>
+              <ItemCount>{item.count}</ItemCount>
+              <UpDownWrapper>
+                <UpDownBtn name={idx} type="up" onClick={onUpBtnClick}>
+                  ▲
+                </UpDownBtn>
+                <UpDownBtn name={idx} type="down" onClick={onDownBtnClick}>
+                  ▼
+                </UpDownBtn>
+              </UpDownWrapper>
+              <Price>{price * item.count}원</Price>
+              <DelBtn name={idx} key={"x_" + idx} onClick={onDelBtnClick}>
+                ⨉
+              </DelBtn>
+            </ItemLi>
           ))}
-        </ul>
+        </OptionAndCounterWrapper>
+        <TotalPriceWrapper>
+          <PriceLabel>총 결제금액</PriceLabel>
+          <TotalPrice>
+            {chosen.length == 0
+              ? 0
+              : chosen.map((c) => c.count).reduce((prev, post) => prev + post) *
+                price}
+            <Won>원</Won>
+          </TotalPrice>
+        </TotalPriceWrapper>
       </div>
     </div>
   );
@@ -209,4 +214,115 @@ Option.propTypes = {
   setChosenSubInfo: PropTypes.func.isRequired,
 };
 
+const OptionAndCounterWrapper = styled.div`
+  border-bottom: solid 1px #bdbdbd;
+`;
+const OptionsWrapper = styled.div`
+  padding: 20px 0px;
+  list-style-type: none;
+  border-top: dashed 0.3px #bdbdbd;
+  border-bottom: dashed 0.3px #bdbdbd;
+`;
+const SelectLi = styled.li`
+  width: 100%;
+  height: 60px;
+`;
+
+const Select = styled.select`
+  display: inline-block;
+  position: relative;
+  top: 10%;
+  width: 170px;
+  height: 80%;
+  padding-left: 10px;
+  text-align: center;
+`;
+
+const Label = styled.label`
+  display: inline-block;
+  font-size: 13.5px;
+  width: 20%;
+  position: relative;
+  top: 10%;
+  text-align: center;
+`;
+
+const ItemLi = styled.li`
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: center;
+  space-between: 20px;
+  margin: 10px 0;
+  padding-left: 10px;
+`;
+
+const ItemName = styled.span`
+  display: inline-block;
+  width: 35%;
+`;
+const ItemCount = styled.span`
+  display: inline-block;
+  height: 80%;
+  text-align: center;
+  width: 18%;
+  border: 1px solid black;
+  border-radius: 3px;
+  line-height: 32px;
+  margin: 0 3px;
+`;
+const UpDownWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 10%;
+  margin: 0px 3px;
+`;
+
+const UpDownBtn = styled.button`
+  display: inline-block;
+  height: 50%;
+  border: none;
+  &:hover {
+    background-color: #424242;
+    color: white;
+  }
+  ${({ type }) =>
+    type === "up"
+      ? "{border-radius : 3px 3px 0 0 ; border-bottom: 0.1px solid #707070}"
+      : "{border-radius :  0 0 3px 3px;"}
+`;
+const Price = styled.div`
+  width: 22%;
+  text-align: center;
+`;
+const DelBtn = styled.button`
+  display: inline-block;
+  background-color: transparent;
+  font-weight: bold;
+  outline: none;
+  border: none;
+`;
+
+const TotalPriceWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  align-items: center;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 45px;
+  margin: 15px 0px;
+`;
+
+const PriceLabel = styled.label`
+  font-size: 19px;
+`;
+const TotalPrice = styled.div`
+  font-size: 26px;
+  color: #ab47bc;
+`;
+const Won = styled.span`
+  font-size: 15px;
+`;
 export default Option;

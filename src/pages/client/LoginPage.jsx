@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isClientState, userTokenState } from "../../store/common/user";
+import PageTitle from "../../components/common/PageTitle/PageTitle";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
@@ -69,7 +70,7 @@ const LoginPage = () => {
   return (
     <LoginWrapper>
       <div>
-        <Title>로그인</Title>
+        <PageTitle title={"로그인"} />
 
         <ul>
           <InputLi name="id_container">
@@ -137,12 +138,6 @@ const LoginWrapper = styled.div`
   padding: 30px 0 90px 0;
 `;
 
-const Title = styled.div`
-  text-align: center;
-  font-size: 25px;
-  font-weight: 600;
-  margin: 30px;
-`;
 const InputLi = styled.li`
   width: 100%;
   height: 60px;

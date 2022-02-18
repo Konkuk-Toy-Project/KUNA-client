@@ -10,6 +10,7 @@ import {
   showEditPopUpState,
 } from "../../../../store/owner/product";
 import CloseButton from "../../../common/CloseButton/CloseButton";
+import ProductButton from "../../../common/ProductButton/ProductButton";
 
 const EditItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
@@ -65,18 +66,17 @@ const EditItemPopUp = () => {
     <EditItemPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowEditPopUp} />
       <div>
-        <h1>상품명 : {currentItem.title}</h1>
+        <Title>상품명 : {currentItem.name}</Title>
         <EditContentWrapper>
-          <p>할인율 </p>
-          <input type="text" value={sale} onChange={onChange(setSale)} />
+          <CategoryTitle>할인율 </CategoryTitle>
+          <InputText type="text" value={sale} onChange={onChange(setSale)} />%
         </EditContentWrapper>
         <EditContentWrapper>
-          <p>가격</p>
-          <input type="text" value={price} onChange={onChange(setPrice)} />
+          <CategoryTitle>가격</CategoryTitle>
+          <InputText type="text" value={price} onChange={onChange(setPrice)} />
+          원
         </EditContentWrapper>
-        <div>
-          <button onClick={onClickSubmit}>수정 완료</button>
-        </div>
+        <ProductButton onClick={onClickSubmit}>수정 완료</ProductButton>
       </div>
     </EditItemPopUpWrapper>
   );
@@ -84,9 +84,9 @@ const EditItemPopUp = () => {
 
 const EditItemPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: 20vw;
-  width: 60vw;
-  height: 60vh;
+  left: 25vw;
+  width: 50vw;
+  height: 40vh;
   border: 1px solid black;
   background-color: white;
   position: absolute;
@@ -99,10 +99,36 @@ const EditItemPopUpWrapper = styled.div`
 
 const EditContentWrapper = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   padding: 1em;
-  width: 80%;
+  width: 24em;
+  margin-bottom: 1em;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1.5em;
+`;
+
+const CategoryTitle = styled.p`
+  font-size: 20px;
+  font-weight: 500;
+  width: 3em;
+  text-align: end;
+  margin-right: 0.5em;
+`;
+
+const InputText = styled.input`
+  border: none;
+  border-bottom: 1px solid black;
+  align-self: flex-start;
+  width: 6em;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default EditItemPopUp;

@@ -28,7 +28,13 @@ const OwnerHeader = () => {
             <h1>관리자 페이지</h1>
           </PageLink>
         </div>
-        <button onClick={onClickLogout}>로그아웃</button>
+        <LogoutButton onClick={onClickLogout}>
+          <img
+            src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon1.png"
+            alt=""
+          />
+          로그아웃
+        </LogoutButton>
       </ShortcutMenuWrapper>
     </HeaderWrapper>
   );
@@ -59,6 +65,31 @@ const PageLink = styled(Link)`
 const HomeIcon = styled.img`
   cursor: pointer;
   width: 8em;
+`;
+
+const LogoutButton = styled.button`
+  width: 6em;
+  height: 6em;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid black;
+  padding: 1em;
+  outline: none;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  img {
+    width: 3em;
+  }
+  &:hover {
+    background-color: black;
+    transition: all 0.3s ease-in;
+    color: white;
+  }
 `;
 
 export default OwnerHeader;

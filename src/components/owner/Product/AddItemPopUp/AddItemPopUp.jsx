@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { currentY, userTokenState } from "../../../../store/common/user";
 import { showAddPopUpState } from "../../../../store/owner/product";
 import CloseButton from "../../../common/CloseButton/CloseButton";
+import ProductButton from "../../../common/ProductButton/ProductButton";
 
 const AddItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
@@ -71,39 +72,58 @@ const AddItemPopUp = () => {
   return (
     <AddItemPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowAddPopUp} />
-      <div>
-        <h1>상품명 </h1>
-        <input type="text" onChange={onChange(setTitle)} />
-      </div>
-      <div>
-        <h1>가격 </h1>
-        <input type="text" onChange={onChange(setPrice)} />
-      </div>
-      <div>
-        <h1>할인율 </h1>
-        <input type="text" onChange={onChange(setDiscount)} />
-      </div>
-      <div>
-        <h1>카테고리</h1>
+      <Title>상품 등록</Title>
+      <InputWrapper>
+        <InputTitle>상품명</InputTitle>
+        <InputText
+          type="text"
+          placeholder="상품명을 입력하세요"
+          onChange={onChange(setTitle)}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <InputTitle>가격</InputTitle>
+        <InputText
+          type="text"
+          placeholder="가격을 입력하세요"
+          onChange={onChange(setPrice)}
+        />
+        원
+      </InputWrapper>
+      <InputWrapper>
+        <InputTitle>할인율</InputTitle>
+        <InputText
+          type="text"
+          placeholder="할인율을 입력하세요"
+          onChange={onChange(setDiscount)}
+        />
+        %
+      </InputWrapper>
+      <InputWrapper>
+        <InputTitle>카테고리</InputTitle>
         <select name="category" onChange={onChange(setCategory)}>
           <option value="4">상의</option>
           <option value="5">하의</option>
           <option value="6">신발</option>
         </select>
-      </div>
-      <div>
-        <h1>상품 메인 이미지</h1>
-        <input type="file" multiple onChange={onChangeImage(setMainImg)} />
-      </div>
-      <div>
-        <h1>상품 세부 이미지</h1>
-        <input type="file" multiple onChange={onChangeImage(setDetailImg)} />
-      </div>
-      <div>
-        <h1>썸네일 이미지</h1>
-        <input type="file" name="" onChange={onChangeImage(setThumbnailImg)} />
-      </div>
-      <button onClick={onClickSubmit}>상품 추가하기</button>
+      </InputWrapper>
+      <InputImageWrapper>
+        <InputTitle>상품 메인 이미지</InputTitle>
+        <InputImage type="file" multiple onChange={onChangeImage(setMainImg)} />
+      </InputImageWrapper>
+      <InputImageWrapper>
+        <InputTitle>상품 세부 이미지</InputTitle>
+        <InputImage
+          type="file"
+          multiple
+          onChange={onChangeImage(setDetailImg)}
+        />
+      </InputImageWrapper>
+      <InputImageWrapper>
+        <InputTitle>상품 썸네일 이미지</InputTitle>
+        <InputImage type="file" onChange={onChangeImage(setThumbnailImg)} />
+      </InputImageWrapper>
+      <ProductButton onClick={onClickSubmit}>상품 추가하기</ProductButton>
     </AddItemPopUpWrapper>
   );
 };
@@ -121,6 +141,52 @@ const AddItemPopUpWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 1.5em;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  padding: 0.5em;
+  align-items: center;
+  width: 24em;
+`;
+
+const InputTitle = styled.p`
+  font-size: 18px;
+  font-weight: 500;
+  width: 8em;
+  text-align: end;
+  margin-right: 1em;
+`;
+
+const InputText = styled.input`
+  border: none;
+  border-bottom: 1px solid black;
+  align-self: flex-start;
+  width: 10em;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const InputImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5em;
+`;
+
+const InputImage = styled.input`
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0.5em 0;
+  margin-left: 11em;
 `;
 
 export default AddItemPopUp;

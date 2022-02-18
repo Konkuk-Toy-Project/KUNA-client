@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import BirthSelectBox from "../../components/client/Login/BirthSelectBox";
 import PhoneInput from "../../components/client/Login/PhoneInput";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import PageTitle from "../../components/common/PageTitle/PageTitle";
 
 const TYPE_MANUALLY = "직접입력";
 const emailArr = [TYPE_MANUALLY, "naver.com", "gmail.com", "daum.net"];
@@ -188,67 +190,62 @@ const SignUpPage = () => {
     );
   }, [info]);
   return (
-    <div>
+    <SignUpWrapper>
       {/* 로딩중 샘플 */}
       {loading ? <div>로딩중</div> : null}
-      <ul id="info-container">
-        <li id="id-container">
-          <label>아이디(이메일)</label>
-          <input
-            type="text"
-            id={ID}
-            name={ID}
-            value={info[ID]}
-            onChange={onChange}
-          />
+      <PageTitle title={"회원가입"} />
+      <Ul id="info-container">
+        <List id="id-container">
+          <Label>아이디</Label>
+          <Input name={ID} value={info[ID]} onChange={onChange} width={120} />
           @
-          <input
-            type="text"
+          <Input
             name={EMAIL_ADDR}
             value={info[EMAIL_ADDR]}
             onChange={onChange}
             disabled={isEmailTypingMode ? false : true}
+            width={120}
           />
-          <select onChange={onSelectEmail}>
+          <AddrSelect onChange={onSelectEmail}>
             {emailArr.map((email, idx) => (
               <option key={idx}>{email}</option>
             ))}
-          </select>
-          <button onClick={onEmailDupClick} disabled={isEmailUnique}>
+          </AddrSelect>
+          <DupCheckBtn onClick={onEmailDupClick} disabled={isEmailUnique}>
             중복확인
-          </button>
-          {/* 로딩상태 추가해주기---------------------------------------------------- */}
-          <p>
-            {!isEmailDupChecked
-              ? "   "
-              : emailDupLoading
+          </DupCheckBtn>
+        </List>
+        <li>
+          <EmptyLabel />
+          <Alert visibility={isEmailDupChecked}>
+            {emailDupLoading
               ? "확인 중..."
               : isEmailUnique
               ? "사용가능한 이메일입니다✅"
               : "중복된 이메일입니다"}
-          </p>
+          </Alert>
         </li>
 
-        <li name="pw-container">
-          <label>비밀번호</label>
-          <input
+        <List name="pw-container">
+          <Label>비밀번호</Label>
+          <Input
             name={PW}
             type="password"
             value={info[PW]}
             onChange={onChange}
             placeholder="8자이상, 영문자, 숫자, 특수문자 조합"
           />
-
-          {info[PW] !== "" && !isProperPw() ? (
-            <div id="warningPw">
-              비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다.
-            </div>
-          ) : null}
+        </List>
+        <li>
+          <EmptyLabel />
+          <Alert visibility={info[PW] !== "" && !isProperPw()}>
+            비밀번호는 8자 이상, 특수 문자, 영문자 숫자 조합이어야 합니다.
+          </Alert>
         </li>
 
-        <li name="pwCheck-container">
-          <label>비밀번호 확인</label>
-          <input
+        <List name="pwCheck-container">
+          <Label>비밀번호 확인</Label>
+          <Input
             type="password"
             name={PW_CHECK}
             placeholder="비밀번호 확인"
@@ -258,61 +255,161 @@ const SignUpPage = () => {
           <span>
             {info[PW] !== "" && info[PW] === info[PW_CHECK] ? "🟢" : "🔴"}
           </span>
-        </li>
+        </List>
 
-        <li id="name-container">
-          <label>이름</label>
-          <input
+        <List id="name-container">
+          <Label>이름</Label>
+          <Input
             type="text"
             name={NAME}
             placeholder="이름"
             onChange={onChange}
           />
-        </li>
-        <li id="phone-container">
-          <label>휴대전화</label>
+        </List>
+        <List id="phone-container">
+          <Label>휴대전화</Label>
           <PhoneInput
             name={[PH_FIRST, PH_MID, PH_LAST]}
             data={info}
             onChange={onChange}
           />
-        </li>
-        <li id="birth-container">
-          <label id="birth-label">생년월일</label>
-          <BirthSelectBox
-            name={BIRTH_Y}
-            start={YEAR_START}
-            end={YEAR_END}
-            onChange={onChange}
-          />
-          년
-          <BirthSelectBox
-            name={BIRTH_M}
-            start={1}
-            end={12}
-            onChange={onChange}
-          />
-          월
-          <BirthSelectBox
-            name={BIRTH_D}
-            start={1}
-            end={31}
-            onChange={onChange}
-          />
-          일
-        </li>
-      </ul>
-      <div>
-        <p>관리자이신가요? </p>
+        </List>
+        <List id="birth-container">
+          <Label id="birth-label">생년월일</Label>
+          <BirthWrapper>
+            <BirthSelectBox
+              name={BIRTH_Y}
+              start={YEAR_START}
+              end={YEAR_END}
+              onChange={onChange}
+            />
+            년
+          </BirthWrapper>
+          <BirthWrapper>
+            <BirthSelectBox
+              name={BIRTH_M}
+              start={1}
+              end={12}
+              onChange={onChange}
+            />
+            월
+          </BirthWrapper>
+          <BirthWrapper>
+            <BirthSelectBox
+              name={BIRTH_D}
+              start={1}
+              end={31}
+              onChange={onChange}
+            />
+            일{" "}
+          </BirthWrapper>
+        </List>
+      </Ul>
+      <AskAdminWrapper>
+        <AskAdmin>관리자이신가요? </AskAdmin>
         <input type="checkbox" checked={isAdmin} onChange={onCheckAdmin} />
-      </div>
+      </AskAdminWrapper>
       <div id="signInBtn-container">
-        <button id="signIn" onClick={onSignIn}>
-          가입하기
-        </button>
+        <SignUpBtn onClick={onSignIn}>가입하기</SignUpBtn>
       </div>
-    </div>
+    </SignUpWrapper>
   );
 };
+const SignUpWrapper = styled.div`
+  margin: 0 auto;
+  width: 590px;
+  padding: 30px 0 90px 0;
+`;
+const Ul = styled.ul`
+  border-top: solid black 1.5px;
+  border-bottom: solid black 1.5px;
+  padding: 45px 0px;
+  margin-top: 30px;
+`;
+
+const List = styled.li`
+  height: 80px;
+  display: flex;
+  align-items: center;
+`;
+
+const Label = styled.label`
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+  padding: 10px 10px;
+`;
+const EmptyLabel = styled.div`
+  display: inline-block;
+  width: 140px;
+  height: 13px;
+  font-weight: bold;
+`;
+
+const Input = styled.input`
+  display: inline-block;
+  height: 60%;
+  width: ${({ width }) => (width !== undefined ? `${width}px` : "68%")};
+  border: none;
+  border-bottom: solid black 1px;
+  padding-left: 5px;
+  &:focus {
+    outline: none;
+  }
+`;
+const AddrSelect = styled.select`
+  display: inline-block;
+  padding: 1px 2px;
+  height: 64%;
+  border: none;
+  border-left: dashed black 1px;
+  border-bottom: solid black 1px;
+`;
+
+const DupCheckBtn = styled.button`
+  display: inline-block;
+  padding: 1px 2px;
+  height: 57%;
+  margin-left: 6px;
+`;
+const Alert = styled.p`
+  display: inline-block;
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  height: 15px;
+  visibility: ${({ visibility }) => (visibility ? "visible" : "hidden")};
+  color: #4d3c4b;
+`;
+
+const BirthWrapper = styled.div`
+  display: inline-block;
+  margin-right: 15px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const AskAdminWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 30px 10px;
+`;
+const AskAdmin = styled.p`
+  display: inline-block;
+  margin: 0 10px;
+`;
+
+const SignUpBtn = styled.button`
+  display: inline-block;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+  background-color: #1c101f;
+  color: #f0fbfd;
+  font-size: 15px;
+  font-weight: bold;
+`;
 
 export default SignUpPage;

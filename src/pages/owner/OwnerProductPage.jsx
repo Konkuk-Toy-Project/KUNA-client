@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+import ProductButton from "../../components/common/ProductButton/ProductButton";
 import AddItemPopUp from "../../components/owner/Product/AddItemPopUp/AddItemPopUp";
 import AddOptionPopUp from "../../components/owner/Product/AddOptionPopUp/AddOptionPopUp";
 import EditItemPopUp from "../../components/owner/Product/EditItemPopUp/EditItemPopUp";
@@ -40,8 +41,14 @@ const OwnerProductPage = () => {
 
   return (
     <OwnerProductPageWrapper>
-      <button onClick={onClickAddItem}>상품 추가</button>
-      <h1>등록한 상품 목록</h1>
+      <EnrollItemWrapper onClick={onClickAddItem}>
+        <img
+          src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"
+          alt=""
+        />
+        <p>상품 등록</p>
+      </EnrollItemWrapper>
+      <Title>기존에 등록한 상품</Title>
       <EnrolledItemList items={items} />
       {showAddPopUp && <AddItemPopUp />}
       {showEditPopUp && <EditItemPopUp />}
@@ -52,6 +59,36 @@ const OwnerProductPage = () => {
 
 const OwnerProductPageWrapper = styled.div`
   text-align: center;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const EnrollItemWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid black;
+  width: 10em;
+  height: 10em;
+  padding: 1em;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    color: white;
+    background-color: black;
+    transition: all 0.3s ease-in;
+  }
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 1em;
 `;
 
 export default OwnerProductPage;

@@ -7,6 +7,7 @@ import {
   showEditPopUpState,
   showOptionPopUpState,
 } from "../../../../store/owner/product";
+import ProductButton from "../../../common/ProductButton/ProductButton";
 
 const EnrolledItem = ({ item }) => {
   const setCurrentItem = useSetRecoilState(currentItemState);
@@ -42,10 +43,10 @@ const EnrolledItem = ({ item }) => {
           <p>가격 : {item.price}</p>
           <p>할인율 : {item.sale}%</p>
         </ItemPriceWrapper>
-        <div>
-          <button onClick={onClickEditItem}>상품 수정</button>
-          <button onClick={onClickAddOption}>옵션 추가</button>
-        </div>
+        <Buttons>
+          <ProductButton onClick={onClickEditItem}>상품 수정</ProductButton>
+          <ProductButton onClick={onClickAddOption}>옵션 추가</ProductButton>
+        </Buttons>
       </ItemDescription>
     </ItemWrapper>
   );
@@ -71,16 +72,22 @@ const ItemDescription = styled.div`
   padding: 0.2em;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
 `;
 
 const ItemTitle = styled.p`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
+  margin-bottom: 0.2em;
 `;
 
 const ItemPriceWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Buttons = styled.div`
+  margin: 0.5em;
 `;
 
 export default EnrolledItem;

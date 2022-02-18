@@ -10,6 +10,7 @@ import {
   showOptionPopUpState,
 } from "../../../../store/owner/product";
 import CloseButton from "../../../common/CloseButton/CloseButton";
+import ProductButton from "../../../common/ProductButton/ProductButton";
 
 const AddOptionPopUp = () => {
   const scrollY = useRecoilValue(currentY);
@@ -70,7 +71,7 @@ const AddOptionPopUp = () => {
 
   const onClickSubmit = async () => {
     if (addDetailOption) {
-      return alert("세부 옵션 등록 완료 버튼을 눌러주세요");
+      return alert("세부 옵션 추가 완료 버튼을 눌러주세요");
     }
     const data = {
       option1s: [
@@ -92,43 +93,62 @@ const AddOptionPopUp = () => {
   return (
     <AddOptionPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowOptionPopUp} />
-      <div>
-        <h1>옵션</h1>
-        <input type="text" onChange={onChange(setOption)} />
-      </div>
-      <div>
-        <h1>재고</h1>
-        <input type="text" onChange={onChange(setOptionCount)} />
-      </div>
+      <Title>옵션 추가</Title>
+      <InputWrapper>
+        <CategoryTitle>옵션</CategoryTitle>
+        <InputText
+          type="text"
+          placeholder="옵션을 입력해주세요"
+          onChange={onChange(setOption)}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <CategoryTitle>재고</CategoryTitle>
+        <InputText
+          type="text"
+          placeholder="재고를 입력해주세요"
+          onChange={onChange(setOptionCount)}
+        />
+      </InputWrapper>
       {addDetailOption && (
         <div>
-          <div>
-            <h1>세부 옵션</h1>
-            <input
+          <InputWrapper>
+            <CategoryTitle>세부 옵션</CategoryTitle>
+            <InputText
               type="text"
+              placeholder="옵션을 입력해주세요"
               value={detailOption}
               onChange={onChange(setDetailOption)}
             />
-          </div>
-          <div>
-            <h1>재고</h1>
-            <input
+          </InputWrapper>
+          <InputWrapper>
+            <CategoryTitle>재고</CategoryTitle>
+            <InputText
               type="text"
+              placeholder="재고를 입력해주세요"
               value={detailOptionCount}
               onChange={onChange(setDetailOptionCount)}
             />
-          </div>
+          </InputWrapper>
         </div>
       )}
-      {addDetailOption ? (
-        <button onClick={onClickAddDetail}>세부 옵션 더 추가하기</button>
-      ) : (
-        <button onClick={onClickAddDetail}>세부 옵션 추가하기</button>
-      )}
-      {addDetailOption && (
-        <button onClick={onClickFinish}>세부 옵션 추가 완료</button>
-      )}
-      <button onClick={onClickSubmit}>상품 추가하기</button>
+      <OptionButtons>
+        {addDetailOption ? (
+          <ProductButton onClick={onClickAddDetail}>
+            세부 옵션 더 추가하기
+          </ProductButton>
+        ) : (
+          <ProductButton onClick={onClickAddDetail}>
+            세부 옵션 추가하기
+          </ProductButton>
+        )}
+        {addDetailOption && (
+          <ProductButton onClick={onClickFinish}>
+            세부 옵션 추가 완료
+          </ProductButton>
+        )}
+      </OptionButtons>
+      <ProductButton onClick={onClickSubmit}>상품 추가하기</ProductButton>
     </AddOptionPopUpWrapper>
   );
 };
@@ -146,6 +166,44 @@ const AddOptionPopUpWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1.5em;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  padding: 0.5em;
+  justify-content: center;
+  align-items: center;
+  width: 24em;
+`;
+
+const CategoryTitle = styled.p`
+  font-size: 20px;
+  font-weight: 500;
+  width: 4em;
+  text-align: end;
+  margin-right: 0.5em;
+`;
+
+const InputText = styled.input`
+  border: none;
+  border-bottom: 1px solid black;
+  align-self: flex-start;
+  width: 12em;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const OptionButtons = styled.div`
+  display: flex;
+  margin: 1em 0;
 `;
 
 export default AddOptionPopUp;

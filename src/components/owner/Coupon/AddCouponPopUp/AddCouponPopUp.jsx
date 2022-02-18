@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { currentY } from "../../../../store/common/user";
 import { showCouponPopUpState } from "../../../../store/owner/coupon";
 import CloseButton from "../../../common/CloseButton/CloseButton";
-import AddCategory from "../AddCategory/AddCategory";
+import ProductButton from "../../../common/ProductButton/ProductButton";
 
 const AddCouponPopUp = () => {
   const scrollY = useRecoilValue(currentY);
@@ -58,41 +58,56 @@ const AddCouponPopUp = () => {
   return (
     <AddCouponPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowCouponPopUp} />
-      <div>
-        <h1>쿠폰 종류</h1>
+      <Title>쿠폰 등록</Title>
+      <InputWrapper>
+        <InputTitle>쿠폰 종류</InputTitle>
         <select name="kind" onChange={onChange(setKind)}>
           <option value="percent">퍼센트</option>
           <option value="static">금액</option>
         </select>
-      </div>
-      <AddCategory title="할인 정도" onChange={onChange(setRate)} />
-      <div>
-        <h1>쿠폰 만료 기간</h1>
+      </InputWrapper>
+      <InputWrapper>
+        <InputTitle>할인 정도</InputTitle>
+        <InputText
+          type="text"
+          placeholder="할인 정도를 입력해주세요"
+          onChange={onChange(setRate)}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <InputTitle>쿠폰 만료 기간</InputTitle>
         <select name="date" onChange={onChange(setDate)}>
           <option value="7">1주일 뒤</option>
           <option value="30">1달 뒤</option>
           <option value="365">1년 뒤</option>
         </select>
-      </div>
-      <div>
-        <h1>쿠폰 적용 최소 금액</h1>
+      </InputWrapper>
+      <InputWrapper>
+        <InputTitle>쿠폰 적용 최소 금액</InputTitle>
         <select name="condition" onChange={onChange(setCondition)}>
           <option value="total_price_10000">1만원 이상</option>
           <option value="total_price_30000">3만원 이상</option>
           <option value="total_price_50000">5만원 이상</option>
         </select>
-      </div>
-      <AddCategory title="쿠폰 명" onChange={onChange(setName)} />
-      <button onClick={onClickSubmit}>상품 추가하기</button>
+      </InputWrapper>
+      <InputWrapper>
+        <InputTitle>쿠폰 명</InputTitle>
+        <InputText
+          type="text"
+          placeholder="쿠폰 명을 입력해주세요"
+          onChange={onChange(setName)}
+        />
+      </InputWrapper>
+      <ProductButton onClick={onClickSubmit}>상품 추가하기</ProductButton>
     </AddCouponPopUpWrapper>
   );
 };
 
 const AddCouponPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: 20vw;
-  width: 60vw;
-  height: 60vh;
+  left: 25vw;
+  width: 50vw;
+  height: 50vh;
   border: 1px solid black;
   background-color: white;
   position: absolute;
@@ -101,6 +116,38 @@ const AddCouponPopUpWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 1.5em;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  padding: 0.5em;
+  align-items: center;
+  width: 24em;
+  margin: 0.2em 0;
+`;
+
+const InputTitle = styled.p`
+  font-size: 18px;
+  font-weight: 500;
+  width: 8em;
+  text-align: end;
+  margin-right: 1em;
+`;
+
+const InputText = styled.input`
+  border: none;
+  border-bottom: 1px solid black;
+  align-self: flex-start;
+  width: 10em;
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default AddCouponPopUp;

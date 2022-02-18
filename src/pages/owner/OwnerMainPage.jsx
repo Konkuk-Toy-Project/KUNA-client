@@ -42,8 +42,13 @@ const OwnerMainPage = () => {
 };
 
 const OwnerMainPageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
   text-align: center;
-  height: 70vh;
+  height: 80vh;
+  width: 50em;
 `;
 
 const Title = styled.p`

@@ -9,7 +9,7 @@ import {
 import AnswerPopUp from "../../components/owner/Answer/AnswerPopUp/AnswerPopUp";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { userTokenState } from "../../store/common/user";
+import { currentY, userTokenState } from "../../store/common/user";
 
 const OwnerAnswerPage = () => {
   const [items, setItems] = useState([]);
@@ -17,8 +17,14 @@ const OwnerAnswerPage = () => {
     useRecoilState(showAnswerPopUpState);
   const setCurrentAnswerItem = useSetRecoilState(currentAnswerItemState);
   const userToken = useRecoilValue(userTokenState);
+  const setCurrentY = useSetRecoilState(currentY);
+
+  const calculatePopUpHeight = () => {
+    setCurrentY(window.scrollY + window.innerHeight * 0.15);
+  };
 
   const onClickAnswer = (answer) => {
+    calculatePopUpHeight();
     setShowAnswerPopUp(true);
     setCurrentAnswerItem(answer);
   };

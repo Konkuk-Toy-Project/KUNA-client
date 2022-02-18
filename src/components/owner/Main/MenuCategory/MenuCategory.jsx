@@ -2,12 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { currentY } from "../../../../store/common/user";
 import { showCouponPopUpState } from "../../../../store/owner/coupon";
 
 const MenuCategory = ({ link, imageUrl, title, type }) => {
   const setShowCouponPopUp = useSetRecoilState(showCouponPopUpState);
+  const setCurrentY = useSetRecoilState(currentY);
+
+  const calculatePopUpHeight = () => {
+    setCurrentY(window.scrollY + window.innerHeight * 0.15);
+  };
 
   const onClickAdd = () => {
+    calculatePopUpHeight();
     setShowCouponPopUp(true);
   };
   return (

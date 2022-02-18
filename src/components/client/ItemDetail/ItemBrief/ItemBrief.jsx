@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import ImgSlide from "../../../common/ImgSlide/ImgSlide";
-import LikeBtn from "./BriefInfoComp/LikeBtn";
 import Option from "./BriefInfoComp/Option";
 import BriefHeader from "./BriefInfoComp/BriefHeader";
 import axios from "axios";
@@ -10,6 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { buyingState } from "../../../../store/client/buying";
 import { userTokenState } from "../../../../store/common/user";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const ItemBrief = ({ itemObj }) => {
   const [item, setItem] = useState(itemObj);
@@ -94,41 +94,79 @@ const ItemBrief = ({ itemObj }) => {
   };
 
   return (
-    <div>
-      <ImgSlide
-        imgsrcs={item.itemImageUrl.map(
-          (url) => `http://localhost:8080/image/item/${url}`
-        )}
-        defaultIdx={0}
-      />
-
+    <ItemBriefWrapper>
       <div>
+        <ImgSlide
+          imgsrcs={item.itemImageUrl.map(
+            (url) => `http://localhost:8080/image/item/${url}`
+          )}
+          defaultIdx={0}
+        />
+      </div>
+
+      <BriefInfoWrapper>
         <BriefHeader
           state={item.itemState}
           name={item.name}
           price={item.price}
           sale={item.sale}
+          id={item.itemId}
+          like={item.preference}
         />
-        {/* 찜개수+사용자의 찜 내역에 포함 해야함--------------------------------- */}
-        <LikeBtn itemId={item.itemId} num={item.preference} />
+
         <Option
           item={item}
           chosen={chosenOpts}
+          price={(item.price * (100 - item.sale)) / 100}
           setChosen={setChosenOpts}
           setChosenSubInfo={setChosenOptsSubInfo}
         />
-        <div name="submit-btns">
-          <button onClick={onBasketClick}>장바구니</button>
-          <button onClick={onBuyClick}>바로결제</button>
-        </div>
-      </div>
-      {openBasketPopup ? (
-        <AskGoToBasketPopup setOpenPopUp={setOpenBasketPopup} />
-      ) : null}
-    </div>
+        <ButtonWrapper name="submit-btns">
+          <Button onClick={onBasketClick}>장바구니</Button>
+          <Button onClick={onBuyClick} color="plum">
+            바로결제
+          </Button>
+        </ButtonWrapper>
+        {openBasketPopup ? (
+          <AskGoToBasketPopup setOpenPopUp={setOpenBasketPopup} />
+        ) : null}
+      </BriefInfoWrapper>
+    </ItemBriefWrapper>
   );
 };
 
 ItemBrief.propTypes = { itemObj: PropTypes.object.isRequired };
+
+const ItemBriefWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 1050px;
+  margin: 50px auto;
+`;
+
+const BriefInfoWrapper = styled.div`
+  margin: 40px 20px 20px 30px;
+  flex-grow: 1;
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Button = styled.div`
+  display: inline-block;
+  width: 49.5%;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 23px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #f5f5f5;
+  background-color: ${({ color }) =>
+    color === "plum" ? "#ab47bc" : "#212121  "};
+`;
 
 export default ItemBrief;

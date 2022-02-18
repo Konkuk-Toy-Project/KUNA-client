@@ -90,6 +90,8 @@ const SubImgWrapper = styled.div`
 `;
 
 const SubImg = styled.img`
+  display: inline-block;
+  box-sizing: border-box;
   width: 110px;
   height: 110px;
   margin-right: 2px;

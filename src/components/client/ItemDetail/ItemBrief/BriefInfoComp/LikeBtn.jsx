@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userTokenState } from "../../../../../store/common/user";
+import styled from "styled-components";
 
 // 로그인했는지 아닌지 판단 how? - 에러코드 보내달라고 하기
 const LikeBtn = ({ itemId, num }) => {
@@ -63,7 +64,9 @@ const LikeBtn = ({ itemId, num }) => {
   const deleteLike = async () => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/preference/${likeId}`);
+      await axios.delete(`http://localhost:8080/preference/${likeId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -81,6 +84,11 @@ const LikeBtn = ({ itemId, num }) => {
   };
 
   const onClick = () => {
+    if (!isLogin) {
+      alert("로그인 후 시도해주세요.");
+      return;
+    }
+
     if (isLiked) {
       setLikesNum((cur) => cur - 1);
       deleteLike();
@@ -93,16 +101,35 @@ const LikeBtn = ({ itemId, num }) => {
 
   return (
     <>
-      <button onClick={onClick} disabled={loading || !isLogin}>
-        {isLiked ? "💘" : "🤍"}
-        {"  "}
+      <Button onClick={onClick} isLiked={isLiked.toString()}>
+        {isLiked ? "💘" : "💔"}
+        {"    "}
         {likesNum}
-      </button>
+      </Button>
     </>
   );
 };
 LikeBtn.propTypes = {
   num: PropTypes.number.isRequired,
 };
+
+const Button = styled.button`
+  box-sizing: border-box;
+  text-align: center;
+  width: 80px;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: ${({ isLiked }) =>
+    isLiked == "true" ? "black" : "#424242"};
+  color: white;
+  &:hover {
+    border: 2px #black solid;
+    background-color: black;
+  }
+`;
 
 export default LikeBtn;

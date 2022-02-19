@@ -3,28 +3,28 @@ import styled from "styled-components";
 
 const UserCertainInfoWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  width: 80vw;
-  padding: 2em;
-  border: 1px solid black;
   margin-top: 1em;
-  border-radius: 10px;
 `;
 
 const UserInfoTitle = styled.p`
   font-size: 1.5em;
   padding: 0.5em;
-  padding-left: 8em;
-  width: 5em;
+  text-align: end;
+  width: 4em;
+  font-size: 32px;
 `;
 
 const UserInfo = styled.p`
   border-style: none;
-  border: 1px solid black;
-  padding: 1em;
-  width: 20em;
-  border-radius: 10px;
+  border-bottom: 1px solid black;
+  padding: 0.5em;
+  margin: 0.2em 0;
+  width: 15em;
+  text-align: center;
+  font-size: 36px;
+  font-weight: 400;
 `;
 
 const UserCertainInfo = ({ title, info }) => {

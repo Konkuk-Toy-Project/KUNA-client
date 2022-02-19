@@ -40,7 +40,7 @@ const UserInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 90vw;
+  width: 60em;
   border: 1px solid black;
   margin: 1em;
   border-radius: 20px;
@@ -55,16 +55,17 @@ const UserInfoEditWrapper = styled.div`
 
 const UserInfoEditButton = styled.button`
   border: none;
-  width: 8em;
+  width: 12em;
+  font-size: 16px;
   height: 4em;
-  margin: 0 0.5em;
-  border: 1px solid black;
-  background-color: white;
+  margin: 3em 0 1em 0;
+  background-color: #ab46bc;
+  color: white;
   border-radius: 10px;
   cursor: pointer;
   &:hover {
-    background-color: black;
-    color: white;
+    background-color: #d85aee;
+    transform: scale(1.1);
     transition: all 0.3s linear;
   }
 `;

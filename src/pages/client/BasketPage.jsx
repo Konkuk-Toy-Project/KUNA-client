@@ -75,8 +75,8 @@ const BasketPage = () => {
         <ItemWrapper>
           <CategoryWrapper>
             <InfoCategory>주문 상품 정보</InfoCategory>
-            <Category>수량</Category>
-            <Category>가격</Category>
+            <CategoryCount>수량</CategoryCount>
+            <CategoryPrice>가격</CategoryPrice>
           </CategoryWrapper>
           <BasketItemWrapper>
             {items.map((item) => (
@@ -149,10 +149,16 @@ const InfoCategory = styled.p`
   width: 60%;
 `;
 
-const Category = styled.p`
+const CategoryCount = styled.p`
   font-size: 16px;
   font-weight: 600;
-  width: 20%;
+  width: 16%;
+`;
+
+const CategoryPrice = styled.p`
+  font-size: 16px;
+  font-weight: 600;
+  width: 18%;
 `;
 
 const PaymentWrapper = styled.div`

@@ -28,16 +28,16 @@ const PointPopUp = () => {
   return (
     <PointPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowPoint} />
-      <h1>보유 포인트 : {points}</h1>
-      <h3>구매 금액의 1%가 포인트로 적립됩니다.</h3>
+      <Title>보유 포인트</Title>
+      <Point>{points}</Point>
+      <Description>구매 금액의 1%가 포인트로 적립됩니다.</Description>
     </PointPopUpWrapper>
   );
 };
 
 const PointPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: 30vw;
-  width: 40vw;
+  width: 30em;
   height: 30vh;
   border: 1px solid black;
   background-color: white;
@@ -47,6 +47,23 @@ const PointPopUpWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
+const Point = styled.p`
+  font-size: 32px;
+  font-weight: 500;
+  color: #ab46bc;
+  margin: 1em 0;
+`;
+
+const Description = styled.p`
+  font-size: 18px;
+  color: gray;
 `;
 
 export default PointPopUp;

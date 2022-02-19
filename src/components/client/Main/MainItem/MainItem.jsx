@@ -6,7 +6,7 @@ const MainItem = ({ item }) => {
   const navigate = useNavigate();
 
   const briefTitle = (title) => {
-    return title.slice(0, 16) + "...";
+    return title.length > 14 ? title.slice(0, 14) + "..." : title;
   };
 
   const onClickItem = () => {
@@ -21,7 +21,7 @@ const MainItem = ({ item }) => {
       <Description>
         <Title>{briefTitle(item.name)}</Title>
         <PriceWrapper>
-          <h1>할인율 : {item.sale}%</h1>
+          <Discount>{item.sale}%</Discount>
           <h1>{item.price}원</h1>
         </PriceWrapper>
       </Description>
@@ -30,6 +30,7 @@ const MainItem = ({ item }) => {
 };
 
 const Wrapper = styled.li`
+  width: 10em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,7 +41,9 @@ const Wrapper = styled.li`
   cursor: pointer;
   &:hover {
     transform: scale(1.1);
-    transition: transform 0.3s ease-in;
+    transition: all 0.3s ease-in;
+    background-color: black;
+    color: white;
   }
 `;
 
@@ -59,11 +62,20 @@ const Description = styled.div`
 const Title = styled.p`
   font-size: 14px;
   font-weight: 600;
+  margin: 1em;
+  text-align: start;
 `;
 
 const PriceWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 12em;
+  margin: 0 1em;
+`;
+
+const Discount = styled.p`
+  color: #ab46bc;
+  font-weight: 600;
+  margin-right: 0.5em;
 `;
 
 export default MainItem;

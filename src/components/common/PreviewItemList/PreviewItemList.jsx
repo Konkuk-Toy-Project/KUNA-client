@@ -26,6 +26,7 @@ const PreviewItemListWrapper = styled.ul`
   grid-template-columns: repeat(4, 1fr);
   gap: 1em;
   margin: 0.5em 0;
+  margin-bottom: 5em;
 `;
 
 export default PreviewItemList;

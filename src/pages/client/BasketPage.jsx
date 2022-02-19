@@ -1,22 +1,20 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
-import { buyingItemState } from "../../store/client/basket";
 import { buyingState } from "../../store/client/buying";
 import { userTokenState } from "../../store/common/user";
 
 const BasketPage = () => {
-  const [items, setItems] = useRecoilState(buyingItemState);
+  const [items, setItems] = useRecoilState(buyingState);
   const [totalPrice, setTotalPrice] = useState(0);
   const [postPrice, setPostPrice] = useState(3000);
   const [withoutDiscountPrice, setWithoutDiscountPrice] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
-  const setBuying = useSetRecoilState(buyingState);
   const navigate = useNavigate();
   const userToken = useRecoilValue(userTokenState);
 
@@ -28,8 +26,6 @@ const BasketPage = () => {
       .then((response) => response.data);
     setItems(data);
   }, [setItems, userToken]);
-
-  console.log(items);
 
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
@@ -53,7 +49,6 @@ const BasketPage = () => {
 
   const onClickPurchaseItems = () => {
     if (window.confirm("상품을 구매하시겠습니까?")) {
-      setBuying(items);
       navigate("/order");
     }
   };

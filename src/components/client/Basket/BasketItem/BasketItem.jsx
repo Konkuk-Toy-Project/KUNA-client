@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react/cjs/react.development";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { buyingItemState } from "../../../../store/client/basket";
+import { buyingState } from "../../../../store/client/buying";
 import { userTokenState } from "../../../../store/common/user";
 
 const Wrapper = styled.li`
@@ -40,7 +40,7 @@ const PriceWrapper = styled.div`
 `;
 
 const BasketItem = ({ item }) => {
-  const [buyingItems, setBuyingItems] = useRecoilState(buyingItemState);
+  const [buyingItems, setBuyingItems] = useRecoilState(buyingState);
   const [itemCount, setItemCount] = useState(0);
   const navigate = useNavigate();
   const userToken = useRecoilValue(userTokenState);

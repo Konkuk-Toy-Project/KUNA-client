@@ -11,8 +11,3 @@ export const basketItemState = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
-
-export const buyingItemState = atom({
-  key: "buyingItemState",
-  default: [],
-});

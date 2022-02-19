@@ -7,38 +7,6 @@ import styled from "styled-components";
 import { buyingState } from "../../../../store/client/buying";
 import { userTokenState } from "../../../../store/common/user";
 
-const Wrapper = styled.li`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  padding: 1em;
-  border-radius: 10px;
-`;
-
-const Image = styled.img`
-  width: 10em;
-  border-radius: 10px;
-`;
-
-const Description = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0.2em;
-  width: 12em;
-`;
-
-const Title = styled.p`
-  font-size: 14px;
-  font-weight: 600;
-`;
-
-const PriceWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 const BasketItem = ({ item }) => {
   const [buyingItems, setBuyingItems] = useRecoilState(buyingState);
   const [itemCount, setItemCount] = useState(0);
@@ -100,6 +68,10 @@ const BasketItem = ({ item }) => {
     }
   };
 
+  const discountPrice = () => {
+    return (item.price * (100 - item.sale)) / 100;
+  };
+
   useEffect(() => {
     setItemCount(item.count);
   }, [item.count]);
@@ -110,21 +82,89 @@ const BasketItem = ({ item }) => {
         src={`http://localhost:8080/image/thumbnail/${item.thumbnailUrl}`}
       />
       <Description>
-        <Title>{item.name}</Title>
-        <PriceWrapper>
-          <h1>할인율 : {item.sale}%</h1>
-          <h1>{item.price}원</h1>
-        </PriceWrapper>
-        <h1>
+        <Name>{item.name}</Name>
+        <Options>
           {item?.option1} {item?.option2}
-        </h1>
+        </Options>
       </Description>
-      <button onClick={() => onClickChangeCount("decrease")}>-</button>
-      <span>{itemCount}</span>
-      <button onClick={() => onClickChangeCount("increase")}>+</button>
-      <button onClick={onClickDeleteBasket}>Delete Basket</button>
+      <AmountWrapper>
+        <Button onClick={() => onClickChangeCount("decrease")}>〈</Button>
+        <DiscountAndCount>{itemCount}</DiscountAndCount>
+        <Button onClick={() => onClickChangeCount("increase")}>〉</Button>
+      </AmountWrapper>
+      <PriceWrapper>
+        <ItemPrice>{item.price}원</ItemPrice>
+        <DiscountAndCount>{discountPrice()}원</DiscountAndCount>
+      </PriceWrapper>
+      <Button onClick={onClickDeleteBasket}>✕</Button>
     </Wrapper>
   );
 };
+
+const Wrapper = styled.li`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+  padding: 1em;
+`;
+
+const Image = styled.img`
+  width: 6em;
+  height: 6em;
+  border-radius: 10px;
+  margin-right: 1em;
+`;
+
+const Description = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.2em;
+  width: 30em;
+`;
+
+const Name = styled.p`
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+`;
+
+const Options = styled.p`
+  font-size: 16px;
+  color: gray;
+`;
+
+const PriceWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 13em;
+`;
+
+const AmountWrapper = styled.div`
+  width: 10em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  outline: none;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+`;
+
+const ItemPrice = styled.p`
+  color: gray;
+  text-decoration: line-through;
+  margin-bottom: 0.2em;
+  font-size: 16px;
+`;
+
+const DiscountAndCount = styled.p`
+  font-size: 16px;
+`;
 
 export default BasketItem;

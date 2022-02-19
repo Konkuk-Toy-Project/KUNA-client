@@ -1,10 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { userTokenState } from "../../../store/common/user";
 
 const LikeItem = ({ item }) => {
   const navigate = useNavigate();
+  const userToken = useRecoilValue(userTokenState);
 
   const onClickDeleteLike = async () => {
     if (window.confirm(`${item.name} 찜목록에서 삭제하시겠습니까?`)) {
@@ -16,7 +19,9 @@ const LikeItem = ({ item }) => {
 
   const deleteData = () => {
     axios
-      .delete(`http://localhost:8080/preference/${item.preferenceId}`)
+      .delete(`http://localhost:8080/preference/${item.preferenceId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
       .then((response) => response.data);
   };
 

@@ -63,10 +63,13 @@ const BasketItem = ({ item }) => {
 
   const changeItemCount = async (count) => {
     await axios
-      .put(`http://localhost:8080/cart/${item.cartItemId}`, {
-        headers: { Authorization: `Bearer ${userToken}` },
-        count,
-      })
+      .put(
+        `http://localhost:8080/cart/${item.cartItemId}`,
+        { count },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
+      )
       .then((response) => response.data);
   };
 

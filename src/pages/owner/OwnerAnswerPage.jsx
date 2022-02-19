@@ -83,11 +83,14 @@ const OwnerAnswerPageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 80vh;
+  width: 80vw;
+  margin: auto;
 `;
 
 const Title = styled.p`
   margin: 1em 0;
   font-size: 24px;
+  font-weight: 600;
 `;
 
 const CouponWrapper = styled.div`
@@ -95,6 +98,8 @@ const CouponWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 2em;
+  border-bottom: 1px solid black;
 `;
 
 const Description = styled.p`
@@ -107,15 +112,22 @@ const Description = styled.p`
 `;
 
 const AnswerButton = styled.p`
-  font-size: 14px;
-  height: 20px;
-  padding: 1em;
-  text-align: center;
-  line-height: 20px;
-  width: 20%;
+  outline: none;
+  color: black;
+  background-color: transparent;
   border: 1px solid black;
-  border-radius: 20px;
+  font-size: 14px;
+  padding: 1em;
+  border-radius: 10px;
   cursor: pointer;
+  width: 20%;
+  text-align: center;
+  &:hover {
+    color: white;
+    background-color: black;
+    border: 1px solid black;
+    transition: all 0.3s ease-in;
+  }
 `;
 
 export default OwnerAnswerPage;

@@ -12,18 +12,26 @@ const RankPopUp = () => {
   return (
     <RankPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowRank} />
-      <h1>등급 목록</h1>
-      <h1>Gold : 누적 결제 금액 500,000원</h1>
-      <h1>Silver : 누적 결제 금액 300,000원</h1>
-      <h1>Bronze : 누적 결제 금액 200,000원</h1>
+      <Title>등급 목록</Title>
+      <RankWrapper>
+        <Rank color="gold">Gold</Rank>
+        <Requirement>누적 결제 금액 500,000원</Requirement>
+      </RankWrapper>
+      <RankWrapper>
+        <Rank color="silver">Silver</Rank>
+        <Requirement>누적 결제 금액 300,000원</Requirement>
+      </RankWrapper>
+      <RankWrapper>
+        <Rank color="brown">Bronze</Rank>
+        <Requirement>누적 결제 금액 200,000원</Requirement>
+      </RankWrapper>
     </RankPopUpWrapper>
   );
 };
 
 const RankPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: 30vw;
-  width: 40vw;
+  width: 30em;
   height: 30vh;
   border: 1px solid black;
   background-color: white;
@@ -33,6 +41,32 @@ const RankPopUpWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+`;
+
+const RankWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5em;
+`;
+
+const Rank = styled.p`
+  width: 4em;
+  text-align: end;
+  margin-right: 1em;
+  font-size: 24px;
+  font-weight: 800;
+  color: ${(props) => props.color};
+`;
+
+const Requirement = styled.p`
+  font-size: 20px;
 `;
 
 export default RankPopUp;

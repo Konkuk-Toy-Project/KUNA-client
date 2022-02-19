@@ -6,6 +6,24 @@ import { Suspense } from "react";
 const MainPage = () => {
   return (
     <MainPageWrapper>
+      <MainImageWrapper>
+        <MainImage
+          src="https://img.sonyunara.com/files/new_banner/1644914647_0.jpg.webp"
+          alt=""
+        />
+        <MainImage
+          src="https://img.sonyunara.com/files/new_banner/1645162224_1.jpg.webp"
+          alt=""
+        />
+        <MainImage
+          src="https://img.sonyunara.com/files/new_banner/1645162627_0.jpg.webp"
+          alt=""
+        />
+        <MainImage
+          src="https://img.sonyunara.com/files/new_banner/1645162680_0.jpg.webp"
+          alt=""
+        />
+      </MainImageWrapper>
       <Suspense fallback={<h1>Loading...</h1>}>
         <Category link="top" name="상의" listType="main" />
       </Suspense>
@@ -24,8 +42,20 @@ const MainPageWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2em 0;
   text-align: center;
+  overflow: hidden;
+`;
+
+const MainImageWrapper = styled.div`
+  display: flex;
+  margin: 4em 0;
+`;
+
+const MainImage = styled.img`
+  width: 40em;
+  height: 45em;
+  border-radius: 20px;
+  margin: 0 1em;
 `;
 
 export default MainPage;

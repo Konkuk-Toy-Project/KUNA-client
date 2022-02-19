@@ -5,8 +5,12 @@ import { useNavigate } from "react-router";
 const MainItem = ({ item }) => {
   const navigate = useNavigate();
 
-  const briefTitle = (title) => {
-    return title.slice(0, 16) + "...";
+  const briefTitle = () => {
+    return item.name.length > 14 ? item.name.slice(0, 14) + "..." : item.name;
+  };
+
+  const discountPrice = () => {
+    return (item.price * (100 - item.sale)) / 100;
   };
 
   const onClickItem = () => {
@@ -19,10 +23,10 @@ const MainItem = ({ item }) => {
         src={`http://localhost:8080/image/thumbnail/${item.thumbnailUrl}`}
       />
       <Description>
-        <Title>{briefTitle(item.name)}</Title>
+        <Title>{briefTitle()}</Title>
         <PriceWrapper>
-          <h1>할인율 : {item.sale}%</h1>
-          <h1>{item.price}원</h1>
+          <Discount>{item.sale}%</Discount>
+          <h1>{discountPrice()}원</h1>
         </PriceWrapper>
       </Description>
     </Wrapper>
@@ -30,6 +34,7 @@ const MainItem = ({ item }) => {
 };
 
 const Wrapper = styled.li`
+  width: 10em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,7 +45,9 @@ const Wrapper = styled.li`
   cursor: pointer;
   &:hover {
     transform: scale(1.1);
-    transition: transform 0.3s ease-in;
+    transition: all 0.3s ease-in;
+    background-color: black;
+    color: white;
   }
 `;
 
@@ -59,11 +66,20 @@ const Description = styled.div`
 const Title = styled.p`
   font-size: 14px;
   font-weight: 600;
+  margin: 1em;
+  text-align: start;
 `;
 
 const PriceWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 12em;
+  margin: 0 1em;
+`;
+
+const Discount = styled.p`
+  color: #ab46bc;
+  font-weight: 600;
+  margin-right: 0.5em;
 `;
 
 export default MainItem;

@@ -64,11 +64,19 @@ const WriteReviewPopUp = () => {
       <CloseButton onClick={setShowWriteReview} />
       <Title>상품명 : {currentReviewItem.itemName}</Title>
       <ReviewInput type="text" onChange={onChange(setDescription)} />
-      <h1>별점</h1>
-      <input type="number" onChange={onChange(setRate)} />
-      <h1>리뷰용 사진</h1>
-      <input type="file" name="" onChange={onChangeImage(setReviewImage)} />
-      <button onClick={onClickSubmit}>작성하기</button>
+      <ContentWrapper>
+        <Description>별점</Description>
+        <RateInput type="number" onChange={onChange(setRate)} />
+      </ContentWrapper>
+      <ContentWrapper>
+        <Description>리뷰용 사진</Description>
+        <FileInput
+          type="file"
+          name=""
+          onChange={onChangeImage(setReviewImage)}
+        />
+      </ContentWrapper>
+      <SubmitButton onClick={onClickSubmit}>작성하기</SubmitButton>
     </WriteReviewPopUpWrapper>
   );
 };
@@ -91,12 +99,42 @@ const WriteReviewPopUpWrapper = styled.div`
 const Title = styled.p`
   font-size: 24px;
   font-weight: 600;
+  margin-bottom: 1em;
 `;
 
 const ReviewInput = styled.input`
-  width: 40vw;
-  height: 10vh;
+  width: 40em;
+  height: 10em;
   margin: 1em 0;
+  border-radius: 20px;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Description = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  width: 5em;
+`;
+
+const RateInput = styled.input`
+  width: 3.5em;
+`;
+
+const FileInput = styled.input`
+  width: 11em;
+`;
+
+const SubmitButton = styled.button`
+  margin-top: 2em;
+  border: none;
+  background-color: black;
+  padding: 1em;
+  color: white;
+  border-radius: 10px;
 `;
 
 export default WriteReviewPopUp;

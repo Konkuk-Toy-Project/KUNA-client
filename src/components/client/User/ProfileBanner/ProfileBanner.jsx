@@ -38,8 +38,12 @@ const ProfileBanner = ({ userInfo }) => {
       <UserInfo>
         <NameAndRankWrapper>
           <Name>{userInfo.name}님</Name>
-          <Rank>등급 : {userInfo.role}</Rank>
-          <button onClick={() => onClick(setShowRank)}>등급 달성 기준</button>
+          <RankWrapper>
+            <Rank>현재 등급 : {userInfo.role}</Rank>
+            <RankButton onClick={() => onClick(setShowRank)}>
+              등급 달성 기준
+            </RankButton>
+          </RankWrapper>
         </NameAndRankWrapper>
       </UserInfo>
       <UserMenus>
@@ -62,7 +66,7 @@ const ProfileBannerWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 90vw;
+  width: 60em;
   height: 20vh;
   border: 1px solid black;
   margin: 1em;
@@ -82,10 +86,32 @@ const NameAndRankWrapper = styled.div`
 const Name = styled.p`
   font-size: 32px;
   font-weight: 600;
+  margin-bottom: 0.2em;
+`;
+
+const RankWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Rank = styled.p`
   font-size: 24px;
+  margin-right: 0.5em;
+`;
+
+const RankButton = styled.button`
+  border: none;
+  background-color: #ab46bc;
+  color: white;
+  padding: 0.8em;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: #d85aee;
+    transition: all 0.3s linear;
+    transform: scale(1.1);
+  }
 `;
 
 const UserMenus = styled.ul`
@@ -99,15 +125,15 @@ const UserMenu = styled.li`
   width: 6em;
   height: 6em;
   font-size: 16px;
-  border: 1px solid black;
   border-radius: 20px;
   text-align: center;
+  background-color: #ab46bc;
   line-height: 6em;
+  color: white;
   margin: 0 1em;
   cursor: pointer;
   &:hover {
-    background-color: black;
-    color: white;
+    background-color: #d85aee;
     transition: all 0.3s linear;
     transform: scale(1.1);
   }

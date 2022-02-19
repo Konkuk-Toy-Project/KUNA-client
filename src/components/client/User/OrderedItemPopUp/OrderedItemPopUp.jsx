@@ -40,16 +40,20 @@ const OrderedItemPopUp = () => {
   return (
     <OrderedItemPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowOrderedItemPopUp} />
-      {orderedItems.length ? <h1>주문한 제품</h1> : <h1>주문한 상품 없음</h1>}
+      {orderedItems.length ? (
+        <Title>주문한 제품</Title>
+      ) : (
+        <Title>주문한 상품 없음</Title>
+      )}
       {orderedItems.map((item, index) => (
         <OrderedItemWrapper key={index}>
-          <h1>{item.itemName}</h1>
+          <ItemName>{item.itemName}</ItemName>
           {item.isReviewed ? (
-            <h1>리뷰 작성 완료</h1>
+            <Review>리뷰 작성 완료</Review>
           ) : (
-            <button onClick={() => onClickWriteReview(item)}>
+            <Button onClick={() => onClickWriteReview(item)}>
               리뷰 작성하기
-            </button>
+            </Button>
           )}
         </OrderedItemWrapper>
       ))}
@@ -59,9 +63,8 @@ const OrderedItemPopUp = () => {
 
 const OrderedItemPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: 10vw;
-  width: 80vw;
-  height: 60vh;
+  width: 40em;
+  padding: 2em;
   border: 1px solid black;
   background-color: white;
   position: absolute;
@@ -73,12 +76,41 @@ const OrderedItemPopUpWrapper = styled.div`
 `;
 
 const OrderedItemWrapper = styled.div`
-  width: 80%;
+  width: 30em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1em;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
+  margin: 1em 0;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1em;
+`;
+
+const ItemName = styled.p`
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+const Review = styled.p`
+  font-size: 18px;
+`;
+
+const Button = styled.button`
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: gray;
+  }
 `;
 
 export default OrderedItemPopUp;

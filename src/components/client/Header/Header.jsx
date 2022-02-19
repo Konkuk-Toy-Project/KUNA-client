@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { basketItemState } from "../../../store/client/basket";
+import { useRecoilState } from "recoil";
 import { userTokenState } from "../../../store/common/user";
 
 const Header = () => {
-  const basketItems = useRecoilValue(basketItemState);
   const [searchValue, setSearchValue] = useState("");
   const [userToken, setUserToken] = useRecoilState(userTokenState);
   const navigate = useNavigate();
@@ -61,7 +59,6 @@ const Header = () => {
                 alt=""
               />
               <p>장바구니</p>
-              <p>{basketItems.length}</p>
             </MenuCategory>
           </MenuIcon>
           <MenuIcon onClick={() => onClickCategory("like")}>

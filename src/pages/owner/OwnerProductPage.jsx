@@ -25,6 +25,7 @@ const OwnerProductPage = () => {
   const calculatePopUpHeight = () => {
     setCurrentY(window.scrollY + window.innerHeight * 0.15);
   };
+
   const onClickAddItem = () => {
     calculatePopUpHeight();
     setShowAddPopUp(true);

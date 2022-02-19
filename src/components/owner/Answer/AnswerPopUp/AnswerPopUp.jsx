@@ -9,6 +9,7 @@ import {
   showAnswerPopUpState,
 } from "../../../../store/owner/answer";
 import CloseButton from "../../../common/CloseButton/CloseButton";
+import ProductButton from "../../../common/ProductButton/ProductButton";
 
 const AnswerPopUp = () => {
   const setShowAnswerPopUp = useSetRecoilState(showAnswerPopUpState);
@@ -28,9 +29,7 @@ const AnswerPopUp = () => {
     navigate("/");
   };
 
-  console.log(answer);
-
-  function addAnswer() {
+  const addAnswer = () => {
     axios
       .post(
         `http://localhost:8080/admin/qna/${currentAnswerItem.qnaId}`,
@@ -42,16 +41,26 @@ const AnswerPopUp = () => {
         }
       )
       .then((response) => response.data);
-  }
+  };
 
   return (
     <AnswerPopUpWrapper>
       <CloseButton onClick={setShowAnswerPopUp} />
-      <h1>상품명 : {currentAnswerItem.itemName}</h1>
-      <h1>제목 : {currentAnswerItem.title}</h1>
-      <h1>질문 : {currentAnswerItem.question}</h1>
-      <input type="text" onChange={onChangeAnswer} />
-      <button onClick={onClickSubmit}>답변 등록하기</button>
+      <Title>답변하기</Title>
+      <ContentWrapper>
+        <ContentTitle>상품명 :</ContentTitle>
+        <ContentDescription>{currentAnswerItem.itemName}</ContentDescription>
+      </ContentWrapper>
+      <ContentWrapper>
+        <ContentTitle>제목 :</ContentTitle>
+        <ContentDescription>{currentAnswerItem.title}</ContentDescription>
+      </ContentWrapper>
+      <ContentWrapper>
+        <ContentTitle>질문 :</ContentTitle>
+        <ContentDescription>{currentAnswerItem.question}</ContentDescription>
+      </ContentWrapper>
+      <InputText cols="50" rows="10" onChange={onChangeAnswer} />
+      <ProductButton onClick={onClickSubmit}>답변 등록하기</ProductButton>
     </AnswerPopUpWrapper>
   );
 };
@@ -69,6 +78,44 @@ const AnswerPopUpWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 1.5em;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+`;
+
+const ContentTitle = styled.p`
+  font-size: 18px;
+  font-weight: 500;
+  text-align: end;
+  width: 4em;
+  margin: 0.2em;
+`;
+
+const ContentDescription = styled.p`
+  font-size: 18px;
+  width: 20em;
+  margin: 0.2em;
+`;
+
+const InputText = styled.textarea`
+  border: 1px solid black;
+  resize: none;
+  border-radius: 20px;
+  text-align: center;
+  padding: 1em;
+  margin: 1em 0;
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default AnswerPopUp;

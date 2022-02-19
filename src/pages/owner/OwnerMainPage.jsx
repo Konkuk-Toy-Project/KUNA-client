@@ -28,7 +28,6 @@ const OwnerMainPage = () => {
           type="coupon"
           imageUrl="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon2.png"
           title="쿠폰 등록하기"
-          onClick={() => console.log("Coupon")}
         />
         <MenuCategory
           link="/answers"

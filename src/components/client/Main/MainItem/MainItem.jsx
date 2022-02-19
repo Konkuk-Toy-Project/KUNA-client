@@ -5,8 +5,12 @@ import { useNavigate } from "react-router";
 const MainItem = ({ item }) => {
   const navigate = useNavigate();
 
-  const briefTitle = (title) => {
-    return title.length > 14 ? title.slice(0, 14) + "..." : title;
+  const briefTitle = () => {
+    return item.name.length > 14 ? item.name.slice(0, 14) + "..." : item.name;
+  };
+
+  const discountPrice = () => {
+    return (item.price * (100 - item.sale)) / 100;
   };
 
   const onClickItem = () => {
@@ -19,10 +23,10 @@ const MainItem = ({ item }) => {
         src={`http://localhost:8080/image/thumbnail/${item.thumbnailUrl}`}
       />
       <Description>
-        <Title>{briefTitle(item.name)}</Title>
+        <Title>{briefTitle()}</Title>
         <PriceWrapper>
           <Discount>{item.sale}%</Discount>
-          <h1>{item.price}원</h1>
+          <h1>{discountPrice()}원</h1>
         </PriceWrapper>
       </Description>
     </Wrapper>

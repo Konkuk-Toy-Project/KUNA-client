@@ -34,9 +34,8 @@ const LikePage = () => {
 
 const LikePageWrapper = styled.div`
   text-align: center;
-  margin: 2em 0;
+  margin: 4em;
   padding-bottom: 2em;
-  border-bottom: 2px solid black;
 `;
 
 export default LikePage;

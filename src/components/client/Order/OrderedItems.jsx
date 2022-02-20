@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useRecoilState } from "recoil";
 import { buyingState } from "../../../store/client/buying";
 import OrderedItem from "./OrderedItem";
+import styled from "styled-components";
 
 const OrderedItems = ({ setDefaultPrice, setSalePrice }) => {
   const [buying, setBuying] = useRecoilState(buyingState);

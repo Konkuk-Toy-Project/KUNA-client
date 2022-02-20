@@ -29,7 +29,7 @@ const ItemBrief = ({ itemObj }) => {
     setBuying(
       chosenOpts.map((chosen, idx) => {
         return {
-          thumbnailImg: item.itemImageUrl[0],
+          thumbnailImg: item.thumbnailUrl,
           name: item.name,
           price: item.price,
           sale: item.sale,

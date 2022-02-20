@@ -5,11 +5,12 @@ import ItemDetailImg from "../../components/client/ItemDetail/ItemDetailImg";
 import QnAPage from "./QnAPage";
 import ReviewPage from "./ReviewPage";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { basketPopupState, reviewPopupState } from "../../store/client/popup";
 import AskGoToBasketPopup from "../../components/client/ItemDetail/ItemBrief/AskGoToBasketPopup";
 import styled from "styled-components";
 import ReviewPopup from "../../components/client/Review/ReviewPopup";
+import { buyingState } from "../../store/client/buying";
 
 const ItemDetailPage = () => {
   const { itemId } = useParams();
@@ -17,9 +18,11 @@ const ItemDetailPage = () => {
   const [item, setItem] = useState();
   const basketPopup = useRecoilValue(basketPopupState);
   const reviewPopupObj = useRecoilValue(reviewPopupState);
+  const setBuying = useSetRecoilState(buyingState);
 
   useEffect(() => {
     getItem();
+    setBuying([]);
   }, []);
 
   const getItem = useCallback(async () => {

@@ -38,8 +38,11 @@ const ItemBrief = ({ itemObj }) => {
         };
       })
     );
-    navigate("/order");
   };
+  useEffect(() => {
+    if (buying.length === 0) return;
+    navigate("/order");
+  }, [buying]);
 
   useEffect(async () => {
     try {

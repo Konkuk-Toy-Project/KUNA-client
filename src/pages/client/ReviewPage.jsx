@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import ReviewPopup from "../../components/client/Review/ReviewPopup";
 import Review from "../../components/client/Review/Review";
 import axios from "axios";
 import PageChanger from "../../components/common/PageChanger/PageChanger";
+import styled from "styled-components";
+import PageTitle from "../../components/common/PageTitle/PageTitle";
+import { useSetRecoilState } from "recoil";
+import { reviewPopupState } from "../../store/client/popup";
 
 const PAGE_UNIT = 5;
 const REVIEW_NUM_UNIT = 5;
@@ -13,15 +16,14 @@ const ReviewPage = ({ itemId }) => {
   const [loading, setLoading] = useState(false);
   const [curPageNum, setCurPageNum] = useState(1);
   const [totalPageNum, setTotalPageNum] = useState(1);
+  const setPopUpReview = useSetRecoilState(reviewPopupState); // 클릭한 아이템의 review + default인덱스
 
-  const [popUpReview, setPopUpReview] = useState({}); // 클릭한 아이템의 review + default인덱스
   useEffect(async () => {
     setLoading(true);
     try {
       const response = await axios.get(
         `http://localhost:8080/review/${itemId}`
       );
-      console.log(response.data);
       setReviews(response.data);
     } catch (error) {
       alert(error.response.message);
@@ -31,18 +33,22 @@ const ReviewPage = ({ itemId }) => {
   }, []);
 
   return (
-    <div>
+    <ReviewPageWrapper>
+      <TitleWrapper>
+        <PageTitle title={"리뷰"} />
+      </TitleWrapper>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div>
+        <ReviewContentsWrapper>
           {reviews.map((review, idx) =>
             idx + 1 >= (curPageNum - 1) * REVIEW_NUM_UNIT + 1 &&
             idx + 1 <= curPageNum * REVIEW_NUM_UNIT ? (
-              <div key={"rev_" + idx}>
-                <Review reviewObj={review} setPopup={setPopUpReview} />
-                <br />
-              </div>
+              <Review
+                reviewObj={review}
+                setPopup={setPopUpReview}
+                key={"review_" + idx}
+              />
             ) : null
           )}
           <PageChanger
@@ -53,10 +59,9 @@ const ReviewPage = ({ itemId }) => {
             setTotalPageNum={setTotalPageNum}
             pageUnit={PAGE_UNIT}
           />
-        </div>
+        </ReviewContentsWrapper>
       )}
-      <ReviewPopup data={popUpReview} setData={setPopUpReview} />
-    </div>
+    </ReviewPageWrapper>
   );
 };
 
@@ -64,4 +69,21 @@ ReviewPage.propTypes = {
   itemId: PropTypes.number.isRequired,
 };
 
+const ReviewPageWrapper = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+`;
+
+const TitleWrapper = styled.div`
+  border-bottom: 1.5px solid #424242;
+  width: 103%;
+  margin-bottom: 10px;
+`;
+
+const ReviewContentsWrapper = styled.div`
+  width: 100%;
+`;
 export default ReviewPage;

@@ -6,9 +6,11 @@ import AnswCheckPopup from "../../components/client/QnA/AnswCheckPopup";
 import PageTitle from "../../components/common/PageTitle/PageTitle";
 
 import axios from "axios";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userTokenState } from "../../store/common/user";
 import styled from "styled-components";
+import { qnaIdsState } from "../../store/client/qnaIds";
+import { qnAWritePopupState } from "../../store/client/popup";
 
 const QnAPage = ({ itemName, thumbnail, itemId }) => {
   const userToken = useRecoilValue(userTokenState);
@@ -22,16 +24,20 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
 
   const [qnAs, setQnAs] = useState([]);
 
-  const [popWriteQnA, setPopWriteQnA] = useState(false);
+  const setPopWriteQnA = useSetRecoilState(qnAWritePopupState);
   const [popAnswer, setPopAnswer] = useState(false);
   const [selAnswIdx, setSelAnswIdx] = useState(null);
-  const [newQnaIds, setNewQnaIds] = useState([]);
+  const [newQnaIds, setNewQnaIds] = useRecoilState(qnaIdsState);
 
   const onWriteQClick = () => {
     getIsLogin();
   };
 
   const onAnswerQClick = () => setPopAnswer(true);
+
+  useEffect(() => {
+    setNewQnaIds([]);
+  }, []);
 
   useEffect(async () => {
     getQnAs();
@@ -83,15 +89,6 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
       </WriteQnABtnWrapper>
 
       <QnATable qnAs={qnAs} setSelAnswIdx={setSelAnswIdx} />
-
-      {/* 팝업창 */}
-      {popWriteQnA ? (
-        <WriteQnAPopUp
-          itemData={itemData}
-          setNewQnaIds={setNewQnaIds}
-          setPopWriteQnA={setPopWriteQnA}
-        />
-      ) : null}
 
       {selAnswIdx !== null ? (
         <AnswCheckPopup

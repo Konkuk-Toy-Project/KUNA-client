@@ -6,7 +6,7 @@ const LEFT = "left_btn";
 const RIGHT = "right_btn";
 const PAGE_UNIT = 5;
 
-const ImgSlide = ({ imgsrcs, defaultIdx }) => {
+const ImgSlide = ({ imgsrcs, defaultIdx, mainW, subW }) => {
   const [imgIdx, setImgIdx] = useState(defaultIdx);
   const onLeftBtnClick = (e) => {
     setImgIdx((curIdx) => (curIdx - 1 + imgsrcs.length) % imgsrcs.length);
@@ -24,8 +24,8 @@ const ImgSlide = ({ imgsrcs, defaultIdx }) => {
   }, [imgIdx]);
 
   return (
-    <ImgSlideWrapper>
-      <MainImgWrapper>
+    <ImgSlideWrapper size={mainW}>
+      <MainImgWrapper size={mainW}>
         <MainImg id="main-img" src={imgsrcs[imgIdx]}></MainImg>
         <NextPrevWrapper>
           <NextPrevFlex>
@@ -38,13 +38,11 @@ const ImgSlide = ({ imgsrcs, defaultIdx }) => {
         {imgsrcs.map((src, idx) =>
           parseInt(idx / PAGE_UNIT) === imgPageNum ? (
             <SubImg
-              key={idx}
+              key={"imgSlide_" + idx}
               src={src}
-              id={idx}
               onClick={onImgClick}
-              width={120}
-              height={120}
               border={idx === imgIdx ? "true" : "false"}
+              size={subW}
             />
           ) : null
         )}
@@ -54,18 +52,21 @@ const ImgSlide = ({ imgsrcs, defaultIdx }) => {
 };
 
 const ImgSlideWrapper = styled.div`
-  width: 560px;
+  width: ${({ size }) => size || "560px"};
 `;
 
 const MainImgWrapper = styled.div`
-  width: 100%;
+  width: ${({ size }) => size || "560px"};
+  height: ${({ size }) => size || "560px"};
   position: relative;
 `;
 
 const MainImg = styled.img`
   display: block;
   width: 100%;
+  height: 100%;
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 const NextPrevFlex = styled.div`
@@ -92,10 +93,11 @@ const SubImgWrapper = styled.div`
 const SubImg = styled.img`
   display: inline-block;
   box-sizing: border-box;
-  width: 110px;
-  height: 110px;
+  width: ${({ size }) => size || "110px"};
+  height: ${({ size }) => size || "110px"};
   margin-right: 2px;
   border-radius: 5px;
+  object-fit: cover;
   border: ${({ border }) => (border === "true" ? "solid #c76fd6 2px" : "none")};
 `;
 export default ImgSlide;

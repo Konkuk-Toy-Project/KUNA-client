@@ -2,12 +2,18 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-
-const IconNext = ({ onClick }) => {
+const PAGE = "page";
+const IconPrev = ({ onClick, type }) => {
   return (
-    <Span onClick={onClick}>
-      <FontAwesomeIcon icon={faAngleLeft} />
-    </Span>
+    <>
+      {type === PAGE ? (
+        <FontAwesomeIcon icon={faAngleLeft} onClick={onClick} />
+      ) : (
+        <Span onClick={onClick}>
+          <FontAwesomeIcon icon={faAngleLeft} />
+        </Span>
+      )}
+    </>
   );
 };
 
@@ -28,4 +34,4 @@ const Span = styled.span`
   }
 `;
 
-export default IconNext;
+export default IconPrev;

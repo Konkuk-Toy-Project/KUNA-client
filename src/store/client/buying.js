@@ -6,7 +6,7 @@ export const buyingDefaultPrice = selector({
   key: "defaultPriceState",
   get: ({ get }) => {
     const buyings = get(buyingState);
-    if (buyings.lengh == 0) return 0;
+    if (buyings.length === 0) return 0;
     const _defaultPrice = buyings
       .map((b) => b.price)
       .reduce((prev, post) => prev + post);
@@ -18,7 +18,7 @@ export const buyingSalePrice = selector({
   key: "salePriceState",
   get: ({ get }) => {
     const buyings = get(buyingState);
-    if (buyings.lengh == 0) return 0;
+    if (buyings.length === 0) return 0;
     const _salePrice = buyings
       .map((b) => (b.price * (100 - b.sale)) / 100)
       .reduce((prev, post) => prev + post);

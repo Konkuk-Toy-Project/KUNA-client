@@ -127,7 +127,6 @@ const Button = styled.button`
     isLiked == "true" ? "black" : "#424242"};
   color: white;
   &:hover {
-    border: 2px #black solid;
     background-color: black;
   }
 `;

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { basketPopupState } from "../../../../../store/client/popup";
 
 const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
   const optionOnes = item.option1;
@@ -14,6 +16,8 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
   const [stock, setStock] = useState();
 
   const [selItems, setSelItems] = useState([]);
+
+  const basketPopup = useRecoilValue(basketPopupState);
 
   const onChange = (e) => {
     const target = e.target;
@@ -114,6 +118,14 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
   useEffect(() => {
     setChosenSubInfo(selItems);
   }, [selItems]);
+
+  useEffect(() => {
+    if (!basketPopup) {
+      setChosen([]);
+      setChosenSubInfo([]);
+      setSelItems([]);
+    }
+  }, [basketPopup]);
 
   return (
     <div>

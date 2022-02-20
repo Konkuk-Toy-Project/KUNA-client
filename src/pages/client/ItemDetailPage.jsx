@@ -6,11 +6,16 @@ import QnAPage from "./QnAPage";
 import ReviewPage from "./ReviewPage";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { basketPopupState, reviewPopupState } from "../../store/client/popup";
+import {
+  basketPopupState,
+  qnAWritePopupState,
+  reviewPopupState,
+} from "../../store/client/popup";
 import AskGoToBasketPopup from "../../components/client/ItemDetail/ItemBrief/AskGoToBasketPopup";
 import styled from "styled-components";
 import ReviewPopup from "../../components/client/Review/ReviewPopup";
 import { buyingState } from "../../store/client/buying";
+import WriteQnAPopUp from "../../components/client/QnA/WriteQnAPopUp";
 
 const ItemDetailPage = () => {
   const { itemId } = useParams();
@@ -19,6 +24,7 @@ const ItemDetailPage = () => {
   const basketPopup = useRecoilValue(basketPopupState);
   const reviewPopupObj = useRecoilValue(reviewPopupState);
   const setBuying = useSetRecoilState(buyingState);
+  const qnaWritePopup = useRecoilValue(qnAWritePopupState);
 
   useEffect(() => {
     getItem();
@@ -59,6 +65,7 @@ const ItemDetailPage = () => {
         </>
       )}
       {Object.keys(reviewPopupObj).length === 0 ? null : <ReviewPopup />}
+      {qnaWritePopup ? <WriteQnAPopUp itemData={item} /> : null}
     </ItemDetailPageWrapper>
   );
 };

@@ -8,7 +8,7 @@ import { userTokenState } from "../../../store/common/user";
 import OrderLabel from "./OrderLabel";
 import styled from "styled-components";
 
-const PER = "percent";
+const PER = "PERCENT";
 const TOTAL_PRICE_ = "total_price_";
 
 const CouponSelector = ({
@@ -26,7 +26,9 @@ const CouponSelector = ({
   const onCouponSel = (e) => {
     const selCp = availCoupons.find((c) => c.couponId == e.target.value);
     setCouponSale(
-      selCp.couponKind === PER ? (salePrice * selCp.rate) / 100 : selCp.rate
+      selCp.couponKind === PER
+        ? (salePrice * (100 - selCp.rate)) / 100
+        : selCp.rate
     );
     setDidUsedCoupon(true);
     setCouponId(selCp.couponId); // orderPage로 선택쿠폰 정보 보내주기
@@ -52,7 +54,6 @@ const CouponSelector = ({
       const response = await axios.get("http://localhost:8080/coupon", {
         headers: { Authorization: `Bearer ${userToken}` },
       });
-      console.log(response.data);
       setAllCoupons(response.data);
     } catch (error) {
       alert(
@@ -64,15 +65,14 @@ const CouponSelector = ({
   }, []);
 
   useEffect(() => {
+    const curDate = new Date();
     setAvailCoupons(
       allCoupons.filter(
         (c) =>
           c.isUsed === false &&
-          parseInt(c.couponCondition.replace(TOTAL_PRICE_, "")) >= salePrice &&
-          c.couponKind === PER
-            ? true
-            : salePrice - c.rate >= 0
-        // 만료날짜 어떻게 추가할건지
+          parseInt(c.couponCondition.replace(TOTAL_PRICE_, "")) <= salePrice &&
+          (c.couponKind === PER ? true : salePrice - c.rate >= 0) &&
+          curDate <= new Date(c.expiredDate)
       )
     );
   }, [buying, allCoupons, salePrice]);
@@ -96,12 +96,7 @@ const CouponSelector = ({
   );
 };
 
-CouponSelector.propTypes = {
-  totalPrice: PropTypes.number.isRequired,
-  defaultPrice: PropTypes.number.isRequired,
-  setTotalPrice: PropTypes.func.isRequired,
-  setCouponId: PropTypes.func.isRequired,
-};
+CouponSelector.propTypes = {};
 
 const Select = styled.select`
   display: inline-block;

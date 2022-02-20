@@ -57,6 +57,8 @@ const OrderPage = () => {
   }, [totalPrice]);
 
   const onPayBtnClick = () => {
+    console.log(isInputFilled);
+    console.log(isPayMthdChecked);
     if (!isInputFilled || !isPayMthdChecked) {
       alert(
         !isInputFilled
@@ -68,22 +70,22 @@ const OrderPage = () => {
     postOrder();
   };
   const postOrder = useCallback(async () => {
-    console.log({
-      ...inputData,
-      payMethod: payMethod,
-      usePoint: usePoint,
-      couponId: couponId === undefined ? "" : couponId,
-      totalPrice: totalPrice, //전체 주문 금액(택배비 미포함)
-      shippingCharge: shippingCharge, //택배비
-      orderItems: buying.map((item) => {
-        return {
-          itemId: item.itemId,
-          option1Id: item.option1Id,
-          option2Id: item.option2Id,
-          count: item.count,
-        };
-      }),
-    });
+    // console.log({
+    //   ...inputData,
+    //   payMethod: payMethod,
+    //   usePoint: usePoint,
+    //   couponId: couponId === undefined ? "" : couponId,
+    //   totalPrice: totalPrice, //전체 주문 금액(택배비 미포함)
+    //   shippingCharge: shippingCharge, //택배비
+    //   orderItems: buying.map((item) => {
+    //     return {
+    //       itemId: item.itemId,
+    //       option1Id: item.option1Id,
+    //       option2Id: item.option2Id,
+    //       count: item.count,
+    //     };
+    //   }),
+    // });
     try {
       const response = await axios.post(
         "http://localhost:8080/order",
@@ -130,7 +132,7 @@ const OrderPage = () => {
     payMethod,
   ]);
 
-  // console.log(inputData);
+  console.log(inputData);
   // console.log(couponId);
   // console.log(payMethod);
   // console.log(items);
@@ -191,12 +193,7 @@ const OrderPage = () => {
           point={usePoint}
           shippingCharge={shippingCharge}
         />
-        <PayButton
-          disabled={!isInputFilled || !isPayMthdChecked}
-          onClick={onPayBtnClick}
-        >
-          결제하기
-        </PayButton>
+        <PayButton onClick={onPayBtnClick}>결제하기</PayButton>
       </PriceBoxWrapper>
     </OrderPageWrapper>
   );

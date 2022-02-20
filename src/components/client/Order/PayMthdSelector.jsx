@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import OrderLabel from "./OrderLabel";
+import { OrderList } from "./OrderList";
+import styled from "styled-components";
 
 const CARD = "card";
 const BANK_BOOK = "bankbook";
@@ -11,31 +14,31 @@ const PayMthdSelector = ({ setPayMethod, setIsChecked }) => {
     setIsChecked(true);
   };
   return (
-    <div>
-      <label>결제 방식</label>
+    <>
+      <OrderLabel text="결제 방식" />
       <ul>
-        <li>
-          <input
+        <RadioLi>
+          <RadioBtn
             type="radio"
             id={CARD}
             name={PAY_METHOD}
             value={CARD}
             onClick={onPayMthdClick}
           />
-          <label htmlFor={CARD}>신용카드</label>
-        </li>
-        <li>
-          <input
+          <RadioLabel htmlFor={CARD}>신용카드</RadioLabel>
+        </RadioLi>
+        <RadioLi>
+          <RadioBtn
             type="radio"
             id={BANK_BOOK}
             name={PAY_METHOD}
             value={BANK_BOOK}
             onClick={onPayMthdClick}
           />
-          <label htmlFor={BANK_BOOK}>계좌이체</label>
-        </li>
+          <RadioLabel htmlFor={BANK_BOOK}>계좌이체</RadioLabel>
+        </RadioLi>
       </ul>
-    </div>
+    </>
   );
 };
 
@@ -44,4 +47,20 @@ PayMthdSelector.propTypes = {
   setIsChecked: PropTypes.func.isRequired,
 };
 
+const RadioLi = styled.li`
+  display: inline-block;
+  margin: 0px 5px;
+  font-sizw: 18px;
+`;
+
+const RadioLabel = styled.label`
+  margin: 3px 0;
+`;
+
+const RadioBtn = styled.input`
+  font-size: 22px;
+  &:checked {
+    background-color: #ab47bc;
+  }
+`;
 export default PayMthdSelector;

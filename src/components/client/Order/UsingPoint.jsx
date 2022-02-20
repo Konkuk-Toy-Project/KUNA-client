@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userTokenState } from "../../../store/common/user";
+import OrderLabel from "./OrderLabel";
+import styled from "styled-components";
 
 const UsingPoint = ({ salePrice, couponSale, setUsePoint }) => {
   const [ownPoint, setOwnPoint] = useState(0);
@@ -51,16 +53,59 @@ const UsingPoint = ({ salePrice, couponSale, setUsePoint }) => {
   console.log(ownPoint);
 
   return (
-    <div>
-      <label>포인트</label>
-      <input type="text" onChange={onChange} value={inputPoint}></input>
-      <button onClick={onClick}>전액사용</button>
-      <span>사용가능 포인트 {availPoint - parseInt(inputPoint)}원</span>
-      <span>보유 포인트 {ownPoint - parseInt(inputPoint)}원</span>
-    </div>
+    <>
+      <OrderLabel text="포인트" />
+      <Input type="text" onChange={onChange} value={inputPoint}></Input>
+      <Button onClick={onClick}>전액사용</Button>
+      <HavingPointWrapper>
+        <PointSpan color="plum">
+          사용가능 : {(availPoint - parseInt(inputPoint)).toLocaleString()}원
+        </PointSpan>
+        │
+        <PointSpan>
+          보유 : {(ownPoint - parseInt(inputPoint)).toLocaleString()}원
+        </PointSpan>
+      </HavingPointWrapper>
+    </>
   );
 };
 
 UsingPoint.propTypes = { setUsePoint: PropTypes.func.isRequired };
+
+const Input = styled.input`
+  display: inline-block;
+  box-sizing: border-box;
+  width: 13%;
+  height: 70%;
+  padding: 0 12px;
+  text-align: right;
+  margin-right: 5px;
+`;
+
+const Button = styled.button`
+  display: inline-block;
+  box-sizing: border-box;
+  height: 70%;
+  border-radius: 5px;
+  background-color: #424242;
+  color: white;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background-color: black;
+  }
+`;
+
+const HavingPointWrapper = styled.div`
+  margin: 0 5px;
+`;
+
+const PointSpan = styled.span`
+  font-size: 13px;
+  margin: 0 5px;
+
+  color: ${({ color }) => (color === "plum" ? "#ab47bc" : "#494949")};
+`;
 
 export default UsingPoint;

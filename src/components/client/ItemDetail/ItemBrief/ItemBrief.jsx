@@ -10,15 +10,17 @@ import { buyingState } from "../../../../store/client/buying";
 import { userTokenState } from "../../../../store/common/user";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { basketPopupState } from "../../../../store/client/popup";
 
 const ItemBrief = ({ itemObj }) => {
   const [item, setItem] = useState(itemObj);
-  const userToken = useRecoilValue(userTokenState);
   const [chosenOpts, setChosenOpts] = useState([]);
   const [chosenOptsSubInfo, setChosenOptsSubInfo] = useState([]);
-  const [openBasketPopup, setOpenBasketPopup] = useState(false);
-  const [buying, setBuying] = useRecoilState(buyingState);
   const [isLogin, setIsLogin] = useState(false);
+  const userToken = useRecoilValue(userTokenState);
+  const [buying, setBuying] = useRecoilState(buyingState);
+  const [openBasketPopup, setOpenBasketPopup] =
+    useRecoilState(basketPopupState);
   const navigate = useNavigate();
 
   const onBuyClick = () => {
@@ -36,6 +38,7 @@ const ItemBrief = ({ itemObj }) => {
         };
       })
     );
+    navigate("/order");
   };
 
   useEffect(async () => {
@@ -56,11 +59,6 @@ const ItemBrief = ({ itemObj }) => {
       alert("오류가 발생했습니다. 다시 한번 시도해주세요.");
     }
   }, []);
-
-  useEffect(() => {
-    if (buying.length === 0) return;
-    navigate("/order");
-  }, [buying]);
 
   const onBasketClick = () => {
     if (!canDoBtnClickEvent()) return;
@@ -127,9 +125,6 @@ const ItemBrief = ({ itemObj }) => {
             바로결제
           </Button>
         </ButtonWrapper>
-        {openBasketPopup ? (
-          <AskGoToBasketPopup setOpenPopUp={setOpenBasketPopup} />
-        ) : null}
       </BriefInfoWrapper>
     </ItemBriefWrapper>
   );
@@ -140,7 +135,7 @@ ItemBrief.propTypes = { itemObj: PropTypes.object.isRequired };
 const ItemBriefWrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 1050px;
+  width: 100%;
   margin: 50px auto;
 `;
 

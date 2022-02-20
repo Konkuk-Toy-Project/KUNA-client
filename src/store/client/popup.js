@@ -9,3 +9,8 @@ export const reviewPopupState = atom({
   key: "reviewPopupState",
   default: {},
 });
+
+export const qnAWritePopupState = atom({
+  key: "qnAWritePopupState",
+  default: false,
+});

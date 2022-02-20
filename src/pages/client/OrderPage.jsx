@@ -2,8 +2,10 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import styled from "styled-components";
 import CouponSelector from "../../components/client/Order/CouponSelector.jsx";
 import OrderedItems from "../../components/client/Order/OrderedItems.jsx";
+import { OrderList } from "../../components/client/Order/OrderList.jsx";
 import OrderWriteInfo from "../../components/client/Order/OrderWriteInfo.jsx";
 import PayMthdSelector from "../../components/client/Order/PayMthdSelector.jsx";
 import PriceBar from "../../components/client/Order/PriceBar.jsx";
@@ -135,8 +137,11 @@ const OrderPage = () => {
   ///console.log(data);
 
   return (
-    <div>
-      <div>
+    <OrderPageWrapper>
+      <LeftSection>
+        <SectionTitleWrapper>
+          <SectionTitleSpan>주문 상품</SectionTitleSpan>
+        </SectionTitleWrapper>
         <OrderedItems
           setDefaultPrice={setDefaultPrice}
           setSalePrice={setSalePrice}
@@ -149,40 +154,111 @@ const OrderPage = () => {
           shippingCharge={shippingCharge}
         />
 
+        <SectionTitleWrapper>
+          <SectionTitleSpan>주문 정보</SectionTitleSpan>
+        </SectionTitleWrapper>
         <OrderWriteInfo setData={setInputData} setIsFilled={setIsInputFilled} />
-        <CouponSelector
-          salePrice={salePrice}
-          couponSale={couponSale}
-          setCouponSale={setCouponSale}
-          setCouponId={setCouponId}
-        />
-        <UsingPoint
-          salePrice={salePrice}
-          couponSale={couponSale}
-          setUsePoint={setUsePoint}
-        />
-        <PayMthdSelector
-          setPayMethod={setPayMethod}
-          setIsChecked={setIsPayMthdChecked}
-        />
-      </div>
 
-      <div>
+        <SubInputUl>
+          <OrderList>
+            <CouponSelector
+              salePrice={salePrice}
+              couponSale={couponSale}
+              setCouponSale={setCouponSale}
+              setCouponId={setCouponId}
+            />
+          </OrderList>
+          <OrderList>
+            <UsingPoint
+              salePrice={salePrice}
+              couponSale={couponSale}
+              setUsePoint={setUsePoint}
+            />
+          </OrderList>
+          <OrderList>
+            <PayMthdSelector
+              setPayMethod={setPayMethod}
+              setIsChecked={setIsPayMthdChecked}
+            />
+          </OrderList>
+        </SubInputUl>
+      </LeftSection>
+
+      <PriceBoxWrapper>
         <PriceBox
           salePrice={salePrice}
           couponSale={couponSale}
           point={usePoint}
           shippingCharge={shippingCharge}
         />
-        <button
+        <PayButton
           disabled={!isInputFilled || !isPayMthdChecked}
           onClick={onPayBtnClick}
         >
           결제하기
-        </button>
-      </div>
-    </div>
+        </PayButton>
+      </PriceBoxWrapper>
+    </OrderPageWrapper>
   );
 };
 
+const OrderPageWrapper = styled.div`
+  width: 1050px;
+  margin: 0 auto;
+  display: flex;
+  align-item: flex-start;
+`;
+
+const LeftSection = styled.div`
+  flex-basis: 75%;
+`;
+
+const SubInputUl = styled.ul`
+  border-bottom: solid black 1.5px;
+  padding: 30px 0px;
+  margin-bottom: 30px;
+`;
+
+const SectionTitleWrapper = styled.div`
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px 0px;
+  border-bottom: solid black 1.5px;
+  margin-top: 50px;
+`;
+
+const SectionTitleSpan = styled.span`
+  padding: 5px;
+`;
+
+const PriceBoxWrapper = styled.div`
+  position: sticky;
+  width: 350px;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-left: 30px;
+  top: 25%;
+  left: 0;
+`;
+
+const PayButton = styled.button`
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+  height: 50px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #ab47bc;
+  font-size: 18px;
+  font-weight: bold;
+  flex-grow: 1;
+  cursor: pointer;
+  &:hover {
+    background-color: #790e8b;
+  }
+`;
 export default OrderPage;

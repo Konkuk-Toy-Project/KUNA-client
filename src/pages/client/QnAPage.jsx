@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import QnATable from "../../components/client/QnA/QnATable";
 import WriteQnAPopUp from "../../components/client/QnA/WriteQnAPopUp";
 import AnswCheckPopup from "../../components/client/QnA/AnswCheckPopup";
+import PageTitle from "../../components/common/PageTitle/PageTitle";
+
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userTokenState } from "../../store/common/user";
+import styled from "styled-components";
 
 const QnAPage = ({ itemName, thumbnail, itemId }) => {
   const userToken = useRecoilValue(userTokenState);
@@ -72,9 +75,14 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
   };
 
   return (
-    <div>
+    <QnAPageWrapper>
+      <PageTitle title={"Q&A"} />
+
+      <WriteQnABtnWrapper>
+        <WriteQnABtn onClick={onWriteQClick}>Q&A 작성하기</WriteQnABtn>
+      </WriteQnABtnWrapper>
+
       <QnATable qnAs={qnAs} setSelAnswIdx={setSelAnswIdx} />
-      <button onClick={onWriteQClick}>Q&A 작성하기</button>
 
       {/* 팝업창 */}
       {popWriteQnA ? (
@@ -92,7 +100,7 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
           itemData={itemData}
         />
       ) : null}
-    </div>
+    </QnAPageWrapper>
   );
 };
 
@@ -102,4 +110,31 @@ QnAPage.propTypes = {
   itemId: PropTypes.number.isRequired,
 };
 
+const QnAPageWrapper = styled.div`
+  width: 90%;
+  margin: 0px auto;
+`;
+
+const WriteQnABtnWrapper = styled.div`
+  text-align: right;
+  margin: 10px 0 5px 0;
+  height: 40px;
+`;
+
+const WriteQnABtn = styled.button`
+  display: inline-block;
+  width: 150px;
+  height: 100%;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #424242;
+  color: white;
+  &:hover {
+    background-color: black;
+  }
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+`;
 export default QnAPage;

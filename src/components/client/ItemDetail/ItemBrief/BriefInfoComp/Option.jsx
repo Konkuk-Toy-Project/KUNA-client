@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { basketPopupState } from "../../../../../store/client/popup";
+import UpDownBtn from "../../../../common/UpDownBtn/UpDownBtn";
 
 const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
   const optionOnes = item.option1;
@@ -189,14 +190,19 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
                 {item.option2 === "" ? " " : ", " + item.option2}
               </ItemName>
               <ItemCount>{item.count}</ItemCount>
-              <UpDownWrapper>
+              <UpDownBtn
+                onUpBtnClick={onUpBtnClick}
+                onDownBtnClick={onDownBtnClick}
+                idx={idx}
+              />
+              {/* <UpDownWrapper>
                 <UpDownBtn name={idx} type="up" onClick={onUpBtnClick}>
                   ▲
                 </UpDownBtn>
                 <UpDownBtn name={idx} type="down" onClick={onDownBtnClick}>
                   ▼
                 </UpDownBtn>
-              </UpDownWrapper>
+              </UpDownWrapper> */}
               <Price>{price * item.count}원</Price>
               <DelBtn name={idx} key={"x_" + idx} onClick={onDelBtnClick}>
                 ⨉
@@ -283,27 +289,27 @@ const ItemCount = styled.span`
   line-height: 32px;
   margin: 0 3px;
 `;
-const UpDownWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 10%;
-  margin: 0px 3px;
-`;
+// const UpDownWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+//   width: 10%;
+//   margin: 0px 3px;
+// `;
 
-const UpDownBtn = styled.button`
-  display: inline-block;
-  height: 50%;
-  border: none;
-  &:hover {
-    background-color: #424242;
-    color: white;
-  }
-  ${({ type }) =>
-    type === "up"
-      ? "{border-radius : 3px 3px 0 0 ; border-bottom: 0.1px solid #707070}"
-      : "{border-radius :  0 0 3px 3px;"}
-`;
+// const UpDownBtn = styled.button`
+//   display: inline-block;
+//   height: 50%;
+//   border: none;
+//   &:hover {
+//     background-color: #424242;
+//     color: white;
+//   }
+//   ${({ type }) =>
+//     type === "up"
+//       ? "{border-radius : 3px 3px 0 0 ; border-bottom: 0.1px solid #707070}"
+//       : "{border-radius :  0 0 3px 3px;"}
+// `;
 const Price = styled.div`
   width: 22%;
   text-align: center;

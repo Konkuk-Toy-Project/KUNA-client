@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const PriceBar = ({
   salePrice,
@@ -9,41 +10,42 @@ const PriceBar = ({
   point,
 }) => {
   return (
-    <div>
+    <PriceBarWrapper>
       <p>
-        총 상품가격
-        <strong>
-          <span>{salePrice}</span>원
-        </strong>
+        <PriceType>총 상품가격:</PriceType>
+        <Price>
+          <span>{salePrice.toLocaleString()}</span>원
+        </Price>
       </p>
       -
       <p>
-        쿠폰 할인
-        <strong>
-          <span>{couponSale}</span>원
-        </strong>
+        <PriceType>쿠폰 할인:</PriceType>
+        <Price>
+          <span>{couponSale.toLocaleString()}</span>원
+        </Price>
       </p>
       -
       <p>
-        포인트 사용
-        <strong>
-          <span>{point}</span>원
-        </strong>
+        <PriceType>포인트 사용:</PriceType>
+        <Price>
+          <span>{point.toLocaleString()}</span>원
+        </Price>
       </p>
       +
       <p>
-        배송비
-        <strong>
+        <PriceType>배송비:</PriceType>
+        <Price>
           <span>{shippingCharge}</span>원
-        </strong>
+        </Price>
       </p>
-      <p>
-        합계
-        <strong>
-          <span>{totalPrice + shippingCharge - point}</span>원
-        </strong>
-      </p>
-    </div>
+      =
+      <TotalPriceWrapper>
+        <TotalPrice>
+          {(totalPrice + shippingCharge - point).toLocaleString()}
+        </TotalPrice>
+        <TotalWon>원</TotalWon>
+      </TotalPriceWrapper>
+    </PriceBarWrapper>
   );
 };
 
@@ -52,5 +54,41 @@ PriceBar.propTypes = {
   totalPrice: PropTypes.number.isRequired,
   shippingCharge: PropTypes.number.isRequired,
 };
+
+const PriceBarWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 70px;
+  border-bottom: 1px solid #9e9e9e;
+  padding-right: 10px;
+`;
+
+const PriceType = styled.span`
+  padding: 0 3px;
+  font-size: 14px;
+`;
+
+const Price = styled.span`
+  font-size: 15px;
+  font-weight: bold;
+`;
+const TotalPrice = styled.span`
+  font-size: 23px;
+  font-weight: bold;
+  color: #ab47bc;
+`;
+
+const TotalPriceWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+const TotalWon = styled.span`
+  display: inline-border;
+  padding-top: 7px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #ab47bc;
+`;
 
 export default PriceBar;

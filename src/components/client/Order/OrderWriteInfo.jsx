@@ -4,6 +4,7 @@ import OrderInput from "./OrderInput";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userTokenState } from "../../../store/common/user";
+import styled from "styled-components";
 
 const ADDRESS = "address";
 const RECIPIENT = "recipient";
@@ -50,7 +51,7 @@ const OrderWriteInfo = ({ setData, setIsFilled }) => {
 
   return (
     <div>
-      <ul name="address">
+      <Ul name="address">
         <OrderInput
           label="주소"
           name={ADDRESS}
@@ -72,7 +73,7 @@ const OrderWriteInfo = ({ setData, setIsFilled }) => {
         {infos.phone.match(/[^0-9]/g) !== null ? (
           <span>번호만 입력해주세요.</span>
         ) : null}
-      </ul>
+      </Ul>
     </div>
   );
 };
@@ -81,5 +82,11 @@ OrderWriteInfo.propTypes = {
   setData: PropTypes.func.isRequired,
   setIsFilled: PropTypes.func.isRequired,
 };
+
+const Ul = styled.ul`
+  border-bottom: solid #9e9e9e 1px;
+  padding-bottom: 30px;
+  margin-top: 30px;
+`;
 
 export default OrderWriteInfo;

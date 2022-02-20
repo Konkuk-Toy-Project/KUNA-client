@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const PAGE_UP = "pageUp";
 const PAGE_DOWN = "pageDown";
@@ -54,28 +55,34 @@ const PageChanger = ({
     );
   }, [curPageNum, totalPageNum]);
   return (
-    <div name="pageChanger">
-      <button id={PAGE_MIN} onClick={onPageBtnClick}>
-        ⏪
-      </button>
-      <button id={PAGE_DOWN} onClick={onPageBtnClick}>
-        ◀
-      </button>
+    <PageChangerWrapper name="pageChanger">
+      <Button id={PAGE_MIN} onClick={onPageBtnClick}>
+        {/* ⏪ */}
+        {/* <IconSuperPrev /> */}《
+      </Button>
+      <Button id={PAGE_DOWN} onClick={onPageBtnClick}>
+        {/* ◀
+        <IconPrev type="page" /> */}
+        〈
+      </Button>
       {selectablePages.map((page, idx) => (
-        <span
+        <PageNumSpan
           key={"qna_p_" + idx}
           style={curPageNum === page ? { color: "#ba68c8" } : null}
+          bold={curPageNum === page ? "bold" : "default"}
         >
           {page}
-        </span>
+        </PageNumSpan>
       ))}
-      <button id={PAGE_UP} onClick={onPageBtnClick}>
-        ▶
-      </button>
-      <button id={PAGE_MAX} onClick={onPageBtnClick}>
-        ⏩
-      </button>
-    </div>
+      <Button id={PAGE_UP} onClick={onPageBtnClick}>
+        {/* ▶ */}
+        {/* <IconNext type="page" /> */}〉
+      </Button>
+      <Button id={PAGE_MAX} onClick={onPageBtnClick}>
+        {/* ⏩ */}
+        {/* <IconSuperNext /> */}》
+      </Button>
+    </PageChangerWrapper>
   );
 };
 
@@ -86,5 +93,30 @@ PageChanger.propTypes = {
   setTotalPageNum: PropTypes.func.isRequired,
   pageUnit: PropTypes.number.isRequired,
 };
+
+const PageChangerWrapper = styled.div`
+  font-size: 18px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin 20px 0 40px 0;
+`;
+
+const PageNumSpan = styled.span`
+  display: inline-block;
+  margin: 0 3px;
+  font-weight: ${({ bold }) => bold};
+  cursor: pointer;
+`;
+
+const Button = styled.button`
+  display: inline-block;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  background-color: transparent;
+  margin: 0 2px;
+  cursor: pointer;
+`;
 
 export default PageChanger;

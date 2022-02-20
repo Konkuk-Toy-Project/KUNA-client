@@ -5,6 +5,8 @@ import axios from "axios";
 import { buyingState } from "../../../store/client/buying";
 import { useRecoilValue } from "recoil";
 import { userTokenState } from "../../../store/common/user";
+import OrderLabel from "./OrderLabel";
+import styled from "styled-components";
 
 const PER = "percent";
 const TOTAL_PRICE_ = "total_price_";
@@ -76,9 +78,9 @@ const CouponSelector = ({
   }, [buying, allCoupons, salePrice]);
 
   return (
-    <div>
-      <label>쿠폰</label>
-      <select name="coupons" disabled={didUsedCoupon} onChange={onCouponSel}>
+    <>
+      <OrderLabel text="쿠폰" />
+      <Select name="coupons" disabled={didUsedCoupon} onChange={onCouponSel}>
         <option disabled selected={!didUsedCoupon}>
           쿠폰 선택하기
         </option>
@@ -88,9 +90,9 @@ const CouponSelector = ({
             {` (${coupon.rate}${coupon.couponKind === PER ? "%" : "원"} 할인)`}
           </option>
         ))}
-      </select>
+      </Select>
       {didUsedCoupon ? <IconX onClick={onRemoveCoupon} /> : null}
-    </div>
+    </>
   );
 };
 
@@ -100,5 +102,10 @@ CouponSelector.propTypes = {
   setTotalPrice: PropTypes.func.isRequired,
   setCouponId: PropTypes.func.isRequired,
 };
+
+const Select = styled.select`
+  display: inline-block;
+  height: 80%;
+`;
 
 export default CouponSelector;

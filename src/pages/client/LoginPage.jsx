@@ -100,11 +100,11 @@ const LoginPage = () => {
         </ul>
         {isWrong ? (
           <div id="warningStr">
-            <p style={{ whiteSpace: "pre-line" }}>
+            <WrongAlertP style={{ whiteSpace: "pre-line" }}>
               {
-                " 아이디 또는 비밀번호가 잘못 입력 되었습니다. \n아이디와 비밀번호를 정확히 입력해 주세요."
+                " 아이디 또는 비밀번호가 잘못 입력 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요."
               }
-            </p>
+            </WrongAlertP>
           </div>
         ) : null}
         <Button
@@ -140,9 +140,10 @@ const LoginWrapper = styled.div`
 
 const InputLi = styled.li`
   width: 100%;
-  height: 60px;
+  height: 70px;
   border-bottom: 2px solid #212b16;
   margin: 8px auto;
+  font-size: 17px;
 `;
 const Input = styled.input`
   box-sizing: border-box;
@@ -162,14 +163,23 @@ const Button = styled.button`
   height: 60px;
   border-radius: 10px;
   border: none;
-  font-size: 17px;
+  font-size: 20px;
   margin: 3px auto;
-  background-color: #c76fd6;
-  color: #192111;
+  background-color: #b44bd1;
+  color: #e7e8e6;
+  font-weight: bold;
   &:disabled {
     background-color: #d8d5dc;
     color: #a5a3a8;
   }
+  &:hover {
+    background-color: #790e8b;
+    &:disabled {
+      background-color: #d8d5dc;
+      color: #a5a3a8;
+    }
+  }
+  cursor: pointer;
 `;
 const IconWrapper = styled.div`
   display: inline-block;
@@ -192,6 +202,12 @@ const LinkSpan = styled.span`
   font-size: 14px;
   color: #6a6d75;
   text-decoration: underline;
+`;
+const WrongAlertP = styled.p`
+  padding: 10px 5px;
+  line-height: 150%;
+  font-size: 13px;
+  color: #494949;
 `;
 
 export default LoginPage;

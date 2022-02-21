@@ -20,7 +20,7 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
   const [itemData, setItemData] = useState({
     itemId: itemId,
     name: itemName,
-    img: `http://localhost:8080/image/item/${thumbnail}`,
+    img: `http://localhost:8080/image/thumbnail/${thumbnail}`,
   });
 
   const [qnAs, setQnAs] = useRecoilState(qnasState);

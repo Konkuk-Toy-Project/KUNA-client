@@ -39,6 +39,7 @@ const ImgSlide = ({ imgsrcs, defaultIdx, mainW, subW }) => {
           parseInt(idx / PAGE_UNIT) === imgPageNum ? (
             <SubImg
               key={"imgSlide_" + idx}
+              id={idx}
               src={src}
               onClick={onImgClick}
               border={idx === imgIdx ? "true" : "false"}

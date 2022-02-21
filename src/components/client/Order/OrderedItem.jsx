@@ -59,7 +59,11 @@ const OrderedItem = ({ item }) => {
     <OrderedItemWrapper>
       <ThumbnailWrapper>
         <Thumbnail
-          src={`http://localhost:8080/image/thumbnail/${item.thumbnailImg}`}
+          src={`http://localhost:8080/image/thumbnail/${
+            item.thumbnailImg === undefined
+              ? item.thumbnailUrl
+              : item.thumbnailImg
+          }`}
           alt="사진없음"
         />
       </ThumbnailWrapper>

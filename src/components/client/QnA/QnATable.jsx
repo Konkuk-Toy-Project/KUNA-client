@@ -107,15 +107,24 @@ const AnswButton = styled.button`
   widht: 120px;
   border: none;
   outline: none;
-  border-radius: 5px;
+  border-radius: 7px;
 
-  background-color: #ab47bc;
-  color: #f5f5f5;
+  background-color: #b44bd1;
+  color: white;
 
   &:disabled {
     background-color: #cfcfcf;
     color: #9e9e9e;
   }
+
+  &:hover {
+    background-color: #790e8b;
+    &:disabled {
+      background-color: #cfcfcf;
+      color: #9e9e9e;
+    }
+  }
+  cursor: pointer;
 `;
 
 export default QnATable;

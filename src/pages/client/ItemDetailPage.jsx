@@ -115,7 +115,7 @@ const ItemDetailPageWrapper = styled.div`
 `;
 
 const TabUl = styled.ul`
-  width: 80%;
+  width: 90%;
   height: 50px;
   display: flex;
   justify-content: space-around;
@@ -128,6 +128,7 @@ const TabUl = styled.ul`
 `;
 
 const TabLi = styled.li`
+  box-sizing: border-box;
   height: 100%;
   font-size: 25px;
   font-weight: bold;

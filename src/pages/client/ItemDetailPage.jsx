@@ -10,12 +10,14 @@ import {
   basketPopupState,
   qnAWritePopupState,
   reviewPopupState,
+  selAnswIdxState,
 } from "../../store/client/popup";
 import AskGoToBasketPopup from "../../components/client/ItemDetail/ItemBrief/AskGoToBasketPopup";
 import styled from "styled-components";
 import ReviewPopup from "../../components/client/Review/ReviewPopup";
 import { buyingState } from "../../store/client/buying";
 import WriteQnAPopUp from "../../components/client/QnA/WriteQnAPopUp";
+import AnswCheckPopup from "../../components/client/QnA/AnswCheckPopup";
 
 const ItemDetailPage = () => {
   const { itemId } = useParams();
@@ -25,6 +27,7 @@ const ItemDetailPage = () => {
   const reviewPopupObj = useRecoilValue(reviewPopupState);
   const setBuying = useSetRecoilState(buyingState);
   const qnaWritePopup = useRecoilValue(qnAWritePopupState);
+  const selAnswIdx = useRecoilValue(selAnswIdxState);
 
   useEffect(() => {
     getItem();
@@ -66,6 +69,7 @@ const ItemDetailPage = () => {
       )}
       {Object.keys(reviewPopupObj).length === 0 ? null : <ReviewPopup />}
       {qnaWritePopup ? <WriteQnAPopUp itemData={item} /> : null}
+      {selAnswIdx !== null ? <AnswCheckPopup itemData={item} /> : null}
     </ItemDetailPageWrapper>
   );
 };

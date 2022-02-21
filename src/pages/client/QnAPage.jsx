@@ -10,7 +10,8 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userTokenState } from "../../store/common/user";
 import styled from "styled-components";
 import { qnaIdsState } from "../../store/client/qnaIds";
-import { qnAWritePopupState } from "../../store/client/popup";
+import { qnAWritePopupState, selAnswIdxState } from "../../store/client/popup";
+import { qnasState } from "../../store/client/qnas";
 
 const QnAPage = ({ itemName, thumbnail, itemId }) => {
   const userToken = useRecoilValue(userTokenState);
@@ -22,11 +23,11 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
     img: `http://localhost:8080/image/item/${thumbnail}`,
   });
 
-  const [qnAs, setQnAs] = useState([]);
+  const [qnAs, setQnAs] = useRecoilState(qnasState);
 
   const setPopWriteQnA = useSetRecoilState(qnAWritePopupState);
   const [popAnswer, setPopAnswer] = useState(false);
-  const [selAnswIdx, setSelAnswIdx] = useState(null);
+  const [selAnswIdx, setSelAnswIdx] = useRecoilState(selAnswIdxState);
   const [newQnaIds, setNewQnaIds] = useRecoilState(qnaIdsState);
 
   const onWriteQClick = () => {
@@ -89,14 +90,6 @@ const QnAPage = ({ itemName, thumbnail, itemId }) => {
       </WriteQnABtnWrapper>
 
       <QnATable qnAs={qnAs} setSelAnswIdx={setSelAnswIdx} />
-
-      {selAnswIdx !== null ? (
-        <AnswCheckPopup
-          qnaData={qnAs[selAnswIdx]}
-          setSelAnswIdx={setSelAnswIdx}
-          itemData={itemData}
-        />
-      ) : null}
     </QnAPageWrapper>
   );
 };

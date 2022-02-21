@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ItemBrief from "../../components/client/ItemDetail/ItemBrief/ItemBrief";
 import ItemDetailImg from "../../components/client/ItemDetail/ItemDetailImg";
 import QnAPage from "./QnAPage";
@@ -19,6 +19,10 @@ import { buyingState } from "../../store/client/buying";
 import WriteQnAPopUp from "../../components/client/QnA/WriteQnAPopUp";
 import AnswCheckPopup from "../../components/client/QnA/AnswCheckPopup";
 
+const ITEM_DETAIL = "itemDetail";
+const REVIEW = "review";
+const QNA = "qna";
+
 const ItemDetailPage = () => {
   const { itemId } = useParams();
   const [loading, setLoading] = useState(true);
@@ -28,6 +32,10 @@ const ItemDetailPage = () => {
   const setBuying = useSetRecoilState(buyingState);
   const qnaWritePopup = useRecoilValue(qnAWritePopupState);
   const selAnswIdx = useRecoilValue(selAnswIdxState);
+
+  const itemDetailRef = useRef();
+  const reviewRef = useRef();
+  const qnaRef = useRef();
 
   useEffect(() => {
     getItem();
@@ -45,6 +53,21 @@ const ItemDetailPage = () => {
     setLoading(false);
   }, [itemId]);
 
+  const onTabClick = (e) => {
+    console.log(e.target.dataset);
+    switch (e.target.dataset.type) {
+      case ITEM_DETAIL:
+        itemDetailRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case REVIEW:
+        reviewRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case QNA:
+        qnaRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+    }
+  };
+
   return (
     <ItemDetailPageWrapper>
       {loading ? (
@@ -53,18 +76,30 @@ const ItemDetailPage = () => {
         <>
           <ItemBrief itemObj={item} />
           {basketPopup ? <AskGoToBasketPopup /> : null}
-          <ul>
-            <li>제품상세</li>
-            <li>리뷰</li>
-            <li>Q&A</li>
-          </ul>
-          <ItemDetailImg imgSrc={item.detailImageUrl} />
-          <ReviewPage itemId={item.itemId} />
-          <QnAPage
-            itemName={item.name}
-            thumbnail={item.itemImageUrl[0]}
-            itemId={item.itemId}
-          />
+          <TabUl>
+            <TabLi data-type={ITEM_DETAIL} onClick={onTabClick}>
+              제품상세
+            </TabLi>
+            <TabLi data-type={REVIEW} onClick={onTabClick}>
+              리뷰
+            </TabLi>
+            <TabLi data-type={QNA} onClick={onTabClick}>
+              Q&A
+            </TabLi>
+          </TabUl>
+          <div ref={itemDetailRef}>
+            <ItemDetailImg imgSrc={item.detailImageUrl} />
+          </div>
+          <div ref={reviewRef}>
+            <ReviewPage itemId={item.itemId} />
+          </div>
+          <div ref={qnaRef}>
+            <QnAPage
+              itemName={item.name}
+              thumbnail={item.thumbnailUrl}
+              itemId={item.itemId}
+            />
+          </div>
         </>
       )}
       {Object.keys(reviewPopupObj).length === 0 ? null : <ReviewPopup />}
@@ -79,4 +114,31 @@ const ItemDetailPageWrapper = styled.div`
   margin: 0 auto;
 `;
 
+const TabUl = styled.ul`
+  width: 80%;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  left: 0;
+  margin: -3px auto;
+`;
+
+const TabLi = styled.li`
+  height: 100%;
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 50px;
+  width: 34%;
+  text-align: center;
+  border-bottom: 5px solid #e0e0e0;
+  &:hover {
+    color: #ab47bc;
+    border-bottom: 5px solid #ab47bc;
+  }
+  cursor: pointer;
+`;
 export default ItemDetailPage;

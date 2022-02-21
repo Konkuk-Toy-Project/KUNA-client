@@ -203,23 +203,25 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
                   ▼
                 </UpDownBtn>
               </UpDownWrapper> */}
-              <Price>{price * item.count}원</Price>
+              <Price>{(price * item.count).toLocaleString()}원</Price>
               <DelBtn name={idx} key={"x_" + idx} onClick={onDelBtnClick}>
                 ⨉
               </DelBtn>
             </ItemLi>
           ))}
         </OptionAndCounterWrapper>
-        <TotalPriceWrapper>
-          <PriceLabel>총 결제금액</PriceLabel>
-          <TotalPrice>
-            {chosen.length == 0
-              ? 0
-              : chosen.map((c) => c.count).reduce((prev, post) => prev + post) *
-                price}
-            <Won>원</Won>
-          </TotalPrice>
-        </TotalPriceWrapper>
+        {chosen.length === 0 ? null : (
+          <TotalPriceWrapper>
+            <PriceLabel>총 결제금액</PriceLabel>
+            <TotalPrice>
+              {(
+                chosen.map((c) => c.count).reduce((prev, post) => prev + post) *
+                price
+              ).toLocaleString()}
+              <Won>원</Won>
+            </TotalPrice>
+          </TotalPriceWrapper>
+        )}
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ const BriefHeader = ({ state, name, price, sale, like, id }) => {
             </SaleSpanWrapper>
             <SaleSpanWrapper>
               <SalePrice name="sale-price">
-                {(price * (100 - sale)) / 100}
+                {((price * (100 - sale)) / 100).toLocaleString()}
               </SalePrice>
               <UnitSpan>원</UnitSpan>
             </SaleSpanWrapper>

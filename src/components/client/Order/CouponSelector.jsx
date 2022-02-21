@@ -91,7 +91,11 @@ const CouponSelector = ({
           </option>
         ))}
       </Select>
-      {didUsedCoupon ? <IconX onClick={onRemoveCoupon} /> : null}
+      {didUsedCoupon ? (
+        <IconXWrapper>
+          <IconX onClick={onRemoveCoupon} />
+        </IconXWrapper>
+      ) : null}
     </>
   );
 };
@@ -101,6 +105,11 @@ CouponSelector.propTypes = {};
 const Select = styled.select`
   display: inline-block;
   height: 80%;
+`;
+
+const IconXWrapper = styled.div`
+  display: inline-block;
+  padding: 0 5px;
 `;
 
 export default CouponSelector;

@@ -32,9 +32,16 @@ const PageChanger = ({
         break;
     }
   };
+  const onPageNumClick = (e) => {
+    setCurPageNum(parseInt(e.target.dataset.pagenum));
+  };
 
   useEffect(() => {
-    setTotalPageNum(parseInt(data.length / pageUnit) + 1);
+    setTotalPageNum(
+      data.length % 5 == 0
+        ? parseInt(data.length / pageUnit)
+        : parseInt(data.length / pageUnit) + 1
+    );
   }, [data]);
 
   useEffect(() => {
@@ -57,30 +64,27 @@ const PageChanger = ({
   return (
     <PageChangerWrapper name="pageChanger">
       <Button id={PAGE_MIN} onClick={onPageBtnClick}>
-        {/* ⏪ */}
-        {/* <IconSuperPrev /> */}《
+        《
       </Button>
       <Button id={PAGE_DOWN} onClick={onPageBtnClick}>
-        {/* ◀
-        <IconPrev type="page" /> */}
         〈
       </Button>
       {selectablePages.map((page, idx) => (
         <PageNumSpan
           key={"qna_p_" + idx}
-          style={curPageNum === page ? { color: "#ba68c8" } : null}
+          style={curPageNum === page ? { color: "#ab47bc" } : null}
           bold={curPageNum === page ? "bold" : "default"}
+          data-pagenum={idx + 1}
+          onClick={onPageNumClick}
         >
           {page}
         </PageNumSpan>
       ))}
       <Button id={PAGE_UP} onClick={onPageBtnClick}>
-        {/* ▶ */}
-        {/* <IconNext type="page" /> */}〉
+        〉
       </Button>
       <Button id={PAGE_MAX} onClick={onPageBtnClick}>
-        {/* ⏩ */}
-        {/* <IconSuperNext /> */}》
+        》
       </Button>
     </PageChangerWrapper>
   );

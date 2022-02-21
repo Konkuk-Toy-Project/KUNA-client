@@ -35,7 +35,7 @@ const PriceBar = ({
       <p>
         <PriceType>배송비:</PriceType>
         <Price>
-          <span>{shippingCharge}</span>원
+          <span>{shippingCharge.toLocaleString()}</span>원
         </Price>
       </p>
       =

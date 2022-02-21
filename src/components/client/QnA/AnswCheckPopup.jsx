@@ -46,12 +46,12 @@ const AnswCheckPopup = ({ itemData }) => {
             </Main>
           </QWrapper>
 
-          <div name="A">
+          <AnswerWrapper name="A">
             <Label>관리자의 답변</Label>
             <Main>
               <p style={{ whiteSpace: "pre-line" }}>{qnaData.answer}</p>
             </Main>
-          </div>
+          </AnswerWrapper>
         </PopupContent>
         <BtnWrapper>
           <Button onClick={onClick}>확인</Button>
@@ -85,19 +85,15 @@ const PopupContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
   overflow: auto;
 `;
-const IconXWrapper = styled.div`
-  height: 120px;
-`;
+
 const PopupContent = styled.div`
   width: 90%;
-  height: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin: 20px 0;
+  justify-content: center;
+  margin: 20px 0 5px 0;
 `;
 const PopupTitleWrapper = styled.div`
   width: 95%;
@@ -135,6 +131,10 @@ const Main = styled.div`
   border: solid 0.3px #bdbdbd;
 `;
 
+const AnswerWrapper = styled.div`
+  margin-top: 5px;
+`;
+
 const TitleWrapper = styled.div`
   display: flex;
   height: 30px;
@@ -160,22 +160,25 @@ const Label = styled.label`
 
 const UserIconWrapper = styled.div`
   padding-right: 5px;
+  color: #790e8b;
 `;
 
 const BtnWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: 60px;
   width: 80%;
-  margin: 0 0 20px 0;
+  margin: 5px 0 10px 0;
 `;
 const Button = styled.button`
   display: inline-block;
+  flex-basis: 60px;
   width: 100%;
   height: 100%;
   border-radius: 5px;
-  margin: 0 2px;
+  margin: 5px 2px;
   font-size: 15px;
   background-color: #424242;
   color: white;

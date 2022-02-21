@@ -14,3 +14,8 @@ export const qnAWritePopupState = atom({
   key: "qnAWritePopupState",
   default: false,
 });
+
+export const selAnswIdxState = atom({
+  key: "selAnswIdxState",
+  default: null,
+});

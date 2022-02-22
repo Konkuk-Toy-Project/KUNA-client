@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import Footer from "./components/common/Footer/Footer";
 import Router from "./Router";
+import ScrollToTop from "./components/common/ScrollToTop/ScrollToTop";
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -13,6 +14,7 @@ const GlobalStyles = createGlobalStyle`
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <GlobalStyles />
       <Router />
       <Footer />

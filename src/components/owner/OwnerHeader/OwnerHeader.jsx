@@ -1,11 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useCallback, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { isClientState, userTokenState } from "../../../store/common/user";
 
 const OwnerHeader = () => {
-  const setUserToken = useSetRecoilState(userTokenState);
+  const [userToken, setUserToken] = useRecoilState(userTokenState);
   const setIsClient = useSetRecoilState(isClientState);
   const navigate = useNavigate();
 
@@ -15,6 +16,21 @@ const OwnerHeader = () => {
     navigate("/");
     window.location.reload();
   };
+
+  const isValidLogin = useCallback(async () => {
+    const data = await axios
+      .get(`http://localhost:8080/member/isLogin`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+      .then((response) => response.data);
+    if (!data) {
+      setUserToken([]);
+    }
+  }, [setUserToken, userToken]);
+
+  useEffect(() => {
+    isValidLogin();
+  }, [isValidLogin]);
 
   return (
     <HeaderWrapper>

@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userTokenState } from "../../../store/common/user";
+import axios from "axios";
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [userToken, setUserToken] = useRecoilState(userTokenState);
   const navigate = useNavigate();
+
+  const isValidLogin = useCallback(async () => {
+    const data = await axios
+      .get(`http://localhost:8080/member/isLogin`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+      .then((response) => response.data);
+    if (!data) {
+      setUserToken([]);
+    }
+  }, [setUserToken, userToken]);
 
   const onClickLogout = () => {
     setUserToken([]);
@@ -35,6 +47,10 @@ const Header = () => {
       navigate("/login");
     }
   };
+
+  useEffect(() => {
+    isValidLogin();
+  }, [isValidLogin]);
 
   return (
     <HeaderWrapper>

@@ -6,9 +6,10 @@ const PreviewTitle = ({ name }) => {
 };
 
 const PreviewTitleWrapper = styled.p`
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 1em;
+  color: #ab46bc;
+  font-size: 36px;
+  font-weight: 800;
+  margin: 1em 0 2em 0;
 `;
 
 export default PreviewTitle;

@@ -40,6 +40,8 @@ const CouponSelector = ({
     setCouponId(""); //orderPage로 쿠폰 제거 정보 보내주기
   };
 
+  useEffect(() => onRemoveCoupon(), [salePrice]);
+
   // 고려사항 : 만료날짜 충족, 총금액 충족, 사용여부 no
   // couponKind: 쿠폰 종류(percent-퍼센트 할인, static-고정 할인액)
   // rate: 할인 정도
@@ -91,11 +93,7 @@ const CouponSelector = ({
           </option>
         ))}
       </Select>
-      {didUsedCoupon ? (
-        <IconXWrapper>
-          <IconX onClick={onRemoveCoupon} />
-        </IconXWrapper>
-      ) : null}
+      {didUsedCoupon ? <IconX onClick={onRemoveCoupon} /> : null}
     </>
   );
 };
@@ -105,11 +103,6 @@ CouponSelector.propTypes = {};
 const Select = styled.select`
   display: inline-block;
   height: 80%;
-`;
-
-const IconXWrapper = styled.div`
-  display: inline-block;
-  padding: 0 5px;
 `;
 
 export default CouponSelector;

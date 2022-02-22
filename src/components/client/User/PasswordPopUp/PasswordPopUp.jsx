@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { passwordPopUpState } from "../../../../store/client/user";
 import { currentY, userTokenState } from "../../../../store/common/user";
 import CloseButton from "../../../common/CloseButton/CloseButton";
+import ProductButton from "../../../common/ProductButton/ProductButton";
 
 const PasswordPopUp = () => {
   const [password, setPassword] = useState("");
@@ -57,11 +58,19 @@ const PasswordPopUp = () => {
   return (
     <PasswordPopUpWrapper top={scrollY}>
       <CloseButton onClick={setEditPassword} />
-      <h1>변경할 비밀번호</h1>
-      <input onChange={onChange(setPassword)} type="password" />
-      <h1>변경할 비밀번호 확인</h1>
-      <input onChange={onChange(setConfirmPassword)} type="password" />
-      <button onClick={onClickChangePassword}>변경하기</button>
+      <Title>비밀번호 변경</Title>
+      <PasswordWrapper>
+        <PasswordTitle>변경할 비밀번호</PasswordTitle>
+        <InputPassword onChange={onChange(setPassword)} type="password" />
+      </PasswordWrapper>
+      <PasswordWrapper>
+        <PasswordTitle>변경할 비밀번호 확인</PasswordTitle>
+        <InputPassword
+          onChange={onChange(setConfirmPassword)}
+          type="password"
+        />
+      </PasswordWrapper>
+      <ProductButton onClick={onClickChangePassword}>변경하기</ProductButton>
     </PasswordPopUpWrapper>
   );
 };
@@ -79,6 +88,38 @@ const PasswordPopUpWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1em;
+`;
+
+const PasswordWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5em;
+  padding: 1em;
+`;
+
+const PasswordTitle = styled.p`
+  font-size: 18px;
+  font-weight: 500;
+  width: 10em;
+  text-align: end;
+  margin-right: 1em;
+`;
+
+const InputPassword = styled.input`
+  border: none;
+  border-bottom: 1px solid black;
+  align-self: flex-start;
+  width: 10em;
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default PasswordPopUp;

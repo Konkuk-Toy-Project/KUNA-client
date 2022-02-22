@@ -219,7 +219,7 @@ const PriceBoxWrapper = styled.div`
   height: 330px;
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin: 50px 0px;
   margin-left: 30px;
   top: 25%;
   left: 0;

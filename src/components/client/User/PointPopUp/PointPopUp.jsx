@@ -38,7 +38,7 @@ const PointPopUp = () => {
 const PointPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
   width: 30em;
-  height: 30vh;
+  height: 20em;
   border: 1px solid black;
   background-color: white;
   position: absolute;

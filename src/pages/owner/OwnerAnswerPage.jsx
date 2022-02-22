@@ -36,6 +36,10 @@ const OwnerAnswerPage = () => {
     )}월 ${date.substring(8, 10)}일`;
   };
 
+  const getText = (text) => {
+    return text.length > 10 ? text.substring(0, 10) + "..." : text;
+  };
+
   useEffect(() => {
     async function getData() {
       const data = await axios
@@ -60,9 +64,9 @@ const OwnerAnswerPage = () => {
       </CouponWrapper>
       {items.map((item) => (
         <CouponWrapper key={item.qnaId}>
-          <Description>{item.itemName}</Description>
-          <Description>{item.title}</Description>
-          <Description>{item.question}</Description>
+          <Description>{getText(item.itemName)}</Description>
+          <Description>{getText(item.title)}</Description>
+          <Description>{getText(item.question)}</Description>
           <Description>{convertDate(item.registryDate)}</Description>
           {item.answered ? (
             <Description>답변 완료</Description>

@@ -95,7 +95,7 @@ const CouponPopUp = () => {
 
 const CouponPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  height: 40vh;
+  min-height: 40vh;
   border: 1px solid black;
   background-color: white;
   position: absolute;

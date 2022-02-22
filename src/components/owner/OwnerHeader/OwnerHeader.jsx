@@ -84,9 +84,9 @@ const HomeIcon = styled.img`
 `;
 
 const LogoutButton = styled.button`
-  width: 6em;
-  height: 6em;
-  font-size: 12px;
+  width: 7em;
+  height: 7em;
+  font-size: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;

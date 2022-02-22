@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -61,10 +61,12 @@ const LoginPage = () => {
             return;
         }
       }
+
       alert("오류가 발생하였습니다. 다시 시도해주세요");
       window.location.reload();
     }
   };
+  useEffect(() => setIsWrong(false), [account]);
   return (
     <LoginWrapper>
       <div>

@@ -14,7 +14,9 @@ const BriefHeader = ({ state, name, price, sale, like, id }) => {
       <ItemWrapper id="sale-container">
         {sale > 0 ? (
           <>
-            <SaleItemDefaultPrice name="price">{price}원</SaleItemDefaultPrice>
+            <SaleItemDefaultPrice name="price">
+              {price.toLocaleString()}원
+            </SaleItemDefaultPrice>
             <SaleSpanWrapper>
               <SaleRate name="sale">{sale}</SaleRate>
               <UnitSpan color="plum">%</UnitSpan>

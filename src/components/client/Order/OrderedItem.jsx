@@ -78,12 +78,12 @@ const OrderedItem = ({ item }) => {
 
       {item.sale > 0 ? (
         <PriceWrapper name="price-wrapper">
-          <span
+          <BeforePrice
             name="price"
             style={{ display: "block", textDecoration: "line-through" }}
           >
             {item.price.toLocaleString()}원
-          </span>
+          </BeforePrice>
           <span name="sale-price">
             {((item.price * (100 - item.sale)) / 100).toLocaleString()}원
           </span>
@@ -150,6 +150,12 @@ const OptionName = styled.div`
 const PriceWrapper = styled.div`
   flex-basis: 15%;
   text-align: center;
+`;
+
+const BeforePrice = styled.span`
+  font-size: 14px;
+  color: #757575;
+  padding-bottom: 3px;
 `;
 const CounterWrapper = styled.div`
   flex-basis: 20%;

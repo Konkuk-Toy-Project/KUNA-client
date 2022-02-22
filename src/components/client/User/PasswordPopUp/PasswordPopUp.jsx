@@ -77,9 +77,8 @@ const PasswordPopUp = () => {
 
 const PasswordPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: 10vw;
-  width: 80vw;
-  height: 60vh;
+  width: 30em;
+  height: 30em;
   border: 1px solid black;
   background-color: white;
   position: absolute;

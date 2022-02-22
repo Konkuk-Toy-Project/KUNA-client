@@ -130,9 +130,8 @@ const AddItemPopUp = () => {
 
 const AddItemPopUpWrapper = styled.div`
   top: ${(props) => props.top + "px"};
-  left: 20vw;
-  width: 60vw;
-  height: 60vh;
+  width: 40em;
+  height: 40em;
   border: 1px solid black;
   background-color: white;
   position: absolute;

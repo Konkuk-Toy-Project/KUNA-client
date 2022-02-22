@@ -45,7 +45,10 @@ const OrderPage = () => {
   const [buying, setBuying] = useRecoilState(buyingState);
 
   useEffect(() => {
-    if (buying.length === 0) navigate("/");
+    if (buying.length === 0) {
+      alert("임의로 접근할 수 없는 페이지입니다. 이전페이지로 이동합니다. ");
+      navigate(-1);
+    }
   }, [buying]);
 
   useEffect(
@@ -70,22 +73,6 @@ const OrderPage = () => {
     postOrder();
   };
   const postOrder = useCallback(async () => {
-    // console.log({
-    //   ...inputData,
-    //   payMethod: payMethod,
-    //   usePoint: usePoint,
-    //   couponId: couponId === undefined ? "" : couponId,
-    //   totalPrice: totalPrice, //전체 주문 금액(택배비 미포함)
-    //   shippingCharge: shippingCharge, //택배비
-    //   orderItems: buying.map((item) => {
-    //     return {
-    //       itemId: item.itemId,
-    //       option1Id: item.option1Id,
-    //       option2Id: item.option2Id,
-    //       count: item.count,
-    //     };
-    //   }),
-    // });
     try {
       const response = await axios.post(
         "http://localhost:8080/order",
@@ -110,7 +97,8 @@ const OrderPage = () => {
       const data = response.data;
       setBuying([]);
       navigate(
-        `/order/complete?orderId=${data.orderId}&totalPrice=${data.totalPrice}&shippingCharge=${data.shippingCharge}&orderDate=${data.orderDate}`
+        `/order/complete?orderId=${data.orderId}&totalPrice=${data.totalPrice}&shippingCharge=${data.shippingCharge}&orderDate=${data.orderDate}`,
+        { replace: true }
       );
     } catch (error) {
       const response = error.response;
@@ -140,61 +128,68 @@ const OrderPage = () => {
 
   return (
     <OrderPageWrapper>
-      <LeftSection>
-        <SectionTitleWrapper>
-          <SectionTitleSpan>주문 상품</SectionTitleSpan>
-        </SectionTitleWrapper>
-        <OrderedItems
-          setDefaultPrice={setDefaultPrice}
-          setSalePrice={setSalePrice}
-        />
-        <PriceBar
-          salePrice={salePrice}
-          couponSale={couponSale}
-          point={usePoint}
-          totalPrice={totalPrice}
-          shippingCharge={shippingCharge}
-        />
-
-        <SectionTitleWrapper>
-          <SectionTitleSpan>주문 정보</SectionTitleSpan>
-        </SectionTitleWrapper>
-        <OrderWriteInfo setData={setInputData} setIsFilled={setIsInputFilled} />
-
-        <SubInputUl>
-          <OrderList>
-            <CouponSelector
+      {buying.length === 0 ? null : (
+        <>
+          <LeftSection>
+            <SectionTitleWrapper>
+              <SectionTitleSpan>주문 상품</SectionTitleSpan>
+            </SectionTitleWrapper>
+            <OrderedItems
+              setDefaultPrice={setDefaultPrice}
+              setSalePrice={setSalePrice}
+            />
+            <PriceBar
               salePrice={salePrice}
               couponSale={couponSale}
-              setCouponSale={setCouponSale}
-              setCouponId={setCouponId}
+              point={usePoint}
+              totalPrice={totalPrice}
+              shippingCharge={shippingCharge}
             />
-          </OrderList>
-          <OrderList>
-            <UsingPoint
+
+            <SectionTitleWrapper>
+              <SectionTitleSpan>주문 정보</SectionTitleSpan>
+            </SectionTitleWrapper>
+            <OrderWriteInfo
+              setData={setInputData}
+              setIsFilled={setIsInputFilled}
+            />
+
+            <SubInputUl>
+              <OrderList>
+                <CouponSelector
+                  salePrice={salePrice}
+                  couponSale={couponSale}
+                  setCouponSale={setCouponSale}
+                  setCouponId={setCouponId}
+                />
+              </OrderList>
+              <OrderList>
+                <UsingPoint
+                  salePrice={salePrice}
+                  couponSale={couponSale}
+                  setUsePoint={setUsePoint}
+                />
+              </OrderList>
+              <OrderList>
+                <PayMthdSelector
+                  setPayMethod={setPayMethod}
+                  setIsChecked={setIsPayMthdChecked}
+                />
+              </OrderList>
+            </SubInputUl>
+          </LeftSection>
+
+          <PriceBoxWrapper>
+            <PriceBox
               salePrice={salePrice}
               couponSale={couponSale}
-              setUsePoint={setUsePoint}
+              point={usePoint}
+              shippingCharge={shippingCharge}
             />
-          </OrderList>
-          <OrderList>
-            <PayMthdSelector
-              setPayMethod={setPayMethod}
-              setIsChecked={setIsPayMthdChecked}
-            />
-          </OrderList>
-        </SubInputUl>
-      </LeftSection>
-
-      <PriceBoxWrapper>
-        <PriceBox
-          salePrice={salePrice}
-          couponSale={couponSale}
-          point={usePoint}
-          shippingCharge={shippingCharge}
-        />
-        <PayButton onClick={onPayBtnClick}>결제하기</PayButton>
-      </PriceBoxWrapper>
+            <PayButton onClick={onPayBtnClick}>결제하기</PayButton>
+          </PriceBoxWrapper>
+        </>
+      )}
     </OrderPageWrapper>
   );
 };

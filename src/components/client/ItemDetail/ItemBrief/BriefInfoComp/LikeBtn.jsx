@@ -21,10 +21,14 @@ const LikeBtn = ({ itemId, num }) => {
         `http://localhost:8080/preference/isPreference/${itemId}`,
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
-      setIsLogin(response.data.isLogin);
-      setIsLiked(response.data.isPreference);
+      console.log(response.data);
+      setIsLogin(response.data.login);
+      setIsLiked(response.data.preference);
+      setLikeId(response.data.preferenceId);
+
       return;
     } catch (error) {
+      console.log(error);
       if (error.response) {
         const message = error.response.message;
         if (message !== undefined) {
@@ -32,7 +36,7 @@ const LikeBtn = ({ itemId, num }) => {
           return;
         }
       }
-      alert("오류가 발생했습니다. 다시 한번 시도해주세요.");
+      alert("like 오류가 발생했습니다. 다시 한번 시도해주세요.");
     }
   }, []);
 
@@ -62,6 +66,7 @@ const LikeBtn = ({ itemId, num }) => {
   };
 
   const deleteLike = async () => {
+    if (likeId === null) return;
     setLoading(true);
     try {
       await axios.delete(`http://localhost:8080/preference/${likeId}`, {
@@ -101,7 +106,7 @@ const LikeBtn = ({ itemId, num }) => {
 
   return (
     <>
-      <Button onClick={onClick} isLiked={isLiked.toString()}>
+      <Button onClick={onClick} isLiked={isLiked ? "true" : "false"}>
         {isLiked ? "💘" : "💔"}
         {"    "}
         {likesNum}

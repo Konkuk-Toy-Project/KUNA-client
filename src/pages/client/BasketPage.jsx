@@ -89,7 +89,7 @@ const BasketPage = () => {
           <TotalPrice>{totalPrice}원</TotalPrice>
           <DetailPriceWrapper>
             <DetailDescription>총 상품 금액</DetailDescription>
-            <DetailPrice>{discountPrice}원</DetailPrice>
+            <DetailPrice>{totalPrice - postPrice}원</DetailPrice>
           </DetailPriceWrapper>
           <DetailPriceWrapper>
             <DetailDescription>배송비</DetailDescription>

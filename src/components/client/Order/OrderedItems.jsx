@@ -9,6 +9,7 @@ const OrderedItems = ({ setDefaultPrice, setSalePrice }) => {
   const [buying, setBuying] = useRecoilState(buyingState);
 
   useEffect(() => {
+    if (buying.length === 0) return;
     setDefaultPrice(
       buying.map((i) => i.count * i.price).reduce((prev, post) => prev + post)
     );
@@ -21,9 +22,13 @@ const OrderedItems = ({ setDefaultPrice, setSalePrice }) => {
 
   return (
     <div>
-      {buying.map((item, idx) => (
-        <OrderedItem key={"o_item_" + idx} item={item} />
-      ))}
+      {buying.length === 0 ? (
+        <></>
+      ) : (
+        buying.map((item, idx) => (
+          <OrderedItem key={"o_item_" + idx} item={item} />
+        ))
+      )}
     </div>
   );
 };

@@ -82,7 +82,7 @@ const OwnerAnswerPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
+  min-height: 80vh;
   width: 80vw;
   margin: auto;
 `;

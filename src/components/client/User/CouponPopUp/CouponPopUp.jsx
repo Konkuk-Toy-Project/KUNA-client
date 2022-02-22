@@ -36,6 +36,7 @@ const CouponPopUp = () => {
         )
         .then((response) => response.data);
       alert("쿠폰이 등록되었습니다.");
+      setShowCoupon(false);
     } catch (err) {
       alert("이미 사용했거나 존재하지 않는 쿠폰입니다.");
     }

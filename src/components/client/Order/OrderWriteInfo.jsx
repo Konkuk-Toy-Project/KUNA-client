@@ -20,7 +20,6 @@ const OrderWriteInfo = ({ setData, setIsFilled }) => {
 
   const onChange = (e) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
-    console.log(infos);
   };
 
   useEffect(async () => {
@@ -28,14 +27,13 @@ const OrderWriteInfo = ({ setData, setIsFilled }) => {
       const response = await axios.get("http://localhost:8080/member/info", {
         headers: { Authorization: `Bearer ${userToken}` },
       });
-      console.log(response.data);
       setInfos({
         ...infos,
         [RECIPIENT]: response.data.name,
         [PHONE]: response.data.phone,
       });
     } catch (error) {
-      console.log(error);
+      alert("오류가 발생했습니다. 다시 시도해주세요");
     }
   }, []);
 

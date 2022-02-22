@@ -48,10 +48,6 @@ const UsingPoint = ({ salePrice, couponSale, setUsePoint }) => {
     setUsePoint(parseInt(inputPoint)); // 주문페이지로 보내는 데이터
   }, [inputPoint]);
 
-  console.log(inputPoint);
-  console.log(availPoint);
-  console.log(ownPoint);
-
   return (
     <>
       <OrderLabel text="포인트" />

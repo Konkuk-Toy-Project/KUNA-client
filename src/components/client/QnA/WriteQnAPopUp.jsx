@@ -119,8 +119,6 @@ const WriteQnAPopUp = ({ itemData }) => {
 
 WriteQnAPopUp.propTypes = {
   itemData: PropTypes.object.isRequired,
-  setNewQnaIds: PropTypes.func.isRequired,
-  setPopWriteQnA: PropTypes.func.isRequired,
 };
 
 const PopupBackGround = styled.div`

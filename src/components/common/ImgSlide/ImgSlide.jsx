@@ -100,5 +100,6 @@ const SubImg = styled.img`
   border-radius: 5px;
   object-fit: cover;
   border: ${({ border }) => (border === "true" ? "solid #c76fd6 2px" : "none")};
+  cursor: pointer;
 `;
 export default ImgSlide;

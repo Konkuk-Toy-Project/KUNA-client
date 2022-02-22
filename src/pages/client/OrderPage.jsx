@@ -60,8 +60,6 @@ const OrderPage = () => {
   }, [totalPrice]);
 
   const onPayBtnClick = () => {
-    console.log(isInputFilled);
-    console.log(isPayMthdChecked);
     if (!isInputFilled || !isPayMthdChecked) {
       alert(
         !isInputFilled
@@ -102,13 +100,11 @@ const OrderPage = () => {
       );
     } catch (error) {
       const response = error.response;
-      //console.log(error.response.errorCode);
       alert(
         response && response.errorCode !== undefined
           ? response.message
           : "오류가 발생하였습니다. 다시 시도해주세요"
       );
-      // window.location.reload();
     }
   }, [
     buying,
@@ -119,12 +115,6 @@ const OrderPage = () => {
     usePoint,
     payMethod,
   ]);
-
-  console.log(inputData);
-  // console.log(couponId);
-  // console.log(payMethod);
-  // console.log(items);
-  ///console.log(data);
 
   return (
     <OrderPageWrapper>

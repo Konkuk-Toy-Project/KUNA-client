@@ -44,7 +44,6 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
     }
   };
   const onUpBtnClick = (e) => {
-    console.log(e.target);
     const itemIdx = Number(e.target.name);
     if (selItems[itemIdx].count < selItems[itemIdx].stock) {
       setSelItems(
@@ -61,7 +60,6 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
   };
 
   const onDownBtnClick = (e) => {
-    console.log(e.target);
     const itemIdx = Number(e.target.name);
     if (selItems[itemIdx].count > 1) {
       setSelItems(
@@ -195,14 +193,7 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
                 onDownBtnClick={onDownBtnClick}
                 idx={idx}
               />
-              {/* <UpDownWrapper>
-                <UpDownBtn name={idx} type="up" onClick={onUpBtnClick}>
-                  ▲
-                </UpDownBtn>
-                <UpDownBtn name={idx} type="down" onClick={onDownBtnClick}>
-                  ▼
-                </UpDownBtn>
-              </UpDownWrapper> */}
+
               <Price>{(price * item.count).toLocaleString()}원</Price>
               <DelBtn name={idx} key={"x_" + idx} onClick={onDelBtnClick}>
                 ⨉

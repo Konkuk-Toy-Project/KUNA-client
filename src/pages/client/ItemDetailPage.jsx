@@ -45,16 +45,14 @@ const ItemDetailPage = () => {
   const getItem = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:8080/item/${itemId}`);
-      console.log(response.data);
       setItem(response.data);
     } catch (error) {
-      console.log(error);
+      alert("오류가 발생하였습니다. 다시 시도해주세요");
     }
     setLoading(false);
   }, [itemId]);
 
   const onTabClick = (e) => {
-    console.log(e.target.dataset);
     switch (e.target.dataset.type) {
       case ITEM_DETAIL:
         itemDetailRef.current?.scrollIntoView({ behavior: "smooth" });

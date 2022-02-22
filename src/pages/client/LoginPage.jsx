@@ -41,13 +41,11 @@ const LoginPage = () => {
 
   const sendAccount = async () => {
     try {
-      console.log("클릭");
       const response = await axios.post(
         "http://localhost:8080/member/login",
         account
       );
       const data = await response.data;
-      console.log(data.token);
       setUserToken(data.token);
 
       if (data.role === "admin") setIsClientState(false);

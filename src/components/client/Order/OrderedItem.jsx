@@ -54,7 +54,6 @@ const OrderedItem = ({ item }) => {
     );
   };
 
-  console.log(buying);
   return (
     <OrderedItemWrapper>
       <ThumbnailWrapper>

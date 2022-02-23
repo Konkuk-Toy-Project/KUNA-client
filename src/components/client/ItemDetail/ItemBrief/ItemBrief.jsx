@@ -22,6 +22,7 @@ const ItemBrief = ({ itemObj }) => {
   const [openBasketPopup, setOpenBasketPopup] =
     useRecoilState(basketPopupState);
   const navigate = useNavigate();
+  const [isSoldout, setIsSoldout] = useState(false);
 
   const onBuyClick = () => {
     if (!canDoBtnClickEvent()) return;
@@ -45,6 +46,7 @@ const ItemBrief = ({ itemObj }) => {
   }, [buying]);
 
   useEffect(async () => {
+    checkIsSoldout();
     try {
       const response = await axios.get(`http://localhost:8080/member/isLogin`, {
         headers: { Authorization: `Bearer ${userToken}` },
@@ -79,6 +81,12 @@ const ItemBrief = ({ itemObj }) => {
     return true;
   }, [chosenOpts, isLogin]);
 
+  const checkIsSoldout = useCallback(() => {
+    item.option1.map((o1) => o1.stock).reduce((p, f) => p + f) === 0
+      ? setIsSoldout(true)
+      : setIsSoldout(false);
+  }, [item]);
+
   const postChosenOpt = async () => {
     try {
       const response = await axios.post(
@@ -107,7 +115,7 @@ const ItemBrief = ({ itemObj }) => {
 
       <BriefInfoWrapper>
         <BriefHeader
-          state={item.itemState}
+          state={isSoldout ? "sold_out" : "NORMALITY"}
           name={item.name}
           price={item.price}
           sale={item.sale}

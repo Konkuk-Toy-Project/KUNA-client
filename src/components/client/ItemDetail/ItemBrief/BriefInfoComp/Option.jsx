@@ -16,6 +16,7 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
   const [option2, setOption2] = useState(["", ""]); // 선택한 옵션2
   const [stock, setStock] = useState();
 
+  const [isSoldout, setIsSoldout] = useState(false);
   const [selItems, setSelItems] = useState([]);
 
   const basketPopup = useRecoilValue(basketPopupState);
@@ -78,6 +79,11 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
     setSelItems(selItems.filter((sel, idx) => idx != e.target.name));
     setChosen(chosen.filter((chose, idx) => idx != e.target.name));
   };
+  useEffect(() => {
+    optionOnes.map((o1) => o1.stock).reduce((prev, post) => prev + post) === 0
+      ? setIsSoldout(true)
+      : setIsSoldout(false);
+  }, []);
 
   useEffect(() => {
     if (!isItemSelected) return;
@@ -125,6 +131,8 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
       setSelItems([]);
     }
   }, [basketPopup]);
+  console.log(item);
+  console.log(optionTwos);
 
   return (
     <div>
@@ -135,7 +143,7 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
             name="option1"
             id="option1"
             onChange={onChange}
-            disabled={isOpt1Chosen || item.itemState === "sold_out"}
+            disabled={isOpt1Chosen || isSoldout}
           >
             <option selected={!isOpt1Chosen || !isItemSelected} disabled>
               옵션1
@@ -143,11 +151,11 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
             {optionOnes.map((optOne) => (
               <option
                 key={"o1_" + optOne.name}
-                disabled={optOne.count === 0}
+                disabled={optOne.stock === 0}
                 data-id={optOne.option1Id}
               >
                 {optOne.name}
-                {optOne.count == 0 ? "(품절)" : null}
+                {optOne.stock == 0 ? "(품절)" : null}
               </option>
             ))}
           </Select>
@@ -167,11 +175,11 @@ const Option = ({ item, price, chosen, setChosen, setChosenSubInfo }) => {
               ? optionTwos.map((optTwo) => (
                   <option
                     key={"o2_" + optTwo.name}
-                    disabled={optTwo.count === 0}
+                    disabled={optTwo.stock === 0}
                     data-id={optTwo.option2Id}
                   >
                     {optTwo.name}
-                    {optTwo.count == 0 ? "(품절)" : null}
+                    {optTwo.stock === 0 ? "(품절)" : null}
                   </option>
                 ))
               : null}

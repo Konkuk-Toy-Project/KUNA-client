@@ -8,7 +8,7 @@ const BriefHeader = ({ state, name, price, sale, like, id }) => {
     <BriefHeaderWrapper>
       <ItemTitle name="item-title">
         {name}
-        {state === "sold_out" ? <span>품절</span> : null}
+        {state === "sold_out" ? <SoldOutSpan>품절</SoldOutSpan> : null}
       </ItemTitle>
 
       <ItemWrapper id="sale-container">
@@ -52,6 +52,7 @@ const ItemTitle = styled.div`
   font-weight: bold;
   color: black;
   margin-bottom: 20px;
+  line-height: 150%;
 `;
 
 const ItemWrapper = styled.div`
@@ -95,5 +96,18 @@ const SaleSpanWrapper = styled.span`
 
 const LikeWrapper = styled.div`
   margin: 15px 0 0 0;
+`;
+
+const SoldOutSpan = styled.span`
+  display: inline-block;
+  font-size: 15px;
+  width: 50px;
+  height: 30px;
+  border-radius: 5px;
+  border: 2px solid #b71c1c;
+  color: #b71c1c;
+  margin: 0 5px;
+  text-align: center;
+  line-height: 30px;
 `;
 export default BriefHeader;

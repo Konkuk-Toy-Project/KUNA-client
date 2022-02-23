@@ -93,8 +93,10 @@ const BasketItem = ({ item }) => {
         <Button onClick={() => onClickChangeCount("increase")}>〉</Button>
       </AmountWrapper>
       <PriceWrapper>
-        <ItemPrice>{item.price}원</ItemPrice>
-        <DiscountAndCount>{discountPrice()}원</DiscountAndCount>
+        <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
+        <DiscountAndCount>
+          {discountPrice().toLocaleString()}원
+        </DiscountAndCount>
       </PriceWrapper>
       <Button onClick={onClickDeleteBasket}>✕</Button>
     </Wrapper>

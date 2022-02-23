@@ -86,14 +86,16 @@ const BasketPage = () => {
         </ItemWrapper>
         <PaymentWrapper>
           <PaymentTitle>결제 금액</PaymentTitle>
-          <TotalPrice>{totalPrice}원</TotalPrice>
+          <TotalPrice>{totalPrice.toLocaleString()}원</TotalPrice>
           <DetailPriceWrapper>
             <DetailDescription>총 상품 금액</DetailDescription>
-            <DetailPrice>{totalPrice - postPrice}원</DetailPrice>
+            <DetailPrice>
+              {(totalPrice - postPrice).toLocaleString()}원
+            </DetailPrice>
           </DetailPriceWrapper>
           <DetailPriceWrapper>
             <DetailDescription>배송비</DetailDescription>
-            <DetailPrice>{postPrice}원</DetailPrice>
+            <DetailPrice>{postPrice.toLocaleString()}원</DetailPrice>
           </DetailPriceWrapper>
           <PaymentButton onClick={onClickPurchaseItems}>결제하기</PaymentButton>
         </PaymentWrapper>
@@ -167,6 +169,7 @@ const PaymentWrapper = styled.div`
   background-color: #f6f6f6;
   padding: 2em;
   border-radius: 20px;
+  text-align: center;
 `;
 
 const PaymentTitle = styled.p`

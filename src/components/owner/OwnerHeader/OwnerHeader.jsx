@@ -25,6 +25,8 @@ const OwnerHeader = () => {
       .then((response) => response.data);
     if (!data) {
       setUserToken([]);
+      alert("토큰이 만료되어 로그아웃 되었습니다.");
+      navigate("/");
     }
   }, [setUserToken, userToken]);
 
@@ -38,7 +40,7 @@ const OwnerHeader = () => {
         <div>
           <PageLink to="/">
             <HomeIcon
-              src="https://img.sonyunara.com/2021/asset/pc/img/common/header/renual_logo_pc.png"
+              src="https://user-images.githubusercontent.com/72953316/155157249-3beecbf4-d257-4070-8035-91bc65afd18f.png"
               alt="Home Icon"
             />
             <h1>관리자 페이지</h1>
@@ -84,9 +86,9 @@ const HomeIcon = styled.img`
 `;
 
 const LogoutButton = styled.button`
-  width: 7em;
-  height: 7em;
-  font-size: 10px;
+  width: 6em;
+  height: 6em;
+  font-size: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;

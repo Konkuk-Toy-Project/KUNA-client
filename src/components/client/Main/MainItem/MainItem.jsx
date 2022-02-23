@@ -10,7 +10,7 @@ const MainItem = ({ item }) => {
   };
 
   const discountPrice = () => {
-    return (item.price * (100 - item.sale)) / 100;
+    return ((item.price * (100 - item.sale)) / 100).toLocaleString();
   };
 
   const onClickItem = () => {

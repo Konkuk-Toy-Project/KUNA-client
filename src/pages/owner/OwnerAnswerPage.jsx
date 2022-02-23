@@ -10,6 +10,7 @@ import AnswerPopUp from "../../components/owner/Answer/AnswerPopUp/AnswerPopUp";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { currentY, userTokenState } from "../../store/common/user";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const OwnerAnswerPage = () => {
   const [items, setItems] = useState([]);
@@ -54,6 +55,11 @@ const OwnerAnswerPage = () => {
 
   return (
     <OwnerAnswerPageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>KUNA | Q&A</title>
+        </Helmet>
+      </HelmetProvider>
       <Title>질문 내역</Title>
       <CouponWrapper>
         <Description>상품명</Description>

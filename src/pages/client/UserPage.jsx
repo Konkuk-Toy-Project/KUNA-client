@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import ProfileBanner from "../../components/client/User/ProfileBanner/ProfileBanner";
@@ -25,6 +26,11 @@ const UserPage = () => {
 
   return (
     <UserPageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>KUNA | 프로필</title>
+        </Helmet>
+      </HelmetProvider>
       <ProfileBanner userInfo={userInfo} />
       <UserInfo user={userInfo} />
     </UserPageWrapper>

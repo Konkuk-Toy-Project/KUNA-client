@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
 import styled from "styled-components";
 import PreviewTitle from "../../components/common/PreviewTitle/PreviewTitle";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const SearchPage = () => {
   const [items, setItems] = useState([]);
@@ -24,6 +25,11 @@ const SearchPage = () => {
 
   return (
     <SearchPageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>{`KUNA | ${content}`}</title>
+        </Helmet>
+      </HelmetProvider>
       <PreviewTitle name={`검색 키워드 : ${content}`} />
       <PreviewItemList listType={"main"} items={items} />
     </SearchPageWrapper>

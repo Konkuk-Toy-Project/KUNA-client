@@ -21,9 +21,8 @@ const LikeBtn = ({ itemId, num }) => {
         `http://localhost:8080/preference/isPreference/${itemId}`,
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
-      console.log(response.data);
-      setIsLogin(response.data.login);
-      setIsLiked(response.data.preference);
+      setIsLogin(response.data.isLogin);
+      setIsLiked(response.data.isPreference);
       setLikeId(response.data.preferenceId);
 
       return;

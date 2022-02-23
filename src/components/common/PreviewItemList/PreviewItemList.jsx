@@ -9,9 +9,9 @@ const PreviewItemList = ({ listType, items }) => {
     <PreviewItemListWrapper>
       {items.map((item) =>
         listType === "main" ? (
-          <MainItem key={item.itemId} item={item} />
+          <MainItem key={item.preferenceId} item={item} />
         ) : (
-          <LikeItem key={item.itemId} item={item} />
+          <LikeItem key={item.preferenceId} item={item} />
         )
       )}
     </PreviewItemListWrapper>

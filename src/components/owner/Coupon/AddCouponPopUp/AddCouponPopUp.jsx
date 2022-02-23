@@ -98,7 +98,7 @@ const AddCouponPopUp = () => {
           onChange={onChange(setName)}
         />
       </InputWrapper>
-      <ProductButton onClick={onClickSubmit}>상품 추가하기</ProductButton>
+      <ProductButton onClick={onClickSubmit}>쿠폰 등록하기</ProductButton>
     </AddCouponPopUpWrapper>
   );
 };

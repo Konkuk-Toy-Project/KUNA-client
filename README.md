@@ -51,7 +51,7 @@ https://documenter.getpostman.com/view/15978728/UVe9Qp9K
 **Frontend**
 
 - **Language** : JavaScript
-- **Library & Framework** : React, Styled-Components, Recoil
+- **Library** : React, Styled-Components, Recoil
 
 **Backend**
 

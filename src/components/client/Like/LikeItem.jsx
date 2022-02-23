@@ -38,8 +38,8 @@ const LikeItem = ({ item }) => {
       <Description>
         <Title>{item.name}</Title>
         <PriceWrapper>
-          <ItemPrice>{item.price}원</ItemPrice>
-          <DiscountPrice>{discountPrice()}원</DiscountPrice>
+          <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
+          <DiscountPrice>{discountPrice().toLocaleString()}원</DiscountPrice>
         </PriceWrapper>
       </Description>
     </Wrapper>

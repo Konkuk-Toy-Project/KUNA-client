@@ -29,7 +29,7 @@ const PointPopUp = () => {
     <PointPopUpWrapper top={scrollY}>
       <CloseButton onClick={setShowPoint} />
       <Title>보유 포인트</Title>
-      <Point>{points}</Point>
+      <Point>{points.toLocaleString()}</Point>
       <Description>구매 금액의 1%가 포인트로 적립됩니다.</Description>
     </PointPopUpWrapper>
   );

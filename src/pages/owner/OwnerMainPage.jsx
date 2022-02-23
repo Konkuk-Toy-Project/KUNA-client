@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react/cjs/react.development";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -17,6 +18,11 @@ const OwnerMainPage = () => {
 
   return (
     <OwnerMainPageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>KUNA | 관리자</title>
+        </Helmet>
+      </HelmetProvider>
       <Title>원하는 작업을 선택하세요</Title>
       <MenuCategoryWrapper>
         <MenuCategory

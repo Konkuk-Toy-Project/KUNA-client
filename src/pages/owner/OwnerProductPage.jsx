@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import AddItemPopUp from "../../components/owner/Product/AddItemPopUp/AddItemPopUp";
@@ -46,6 +47,11 @@ const OwnerProductPage = () => {
 
   return (
     <OwnerProductPageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>KUNA | 상품 관리</title>
+        </Helmet>
+      </HelmetProvider>
       <EnrollItemWrapper onClick={onClickAddItem}>
         <img
           src="https://img.sonyunara.com/2020/asset/pc/img/common/header/my_icon3.png"

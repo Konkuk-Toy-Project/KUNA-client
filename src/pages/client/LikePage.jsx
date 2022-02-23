@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import PreviewItemList from "../../components/common/PreviewItemList/PreviewItemList";
@@ -26,6 +27,11 @@ const LikePage = () => {
 
   return (
     <LikePageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>KUNA | 찜목록</title>
+        </Helmet>
+      </HelmetProvider>
       <PreviewTitle name="좋아요" />
       <PreviewItemList listType={"like"} items={items} />
     </LikePageWrapper>

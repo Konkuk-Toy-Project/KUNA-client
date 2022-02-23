@@ -2,10 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import Category from "../../components/client/Main/Category/Category";
 import { Suspense } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const MainPage = () => {
   return (
     <MainPageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>KUNA</title>
+        </Helmet>
+      </HelmetProvider>
       <MainImageWrapper>
         <MainImage
           src="https://img.sonyunara.com/files/new_banner/1644914647_0.jpg.webp"

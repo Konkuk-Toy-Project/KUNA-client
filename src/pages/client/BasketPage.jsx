@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useNavigate } from "react-router";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -70,6 +71,11 @@ const BasketPage = () => {
 
   return (
     <BasketPageWrapper>
+      <HelmetProvider>
+        <Helmet>
+          <title>KUNA | 장바구니</title>
+        </Helmet>
+      </HelmetProvider>
       <Title>장바구니</Title>
       <BasketWrapper>
         <ItemWrapper>

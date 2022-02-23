@@ -2,6 +2,14 @@
   <img width="300px;" src="https://user-images.githubusercontent.com/72953316/155157249-3beecbf4-d257-4070-8035-91bc65afd18f.png" alt="kuna"/>
 </p>
 
+<p align="middle" >
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>
+<img src="https://img.shields.io/badge/styled components-DB7093?style=flat&logo=styled-components&logoColor=white"/>
+<img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=SpringBoot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=SpringSecurity&logoColor=white"/>
+<img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white"/>
+</p>
+
 </br>
 
 ## 🎤 프로젝트 소개

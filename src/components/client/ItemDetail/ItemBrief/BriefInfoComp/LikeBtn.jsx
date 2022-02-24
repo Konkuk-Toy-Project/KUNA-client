@@ -12,6 +12,7 @@ const LikeBtn = ({ itemId, num }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [didGetLikeInfo, setDidGetLikeInfo] = useState(false);
   const userToken = useRecoilValue(userTokenState);
 
   useEffect(() => getPreference(), []);
@@ -21,9 +22,11 @@ const LikeBtn = ({ itemId, num }) => {
         `http://localhost:8080/preference/isPreference/${itemId}`,
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
-      setIsLogin(response.data.isLogin);
-      setIsLiked(response.data.isPreference);
-      setLikeId(response.data.preferenceId);
+
+      await setIsLogin(response.data.login);
+      await setIsLiked(response.data.preference);
+      await setLikeId(response.data.preferenceId);
+      await setDidGetLikeInfo(true);
 
       return;
     } catch (error) {
@@ -105,7 +108,11 @@ const LikeBtn = ({ itemId, num }) => {
 
   return (
     <>
-      <Button onClick={onClick} isLiked={isLiked ? "true" : "false"}>
+      <Button
+        onClick={onClick}
+        isLiked={isLiked ? "true" : "false"}
+        disabled={!didGetLikeInfo}
+      >
         {isLiked ? "💘" : "💔"}
         {"    "}
         {likesNum}

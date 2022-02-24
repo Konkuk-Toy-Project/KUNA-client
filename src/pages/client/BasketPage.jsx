@@ -32,7 +32,7 @@ const BasketPage = () => {
     items.map((item) => (total += item.price * item.count));
     setWithoutDiscountPrice(total);
     if (withoutDiscountPrice > 50000) {
-      setPostPrice(2000);
+      setPostPrice(0);
     } else {
       setPostPrice(3000);
     }

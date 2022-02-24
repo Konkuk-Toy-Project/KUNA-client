@@ -18,6 +18,7 @@ import ReviewPopup from "../../components/client/Review/ReviewPopup";
 import { buyingState } from "../../store/client/buying";
 import WriteQnAPopUp from "../../components/client/QnA/WriteQnAPopUp";
 import AnswCheckPopup from "../../components/client/QnA/AnswCheckPopup";
+import ReactHelmet from "../../components/common/ReactHelmet/ReactHelmet";
 
 const ITEM_DETAIL = "itemDetail";
 const REVIEW = "review";
@@ -68,6 +69,7 @@ const ItemDetailPage = () => {
 
   return (
     <ItemDetailPageWrapper>
+      <ReactHelmet title={"제품상세"} />
       {loading ? (
         <div>Loading</div>
       ) : (

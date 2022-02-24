@@ -4,6 +4,7 @@ import PageTitle from "../../components/common/PageTitle/PageTitle";
 import IconX from "../../components/client/Icon/IconX";
 import axios from "axios";
 import styled from "styled-components";
+import ReactHelmet from "../../components/common/ReactHelmet/ReactHelmet";
 
 const FIND_ID = "findId";
 const FIND_PW = "findPw";
@@ -106,6 +107,7 @@ const FindAccountPage = () => {
 
   return (
     <FindAccountWrapper>
+      <ReactHelmet title={"아이디·비밀번호 찾기"} />
       <PageTitle title={"아이디·비밀번호 찾기"} />
       {loading ? <div>Loading...</div> : null}
       {/* <div id="tab-container"></div> */}

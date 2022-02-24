@@ -5,6 +5,7 @@ import QueryString from "qs";
 import IconCircleCheck from "../../components/client/Icon/IconCircleCheck";
 import styled from "styled-components";
 import OrderLabel from "../../components/client/Order/OrderLabel";
+import ReactHelmet from "../../components/common/ReactHelmet/ReactHelmet";
 // orderId: 주문 번호
 // totalPrice: 전체 주문 금액(택배비 미포함)
 // shippingcharge: 택배비
@@ -26,6 +27,7 @@ const OrderFinPage = () => {
   const onClick = () => navigate("/");
   return (
     <OrderFinPageWrapper>
+      <ReactHelmet title={"주문완료"} />
       <IconWrapper>
         <IconCircleCheck color="#494949" />
       </IconWrapper>

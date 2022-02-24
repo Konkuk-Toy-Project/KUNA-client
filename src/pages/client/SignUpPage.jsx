@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import PageTitle from "../../components/common/PageTitle/PageTitle";
+import ReactHelmet from "../../components/common/ReactHelmet/ReactHelmet";
 
 const TYPE_MANUALLY = "직접입력";
 const emailArr = [TYPE_MANUALLY, "naver.com", "gmail.com", "daum.net"];
@@ -191,6 +192,7 @@ const SignUpPage = () => {
   }, [info]);
   return (
     <SignUpWrapper>
+      <ReactHelmet title={"회원가입"} />
       {/* 로딩중 샘플 */}
       {loading ? <div>로딩중</div> : null}
       <PageTitle title={"회원가입"} />

@@ -11,6 +11,7 @@ import PayMthdSelector from "../../components/client/Order/PayMthdSelector.jsx";
 import PriceBar from "../../components/client/Order/PriceBar.jsx";
 import PriceBox from "../../components/client/Order/PriceBox.jsx";
 import UsingPoint from "../../components/client/Order/UsingPoint.jsx";
+import ReactHelmet from "../../components/common/ReactHelmet/ReactHelmet.jsx";
 import {
   buyingDefaultPrice,
   buyingSalePrice,
@@ -118,6 +119,7 @@ const OrderPage = () => {
 
   return (
     <OrderPageWrapper>
+      <ReactHelmet title={"주문하기"} />
       {buying.length === 0 ? null : (
         <>
           <LeftSection>

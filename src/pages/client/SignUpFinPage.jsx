@@ -3,6 +3,7 @@ import React from "react";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import ReactHelmet from "../../components/common/ReactHelmet/ReactHelmet";
 
 const SignUpFinPage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const SignUpFinPage = () => {
   const onClickToLogin = () => navigate("/login");
   return (
     <SignUpFinPageWrapper>
+      <ReactHelmet title={"회원가입 완료"} />
       <IconWrapper>
         <FontAwesomeIcon icon={faCircleCheck} style={{ fontSize: 100 }} />
       </IconWrapper>

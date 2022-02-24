@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isClientState, userTokenState } from "../../store/common/user";
 import PageTitle from "../../components/common/PageTitle/PageTitle";
+import ReactHelmet from "../../components/common/ReactHelmet/ReactHelmet";
 
 const INPUT_TYPE_PW = "password";
 const INPUT_TYPE_TEXT = "text";
@@ -69,6 +70,7 @@ const LoginPage = () => {
   useEffect(() => setIsWrong(false), [account]);
   return (
     <LoginWrapper>
+      <ReactHelmet title={"로그인"} />
       <div>
         <PageTitle title={"로그인"} />
 

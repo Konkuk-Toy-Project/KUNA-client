@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import Category from "../../components/client/Main/Category/Category";
 import { Suspense } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userTokenState } from "../../store/common/user";
+import { useNavigate } from "react-router";
 
 const MainPage = () => {
+  const [userToken, setUserToken] = useRecoilState(userTokenState);
+  const navigate = useNavigate();
+
+  const isValidLogin = useCallback(async () => {
+    const data = await axios
+      .get(`http://localhost:8080/member/isLogin`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+      .then((response) => response.data);
+    if (!data) {
+      setUserToken([]);
+      alert("토큰이 만료되어 로그아웃 되었습니다.");
+      navigate("/");
+    }
+  }, [setUserToken, userToken]);
+
+  useEffect(() => {
+    isValidLogin();
+  }, [isValidLogin]);
+
   return (
     <MainPageWrapper>
       <HelmetProvider>

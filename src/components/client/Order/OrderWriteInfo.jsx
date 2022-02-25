@@ -19,7 +19,13 @@ const OrderWriteInfo = ({ setData, setIsFilled }) => {
   const userToken = useRecoilValue(userTokenState);
 
   const onChange = (e) => {
-    setInfos({ ...infos, [e.target.name]: e.target.value });
+    let value = e.target.value;
+    if (e.target.name === PHONE) {
+      value = value.toString().replace(/[^0-9]/gi, "");
+      if (value.length > 11) value = value.substring(0, 11);
+    }
+
+    setInfos({ ...infos, [e.target.name]: value });
   };
 
   useEffect(async () => {

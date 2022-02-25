@@ -16,17 +16,17 @@ const LikeBtn = ({ itemId, num }) => {
   const userToken = useRecoilValue(userTokenState);
 
   useEffect(() => getPreference(), []);
-  const getPreference = useCallback(async () => {
+  const getPreference = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/preference/isPreference/${itemId}`,
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
-
-      await setIsLogin(response.data.login);
-      await setIsLiked(response.data.preference);
-      await setLikeId(response.data.preferenceId);
-      await setDidGetLikeInfo(true);
+      console.log(response.data);
+      setIsLogin(response.data.login);
+      setIsLiked(response.data.preference);
+      setLikeId(response.data.preferenceId);
+      setDidGetLikeInfo(true);
 
       return;
     } catch (error) {
@@ -40,7 +40,7 @@ const LikeBtn = ({ itemId, num }) => {
       }
       alert("like 오류가 발생했습니다. 다시 한번 시도해주세요.");
     }
-  }, []);
+  };
 
   const postLike = async () => {
     setLoading(true);
@@ -113,9 +113,16 @@ const LikeBtn = ({ itemId, num }) => {
         isLiked={isLiked ? "true" : "false"}
         disabled={!didGetLikeInfo}
       >
-        {isLiked ? "💘" : "💔"}
-        {"    "}
-        {likesNum}
+        {!didGetLikeInfo ? (
+          <LoadingSpan>LOADING...</LoadingSpan>
+        ) : (
+          <>
+            {isLiked ? "💘" : "💔"}
+            {"    "}
+
+            {likesNum}
+          </>
+        )}
       </Button>
     </>
   );
@@ -134,12 +141,26 @@ const Button = styled.button`
   border: none;
   outline: none;
   cursor: pointer;
+  line-height: 30px;
   background-color: ${({ isLiked }) =>
     isLiked == "true" ? "black" : "#424242"};
   color: white;
   &:hover {
     background-color: black;
   }
+  &:disabled {
+    background-color: #707070;
+    color: white;
+    &:hover {
+      background-color: #707070;
+      color: white;
+      cursor: default;
+    }
+  }
+`;
+
+const LoadingSpan = styled.span`
+  font-size: 13px;
 `;
 
 export default LikeBtn;

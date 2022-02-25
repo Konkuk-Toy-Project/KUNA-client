@@ -31,12 +31,7 @@ const BasketPage = () => {
     let total = 0;
     items.map((item) => (total += item.price * item.count));
     setWithoutDiscountPrice(total);
-    if (withoutDiscountPrice > 50000) {
-      setPostPrice(0);
-    } else {
-      setPostPrice(3000);
-    }
-  }, [withoutDiscountPrice, items]);
+  }, [items]);
 
   const calculateDiscountPrice = useCallback(() => {
     let total = 0;
@@ -60,6 +55,11 @@ const BasketPage = () => {
   useEffect(() => {
     calculateTotalPrice();
     calculateDiscountPrice();
+    if (withoutDiscountPrice - discountPrice > 50000) {
+      setPostPrice(0);
+    } else {
+      setPostPrice(3000);
+    }
     setTotalPrice(withoutDiscountPrice - discountPrice + postPrice);
   }, [
     calculateTotalPrice,

@@ -10,19 +10,6 @@ const Header = () => {
   const [userToken, setUserToken] = useRecoilState(userTokenState);
   const navigate = useNavigate();
 
-  const isValidLogin = useCallback(async () => {
-    const data = await axios
-      .get(`http://localhost:8080/member/isLogin`, {
-        headers: { Authorization: `Bearer ${userToken}` },
-      })
-      .then((response) => response.data);
-    if (!data) {
-      setUserToken([]);
-      alert("토큰이 만료되어 로그아웃 되었습니다.");
-      navigate("/");
-    }
-  }, [setUserToken, userToken]);
-
   const onClickLogout = () => {
     setUserToken([]);
     navigate("/");
@@ -49,10 +36,6 @@ const Header = () => {
       navigate("/login");
     }
   };
-
-  useEffect(() => {
-    isValidLogin();
-  }, [isValidLogin]);
 
   return (
     <HeaderWrapper>

@@ -184,6 +184,7 @@ const Button = styled.button`
   color: white;
   border: none;
   outline: none;
+  cursor: pointer;
 
   &:hover {
     border: 2px black solid;

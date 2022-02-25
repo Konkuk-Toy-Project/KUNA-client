@@ -40,6 +40,10 @@ const LoginPage = () => {
     sendAccount();
   };
 
+  const onPressEnter = (e) => {
+    if (e.key == "Enter") onSubmit();
+  };
+
   const sendAccount = async () => {
     try {
       const response = await axios.post(
@@ -69,7 +73,7 @@ const LoginPage = () => {
   };
   useEffect(() => setIsWrong(false), [account]);
   return (
-    <LoginWrapper>
+    <LoginWrapper onKeyPress={onPressEnter}>
       <ReactHelmet title={"로그인"} />
       <div>
         <PageTitle title={"로그인"} />

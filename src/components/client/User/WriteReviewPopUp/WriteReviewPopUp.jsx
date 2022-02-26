@@ -51,6 +51,12 @@ const WriteReviewPopUp = () => {
   }
 
   const onClickSubmit = async () => {
+    if (0 > Number(rate) || Number(rate) > 5) {
+      return alert("별점은 0~5사이만 가능합니다.");
+    }
+    if (description === "") {
+      return alert("리뷰 내용을 입력해주세요.");
+    }
     if (window.confirm("리뷰를 작성하시겠습니까?")) {
       const data = getItem();
       await addNewItem(data);

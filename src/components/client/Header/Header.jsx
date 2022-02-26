@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userTokenState } from "../../../store/common/user";
-import axios from "axios";
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");

@@ -15,7 +15,7 @@ const ReviewHeader = ({ rate, memberName, option, date }) => {
           <StarWrapper>
             <RatingStars rate={rate} />
           </StarWrapper>
-          <RateNumSpan>{rate.toFixed(1)}</RateNumSpan>
+          <RateNumSpan>{rate}</RateNumSpan>
         </RatingWrapper>
         <HeaderSpanWrapper>
           <HeaderSpan>{memberName}</HeaderSpan>│
@@ -59,7 +59,7 @@ const RatingWrapper = styled.div`
 
 const StarWrapper = styled.div`
   font-size: 25px;
-  width: 140px;
+  width: 160px;
   display: inline-block;
 `;
 

@@ -408,10 +408,15 @@ const SignUpBtn = styled.button`
   border-radius: 5px;
   border: 0;
   outline: 0;
-  background-color: #1c101f;
   color: #f0fbfd;
   font-size: 15px;
   font-weight: bold;
+  cursor: pointer;
+  background-color: #424242;
+  color: white;
+  &:hover {
+    background-color: black;
+  }
 `;
 
 export default SignUpPage;

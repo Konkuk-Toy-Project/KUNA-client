@@ -56,17 +56,16 @@ const BtnWrapper = styled.ul`
 const Button = styled.button`
   height: 40px;
   width: 100px;
-  background-color: white;
-  color: #1c101f;
-  border: 1px solid #1c101f;
+  background-color: #424242;
+  color: white;
+  border: none;
   outline: 0;
   border-radius: 6px;
   margin: 0 3px;
   font-weight: bold;
-
+  cursor: pointer;
   &:hover {
-    background-color: #1c101f;
-    color: #f0fbfd;
+    background-color: black;
   }
 `;
 

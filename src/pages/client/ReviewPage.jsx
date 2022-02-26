@@ -24,7 +24,16 @@ const ReviewPage = ({ itemId }) => {
       const response = await axios.get(
         `http://localhost:8080/review/${itemId}`
       );
-      setReviews(response.data);
+      const reviewsArr = response.data;
+      reviewsArr.length <= 1
+        ? setReviews(reviewsArr)
+        : setReviews(
+            reviewsArr.sort((r1, r2) =>
+              r1.rate != r2.rate
+                ? r2.rate - r1.rate
+                : r2.reviewImagesUrl.length - r1.reviewImagesUrl.length
+            )
+          );
     } catch (error) {
       alert(error.response.message);
       console.log(error);

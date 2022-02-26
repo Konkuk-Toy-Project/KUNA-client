@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PhoneInput from "../../components/client/Login/PhoneInput";
 import PageTitle from "../../components/common/PageTitle/PageTitle";
 import IconX from "../../components/client/Icon/IconX";
@@ -58,6 +58,9 @@ const FindAccountPage = () => {
     setEmail("");
     setTempPW("");
   };
+  useEffect(() => {
+    if (email == "" && tempPW == "") resetInput();
+  }, [email, tempPW]);
 
   const postInfos = async () => {
     setLoading(true);
@@ -94,22 +97,30 @@ const FindAccountPage = () => {
           case "M005":
             alert(data.message);
             setLoading(false);
+            resetInput();
             return;
         }
       }
       alert("오류가 발생하였습니다. 다시 시도해주세요");
-      window.location.reload();
+      resetInput();
     }
   };
-  console.log(info);
-  console.log(email);
-  console.log(tempPW);
+
+  const resetInput = useCallback(() => {
+    setInfo({
+      [ID]: "",
+      [NAME]: "",
+      [PH_FIRST]: "010",
+      [PH_MID]: "",
+      [PH_LAST]: "",
+    });
+  }, []);
 
   return (
     <FindAccountWrapper>
       <ReactHelmet title={"아이디·비밀번호 찾기"} />
       <PageTitle title={"아이디·비밀번호 찾기"} />
-      {loading ? <div>Loading...</div> : null}
+      {/* {loading ? <div>Loading...</div> : null} */}
       {/* <div id="tab-container"></div> */}
       <TabUl>
         <TabLi
@@ -131,12 +142,24 @@ const FindAccountPage = () => {
       <ContentUl>
         <ContentLi name="name">
           <Label htmlFor="name">이름</Label>
-          <Input type="text" id="name" name={NAME} onChange={onChange} />
+          <Input
+            type="text"
+            id="name"
+            value={info[NAME]}
+            name={NAME}
+            onChange={onChange}
+          />
         </ContentLi>
         {isFindIdTab ? null : (
           <ContentLi>
             <Label htmlFor="id">아이디(이메일)</Label>
-            <Input type="text" id="id" name={ID} onChange={onChange} />
+            <Input
+              type="text"
+              id="id"
+              name={ID}
+              value={info[ID]}
+              onChange={onChange}
+            />
           </ContentLi>
         )}
         <ContentLi name="phone">
@@ -156,17 +179,17 @@ const FindAccountPage = () => {
       {showPopup ? (
         <PopupWrapper>
           <PopupContentWrapper>
-            <IconWrapper>
-              <IconX onClick={onClosePopupClick} />
-            </IconWrapper>
             <PopupContent>
-              <span>
+              <IconWrapper>
+                <IconX onClick={onClosePopupClick} />
+              </IconWrapper>
+              <PopupSpan>
                 {isFindIdTab && email !== ""
                   ? `${info[NAME]}님의 아이디는 ${email}입니다.`
                   : !isFindIdTab && tempPW !== ""
                   ? "임시비밀번호가 이메일로 발송되었습니다."
                   : ""}
-              </span>
+              </PopupSpan>
             </PopupContent>
           </PopupContentWrapper>
         </PopupWrapper>
@@ -275,11 +298,13 @@ const PopupWrapper = styled.div`
 `;
 const IconWrapper = styled.div`
   text-align: right;
+  position: absolute;
+  top: 1%;
+  right: 1%;
 `;
 
 const PopupContentWrapper = styled.div`
   display: flex;
-  flex-direction: row-reverse;
   box-sizing: border-box;
   padding: 20px;
   background: #fff;
@@ -289,10 +314,16 @@ const PopupContentWrapper = styled.div`
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 `;
 const PopupContent = styled.div`
-  display: inline-block;
+  display: flex;
   text-align: center;
-  align-self: center;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
-const PopupSpan = styled.span``;
+const PopupSpan = styled.span`
+  display: inline-block;
+`;
 export default FindAccountPage;

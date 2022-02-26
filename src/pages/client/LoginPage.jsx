@@ -54,7 +54,7 @@ const LoginPage = () => {
       setUserToken(data.token);
 
       if (data.role === "admin") setIsClientState(false);
-      else navigate("/");
+      else navigate(-1);
     } catch (error) {
       if (error.response) {
         switch (error.response.data.errorCode) {

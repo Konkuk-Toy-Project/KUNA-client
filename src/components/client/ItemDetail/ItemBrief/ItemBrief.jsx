@@ -75,7 +75,9 @@ const ItemBrief = ({ itemObj }) => {
       alert("상품을 선택해 주세요.");
       return false;
     } else if (!isLogin) {
-      alert("로그인 후 이용해주세요.");
+      if (window.confirm("로그인이 필요합니다. 로그인하시겠습니까?")) {
+        navigate("/login");
+      }
       return false;
     }
     return true;

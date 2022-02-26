@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userTokenState } from "../../../../../store/common/user";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 // 로그인했는지 아닌지 판단 how? - 에러코드 보내달라고 하기
 const LikeBtn = ({ itemId, num }) => {
@@ -14,6 +15,7 @@ const LikeBtn = ({ itemId, num }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [didGetLikeInfo, setDidGetLikeInfo] = useState(false);
   const userToken = useRecoilValue(userTokenState);
+  const navigate = useNavigate();
 
   useEffect(() => getPreference(), []);
   const getPreference = async () => {
@@ -22,7 +24,6 @@ const LikeBtn = ({ itemId, num }) => {
         `http://localhost:8080/preference/isPreference/${itemId}`,
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
-      console.log(response.data);
       setIsLogin(response.data.login);
       setIsLiked(response.data.preference);
       setLikeId(response.data.preferenceId);
@@ -38,7 +39,7 @@ const LikeBtn = ({ itemId, num }) => {
           return;
         }
       }
-      alert("like 오류가 발생했습니다. 다시 한번 시도해주세요.");
+      alert("오류가 발생했습니다. 다시 한번 시도해주세요.");
     }
   };
 
@@ -92,7 +93,8 @@ const LikeBtn = ({ itemId, num }) => {
 
   const onClick = () => {
     if (!isLogin) {
-      alert("로그인 후 시도해주세요.");
+      if (window.confirm("로그인이 필요합니다. 로그인하시겠습니까?"))
+        navigate("/login");
       return;
     }
 

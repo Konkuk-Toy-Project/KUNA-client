@@ -23,6 +23,9 @@ const AnswerPopUp = () => {
   };
 
   const onClickSubmit = async () => {
+    if (answer === "") {
+      return alert("답변을 입력해주세요");
+    }
     await addAnswer();
     alert("답변이 등록되었습니다.");
     setShowAnswerPopUp(false);

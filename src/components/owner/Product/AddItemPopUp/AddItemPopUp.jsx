@@ -13,8 +13,8 @@ const AddItemPopUp = () => {
   const scrollY = useRecoilValue(currentY);
   const setShowAddPopUp = useSetRecoilState(showAddPopUpState);
   const [title, setTitle] = useState("");
-  const [discount, setDiscount] = useState("");
   const [price, setPrice] = useState("");
+  const [discount, setDiscount] = useState(0);
   const [category, setCategory] = useState(4);
   const [mainImg, setMainImg] = useState([]);
   const [detailImg, setDetailImg] = useState([]);
@@ -60,6 +60,34 @@ const AddItemPopUp = () => {
   }
 
   const onClickSubmit = async () => {
+    if (title === "") {
+      return alert("상품명을 입력해주세요");
+    }
+    if (price === "") {
+      return alert("가격을 입력해주세요");
+    }
+    if (discount === "") {
+      return alert("할인율을 입력해주세요");
+    }
+    if (0 > Number(discount) || Number(discount) > 100) {
+      return alert("0~100까지 맞는 할인율을 입력해주세요");
+    }
+    if (mainImg.length === 0) {
+      return alert("상품 메인 이미지는 최소 1장 등록하셔야 합니다.");
+    }
+    if (mainImg.length > 5) {
+      return alert("상품 메인 이미지는 최대 5장 입니다.");
+    }
+    if (detailImg.length === 0) {
+      return alert("상품 세부 이미지는 최소 1장 등록하셔야 합니다.");
+    }
+    if (detailImg.length > 5) {
+      return alert("상품 세부 이미지는 최대 5장 입니다.");
+    }
+    if (thumbnailImg.length === 0) {
+      return alert("상품 썸네일 이미지를 1장 등록하셔야 합니다.");
+    }
+
     if (window.confirm("해당 상품을 등록하시겠습니까?")) {
       const data = getItem();
       await addNewItem(data);
@@ -84,7 +112,7 @@ const AddItemPopUp = () => {
       <InputWrapper>
         <InputTitle>가격</InputTitle>
         <InputText
-          type="text"
+          type="number"
           placeholder="가격을 입력하세요"
           onChange={onChange(setPrice)}
         />
@@ -93,7 +121,7 @@ const AddItemPopUp = () => {
       <InputWrapper>
         <InputTitle>할인율</InputTitle>
         <InputText
-          type="text"
+          type="number"
           placeholder="할인율을 입력하세요"
           onChange={onChange(setDiscount)}
         />

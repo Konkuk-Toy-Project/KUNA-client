@@ -43,6 +43,12 @@ const AddCouponPopUp = () => {
   }, [date]);
 
   const onClickSubmit = () => {
+    if (rate === "") {
+      return alert("할인 정도를 입력해주세요");
+    }
+    if (name === "") {
+      return alert("쿠폰 명을 입력해주세요");
+    }
     calculateExpiredDate();
     if (window.confirm(`${name} 쿠폰을 등록하시겠습니까?`)) {
       addCoupon();

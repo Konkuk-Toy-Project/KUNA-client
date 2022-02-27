@@ -34,6 +34,9 @@ const EditItemPopUp = () => {
   };
 
   const onClickSubmit = async () => {
+    if (0 > Number(sale) || Number(sale) > 100) {
+      return alert("0~100까지 맞는 할인율을 입력해주세요");
+    }
     if (window.confirm("해당 상품을 수정하시겠습니까?")) {
       await changePriceAndSale();
       editSaleOrPrice();
@@ -69,11 +72,15 @@ const EditItemPopUp = () => {
         <Title>상품명 : {currentItem.name}</Title>
         <EditContentWrapper>
           <CategoryTitle>할인율 </CategoryTitle>
-          <InputText type="text" value={sale} onChange={onChange(setSale)} />%
+          <InputText type="number" value={sale} onChange={onChange(setSale)} />%
         </EditContentWrapper>
         <EditContentWrapper>
           <CategoryTitle>가격</CategoryTitle>
-          <InputText type="text" value={price} onChange={onChange(setPrice)} />
+          <InputText
+            type="number"
+            value={price}
+            onChange={onChange(setPrice)}
+          />
           원
         </EditContentWrapper>
         <ProductButton onClick={onClickSubmit}>수정 완료</ProductButton>

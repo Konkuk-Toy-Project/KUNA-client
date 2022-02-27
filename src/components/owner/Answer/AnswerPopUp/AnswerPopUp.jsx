@@ -27,9 +27,11 @@ const AnswerPopUp = () => {
       return alert("답변을 입력해주세요");
     }
     await addAnswer();
-    alert("답변이 등록되었습니다.");
-    setShowAnswerPopUp(false);
-    navigate("/");
+    if (window.confirm("답변을 등록하시겠습니까?")) {
+      alert("답변이 등록되었습니다.");
+      setShowAnswerPopUp(false);
+      navigate("/");
+    }
   };
 
   const addAnswer = () => {

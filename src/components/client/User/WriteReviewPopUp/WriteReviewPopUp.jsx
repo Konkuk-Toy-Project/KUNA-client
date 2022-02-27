@@ -33,7 +33,11 @@ const WriteReviewPopUp = () => {
     formData.append("itemId", currentReviewItem.itemId);
     formData.append("description", description);
     formData.append("rate", Number(rate));
-    formData.append("reviewImage", reviewImage[0]);
+
+    for (const image of reviewImage) {
+      formData.append("reviewImage", image);
+    }
+
     formData.append("orderItemId", currentReviewItem.orderItemId);
     return formData;
   };
@@ -56,6 +60,14 @@ const WriteReviewPopUp = () => {
     }
     if (description === "") {
       return alert("리뷰 내용을 입력해주세요.");
+    }
+    if (!reviewImage.length) {
+      return alert("리뷰용 사진을 추가하셔야 리뷰작성이 가능합니다.");
+    }
+    if (reviewImage.length > 5) {
+      return alert(
+        "리뷰용 사진은 최대 5장만 가능합니다. 사진을 다시 선택해주세요"
+      );
     }
     if (window.confirm("리뷰를 작성하시겠습니까?")) {
       const data = getItem();
@@ -80,6 +92,7 @@ const WriteReviewPopUp = () => {
           type="file"
           name=""
           onChange={onChangeImage(setReviewImage)}
+          multiple
         />
       </ContentWrapper>
       <SubmitButton onClick={onClickSubmit}>작성하기</SubmitButton>

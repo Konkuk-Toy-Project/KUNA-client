@@ -182,6 +182,7 @@ const PaymentTitle = styled.p`
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 1em;
+  text-align: center;
 `;
 
 const TotalPrice = styled.p`
@@ -193,13 +194,14 @@ const TotalPrice = styled.p`
 
 const DetailPriceWrapper = styled.div`
   display: flex;
-  padding: 0 2em;
+  justify-content: space-between;
+  align-items: center;
+  width: 20em;
+  margin: auto;
 `;
 
 const DetailDescription = styled.p`
   font-size: 14px;
-  text-align: start;
-  width: 15em;
   color: gray;
 `;
 

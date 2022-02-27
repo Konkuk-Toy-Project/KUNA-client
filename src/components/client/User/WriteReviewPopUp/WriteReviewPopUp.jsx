@@ -55,11 +55,14 @@ const WriteReviewPopUp = () => {
   }
 
   const onClickSubmit = async () => {
-    if (0 > Number(rate) || Number(rate) > 5) {
-      return alert("별점은 0~5사이만 가능합니다.");
-    }
     if (description === "") {
       return alert("리뷰 내용을 입력해주세요.");
+    }
+    if (rate === "") {
+      return alert("별점을 입력해주세요");
+    }
+    if (0 > Number(rate) || Number(rate) > 5) {
+      return alert("별점은 0~5사이만 가능합니다.");
     }
     if (!reviewImage.length) {
       return alert("리뷰용 사진을 추가하셔야 리뷰작성이 가능합니다.");

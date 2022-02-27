@@ -70,6 +70,12 @@ const AddOptionPopUp = () => {
   }
 
   const onClickSubmit = async () => {
+    if (option === "") {
+      return alert("옵션을 입력해주세요");
+    }
+    if (optionCount === "") {
+      return alert("재고을 입력해주세요");
+    }
     if (addDetailOption) {
       return alert("세부 옵션 추가 완료 버튼을 눌러주세요");
     }
@@ -105,7 +111,7 @@ const AddOptionPopUp = () => {
       <InputWrapper>
         <CategoryTitle>재고</CategoryTitle>
         <InputText
-          type="text"
+          type="number"
           placeholder="재고를 입력해주세요"
           onChange={onChange(setOptionCount)}
         />
@@ -124,7 +130,7 @@ const AddOptionPopUp = () => {
           <InputWrapper>
             <CategoryTitle>재고</CategoryTitle>
             <InputText
-              type="text"
+              type="number"
               placeholder="재고를 입력해주세요"
               value={detailOptionCount}
               onChange={onChange(setDetailOptionCount)}
